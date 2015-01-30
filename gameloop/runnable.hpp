@@ -11,12 +11,16 @@
 class FixedRunnable {
 public:
 	virtual ~FixedRunnable() {}
+
+	// Return false to exit the game loop
 	virtual bool run() = 0;
 };
 
 class VariableRunnable {
 public:
 	virtual ~VariableRunnable() {}
+
+	// return false to exit the game loop
 	virtual bool run(double alpha) = 0;
 };
 

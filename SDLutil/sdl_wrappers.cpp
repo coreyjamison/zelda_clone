@@ -19,15 +19,21 @@ SdlWindow::~SdlWindow()
 	window = nullptr;
 }
 
-SdlRenderer::SdlRenderer( SDL_Window* window, int index, Uint32 flags )
+SdlRenderer::SdlRenderer( const SdlWindow& window, int index, Uint32 flags )
 {
-	renderer = SDL_CreateRenderer( window, index, flags );
+	renderer = SDL_CreateRenderer( window.window, index, flags );
 }
+
+SdlRenderer::SdlRenderer()
+:	renderer(nullptr)
+{}
 
 SdlRenderer::~SdlRenderer()
 {
-	SDL_DestroyRenderer( renderer );
-	renderer = nullptr;
+	if(renderer) {
+		SDL_DestroyRenderer( renderer );
+		renderer = nullptr;
+	}
 }
 
 void SdlRenderer::setRenderDrawColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a )
@@ -45,9 +51,9 @@ void SdlRenderer::renderPresent()
 	SDL_RenderPresent( renderer );
 }
 
-void SdlRenderer::renderCopy( SdlTexture texture, SDL_Rect source, SDL_Rect dest )
+void SdlRenderer::renderCopy( const SdlTexture& texture, SDL_Rect source, SDL_Rect dest )
 {
-	SDL_RenderCopy( renderer, texture.texture, &source, &dest );
+	SDL_RenderCopy( renderer, texture.texture/*->ptr*/, &source, &dest );
 }
 
 void SdlRenderer::renderDrawRect( SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a )
@@ -74,13 +80,44 @@ void SdlSurface::setColorKey( bool enable, Uint8 r, Uint8 g, Uint8 b )
 	SDL_SetColorKey( surface, flag, SDL_MapRGB( surface->format, r, g, b ) );
 }
 
-SdlTexture::SdlTexture( SDL_Renderer* renderer, SDL_Surface* surface )
+TexturePointer::TexturePointer(SDL_Texture* texture)
 {
-	texture = SDL_CreateTextureFromSurface( renderer, surface );
+	ptr = texture;
+	refCount = 1;
+}
+
+TexturePointer::~TexturePointer()
+{
+	if(--refCount == 0)
+	{
+		//SDL_DestroyTexture(ptr);
+	}
+}
+
+TexturePointer* TexturePointer::copy()
+{
+	++refCount;
+	return this;
+}
+
+SdlTexture::SdlTexture()
+:	texture(nullptr)
+{}
+
+SdlTexture::SdlTexture( const SdlRenderer& renderer, const SdlSurface& surface )
+{
+	texture = /*new TexturePointer{*/ SDL_CreateTextureFromSurface( renderer.renderer, surface.surface ) ;//};
+}
+
+SdlTexture::SdlTexture( const SdlTexture& other )
+{
+	texture = other.texture;//->copy();
 }
 
 SdlTexture::~SdlTexture()
 {
-	SDL_DestroyTexture( texture );
-	texture = nullptr;
+	/*if(texture)
+	{
+		delete texture;
+	}*/
 }

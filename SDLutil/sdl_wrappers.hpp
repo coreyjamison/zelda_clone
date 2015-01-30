@@ -22,14 +22,15 @@ struct SdlTexture;
 
 struct SdlRenderer
 {
-	SdlRenderer( SDL_Window* window, int index, Uint32 flags );
+	SdlRenderer( const SdlWindow& window, int index, Uint32 flags );
+	SdlRenderer();
 	~SdlRenderer();
 
 	void setRenderDrawColor( Uint8 r, Uint8 g, Uint8 b, Uint8 a );
 	void clear();
 	void renderPresent();
 
-	void renderCopy( SdlTexture texture, SDL_Rect source, SDL_Rect dest );
+	void renderCopy( const SdlTexture& texture, SDL_Rect source, SDL_Rect dest );
 	void renderDrawRect( SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a );
 
 	SDL_Renderer* renderer;
@@ -45,9 +46,22 @@ struct SdlSurface
 	SDL_Surface* surface;
 };
 
+struct TexturePointer
+{
+	TexturePointer(SDL_Texture* texture);
+	~TexturePointer();
+
+	TexturePointer* copy();
+
+	int refCount;
+	SDL_Texture* ptr;
+};
+
 struct SdlTexture
 {
-	SdlTexture( SDL_Renderer* renderer, SDL_Surface* surface );
+	SdlTexture();
+	SdlTexture( const SdlRenderer& renderer, const SdlSurface& surface );
+	SdlTexture( const SdlTexture& other );
 	~SdlTexture();
 
 	SDL_Texture* texture;
