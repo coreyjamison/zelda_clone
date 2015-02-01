@@ -35,11 +35,13 @@ public:
 	template <typename T>
 	bool hasComponent()
 	{
-		return _components.count(&typeid(T)) != 0;
+		return hasComponent(&typeid(T));
 	}
 
+	bool hasComponent(type_info* componentType);
+
 private:
-	unordered_map<const std::type_info*, Component*> _components;
+	unordered_map<const type_info*, Component*> _components;
 };
 
 
