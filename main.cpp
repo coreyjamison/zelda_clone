@@ -91,24 +91,24 @@ int main(int argc, char* args[])
 		}
 
 		virtual bool run() {
-			if(++count > 1000)
+			if(++count > 2)
 			{
 				if(_state.held(ButtonType::W)) {
-					_node->position->movePos({0,-3});
+					_node->position->movePos({0,-4});
 					_node->render->sprite->setState(0);
 					cout << "W" << endl;
 				}
 				if(_state.held(ButtonType::S)) {
-					_node->position->movePos({0,3});
+					_node->position->movePos({0,4});
 					_node->render->sprite->setState(1);
 					cout << "S" << endl;
 				}
 				if(_state.held(ButtonType::A)) {
-					_node->position->movePos({-3,0});
+					_node->position->movePos({-4,0});
 					_node->render->sprite->setState(3);
 				}
 				if(_state.held(ButtonType::D)) {
-					_node->position->movePos({3,0});
+					_node->position->movePos({4,0});
 					_node->render->sprite->setState(2);
 				}
 				count = 0;

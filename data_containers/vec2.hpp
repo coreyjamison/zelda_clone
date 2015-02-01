@@ -5,12 +5,12 @@
  *      Author: Corey
  */
 
-#ifndef COORDS_HPP_
-#define COORDS_HPP_
+#ifndef VEC2_HPP_
+#define VEC2_HPP_
 
 #include <cmath>
 
-// Don't be a dummy! Only use Vec2 with numerical types!
+// Don't be a dummy! Only use Vec2 with numeric types!
 template <class num_type>
 class Vec2
 {
@@ -127,4 +127,4 @@ public:
 
 
 
-#endif /* COORDS_HPP_ */
+#endif /* VEC2_HPP_ */

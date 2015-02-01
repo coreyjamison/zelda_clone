@@ -20,7 +20,7 @@ void RenderSystem::addNode(RenderNode* node) {
 }
 
 bool RenderSystem::run() {
-	if(++_frame > 1000) {
+	if(++_frame > 2) {
 		_frame = 0;
 		for(RenderNode* node : _nodes) {
 			node->render->sprite->tick();

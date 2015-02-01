@@ -23,7 +23,7 @@ void GameLoop::run() {
 	steady_clock::time_point prevLoopStart = steady_clock::now();
 
 	double t = 0.0;
-	double dt = 0.1;
+	double dt = 0.01;
 
 	double accumulator = 0.0;
 
@@ -32,6 +32,8 @@ void GameLoop::run() {
 		loopStart = steady_clock::now();
 
 		steady_clock::duration chronoFrameTime = loopStart - prevLoopStart;
+
+		prevLoopStart = loopStart;
 
 		double frameTime = double( chronoFrameTime.count() ) *
 				steady_clock::period::num /
