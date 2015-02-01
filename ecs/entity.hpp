@@ -38,7 +38,7 @@ public:
 		return hasComponent(&typeid(T));
 	}
 
-	bool hasComponent(type_info* componentType);
+	bool hasComponent(const type_info* componentType);
 
 private:
 	unordered_map<const type_info*, Component*> _components;

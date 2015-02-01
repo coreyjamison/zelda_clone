@@ -15,7 +15,7 @@
 #include <graphics/render_system.hpp>
 #include <ecs/component.hpp>
 #include <ecs/entity.hpp>
-
+#include <ecs/ecs_manager.hpp>
 
 using namespace std;
 
@@ -126,8 +126,12 @@ int main(int argc, char* args[])
 	DummyRunnable* dr = new DummyRunnable();
 	DummyAnimator* da = new DummyAnimator(RenderNode::createFrom(&e));
 	RenderSystem* render = new RenderSystem(&gw);
+	EcsManager* ecs = new EcsManager();
 
-	render->addNode(RenderNode::createFrom(&e));
+	ecs->addNodeListener<RenderNode>(render);
+	ecs->addEntity(&e);
+
+	//render->addNode(RenderNode::createFrom(&e));
 
 	gm->addFixedRunnable(im);
 	//gm->addFixedRunnable(dr);

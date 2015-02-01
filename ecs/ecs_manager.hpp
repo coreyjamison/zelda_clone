@@ -9,6 +9,7 @@
 #define ECS_MANAGER_HPP_
 
 #include <vector>
+#include <unordered_map>
 
 #include "component.hpp"
 #include "entity.hpp"
@@ -17,17 +18,27 @@
 using namespace std;
 
 class NodeListener {
+public:
 	virtual ~NodeListener() = default;
 
-	virtual void onNodeCreate(vector<Node*> nodes) = 0;
-	virtual void onNodeDestroy(vector<Node*> nodes) = 0;
+	virtual void onNodeChange(Node* node) = 0;
 };
 
 class EcsManager {
+public:
+	template<typename T>
+	void addNodeListener(NodeListener* listener)
+	{
+		_nodeListeners[&typeid(T)].push_back(listener);
+	}
 
+	void addEntity(Entity* e);
+
+	void checkNodes(Entity* e);
 
 private:
 	vector<Entity*> _entities;
+	unordered_map<const type_info*, vector<NodeListener*>> _nodeListeners;
 	unsigned int _nextId;
 };
 

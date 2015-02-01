@@ -11,11 +11,12 @@
 #include <vector>
 
 #include <gameloop/runnable.hpp>
+#include <ecs/ecs_manager.hpp>
 #include <ecs/node.hpp>
 
 #include "game_window.hpp"
 
-class RenderSystem : public VariableRunnable, public FixedRunnable
+class RenderSystem : public VariableRunnable, public FixedRunnable, public NodeListener
 {
 public:
 	RenderSystem(GameWindow* window);
@@ -25,6 +26,10 @@ public:
 
 	virtual bool run();
 	virtual bool run(double alpha);
+	virtual void onNodeChange(Node* r)
+	{
+		_nodes.push_back(static_cast<RenderNode*>(r));
+	}
 
 private:
 	GameWindow* _window;
