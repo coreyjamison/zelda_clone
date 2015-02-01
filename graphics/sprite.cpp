@@ -9,9 +9,10 @@
 #include "sprite.hpp"
 #include "renderable_texture.hpp"
 
-Sprite::Sprite(SdlTexture& texture, map<int, vector<SDL_Rect>> frames)
+Sprite::Sprite(SdlTexture& texture, map<int, vector<SDL_Rect>> frames, Vec2<int> offset)
 :	_texture{texture},
  	_frames{frames},
+ 	_offset{offset},
  	// TODO: Initialize these properly
  	_state{0},
  	_frame{0}
@@ -19,7 +20,7 @@ Sprite::Sprite(SdlTexture& texture, map<int, vector<SDL_Rect>> frames)
 
 Renderable* Sprite::getRenderable()
 {
-	RenderableTexture* rt = new RenderableTexture(_texture, _frames[_state][_frame]);
+	RenderableTexture* rt = new RenderableTexture(_texture, _frames[_state][_frame], _offset);
 	return rt;
 }
 

@@ -23,7 +23,7 @@ void GameLoop::run() {
 	steady_clock::time_point prevLoopStart = steady_clock::now();
 
 	double t = 0.0;
-	double dt = 0.01;
+	double dt = 0.1;
 
 	double accumulator = 0.0;
 

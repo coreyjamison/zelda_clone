@@ -12,6 +12,10 @@
 #include <SDLutil/sdl_wrappers.hpp>
 #include <graphics/sprite_factory.hpp>
 #include <graphics/game_window.hpp>
+#include <graphics/render_system.hpp>
+#include <ecs/component.hpp>
+#include <ecs/entity.hpp>
+
 
 using namespace std;
 
@@ -46,6 +50,12 @@ int main(int argc, char* args[])
 
 	cout << "Done Rendering!" << endl;
 
+	Entity e;
+	PositionComponent p{{100, 100}};
+	RenderComponent r{&testSprite};
+	e.addComponent(&p);
+	e.addComponent(&r);
+
 	class DummyRunnable : public FixedRunnable, public InputObserver {
 	public:
 		virtual void notify(InputState state) {
@@ -67,10 +77,10 @@ int main(int argc, char* args[])
 
 	};
 
-	class DummyAnimator : public VariableRunnable, public FixedRunnable, public InputObserver {
+	class DummyAnimator : public FixedRunnable, public InputObserver {
 	public:
-		DummyAnimator(Sprite& sprite, GameWindow& window)
-		:	_sprite( sprite ), _window( window ), count(0)
+		DummyAnimator(RenderNode* node)
+		:	_node( node ), count(0)
 		{}
 
 		virtual void notify(InputState state) {
@@ -81,46 +91,63 @@ int main(int argc, char* args[])
 		}
 
 		virtual bool run() {
-			if(++count > 5000)
+			if(++count > 1000)
 			{
-				_sprite.tick();
+				if(_state.held(ButtonType::W)) {
+					_node->position->movePos({0,-3});
+					_node->render->sprite->setState(0);
+					cout << "W" << endl;
+				}
+				if(_state.held(ButtonType::S)) {
+					_node->position->movePos({0,3});
+					_node->render->sprite->setState(1);
+					cout << "S" << endl;
+				}
+				if(_state.held(ButtonType::A)) {
+					_node->position->movePos({-3,0});
+					_node->render->sprite->setState(3);
+				}
+				if(_state.held(ButtonType::D)) {
+					_node->position->movePos({3,0});
+					_node->render->sprite->setState(2);
+				}
 				count = 0;
 			}
-			cout << "Frame: " << _sprite._frame << endl;
-			return true;
-		}
-
-		virtual bool run(double alpha) {
-			_window.queueRenderable(_sprite.getRenderable(), RenderLayer::ENTITIES, clicked);
-			_window.render();
 			return true;
 		}
 
 	private:
-		Sprite& _sprite;
-		GameWindow& _window;
+		RenderNode* _node;
 		InputState _state;
 		int count;
 		Vec2<int> clicked;
 	};
 
 	DummyRunnable* dr = new DummyRunnable();
-	DummyAnimator* da = new DummyAnimator(testSprite, gw);
+	DummyAnimator* da = new DummyAnimator(RenderNode::createFrom(&e));
+	RenderSystem* render = new RenderSystem(&gw);
+
+	render->addNode(RenderNode::createFrom(&e));
 
 	gm->addFixedRunnable(im);
 	//gm->addFixedRunnable(dr);
 	gm->addFixedRunnable(da);
-	gm->addVariableRunnable(da);
+
+	gm->addFixedRunnable(render);
+	gm->addVariableRunnable(render);
+
 	//im->addObserver(dr);
 	im->addObserver(da);
 
 	gm->run();
 
 	//delete win;
+	delete render;
 	delete dr;
 	delete da;
 	delete gm;
 	delete im;
+
 
 	SdlUtils::quit();
 

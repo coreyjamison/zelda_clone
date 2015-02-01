@@ -20,7 +20,7 @@ using namespace std;
 class Sprite
 {
 public:
-	Sprite(SdlTexture& texture, map<int, vector<SDL_Rect>> frames);
+	Sprite(SdlTexture& texture, map<int, vector<SDL_Rect>> frames, Vec2<int> offset);
 
 	Renderable* getRenderable();
 	void tick();
@@ -29,6 +29,7 @@ public:
 //private:
 	SdlTexture _texture;
 	map<int, vector<SDL_Rect>> _frames;
+	Vec2<int> _offset;
 	unsigned int _state;
 	unsigned int _frame;
 };
