@@ -39,10 +39,12 @@ int main(int argc, char* args[])
 	cout << "Making Sprite!" << endl;
 
 	Sprite testSprite = sf.makeDemoSprite(gw);
+	Sprite jsonTestSprite = sf.makeSprite(gw, "link");
+	SDL_Delay(1000);
 
 	Entity e;
 	PositionComponent p{{100, 100}};
-	RenderComponent r{&testSprite};
+	RenderComponent r{&jsonTestSprite};
 	StateComponent s{StateComponent::Direction::UP|StateComponent::State::MOVE};
 	e.addComponent(&p);
 	e.addComponent(&r);

@@ -9,9 +9,28 @@
 #include "sprite.hpp"
 #include "renderable_texture.hpp"
 
+SpriteState::SpriteState()
+:	frames{},
+ 	offset{0, 0}
+{}
+
+SpriteState::SpriteState(vector<SDL_Rect> f, Vec2<int> o)
+:	frames(f),
+ 	offset(o)
+{}
+
+Sprite::Sprite()
+:	_texture{}
+{}
+
 Sprite::Sprite(SdlTexture& texture)
 :	_texture{texture}
 {}
+
+void Sprite::setTexture(SdlTexture& texture)
+{
+	_texture = texture;
+}
 
 Renderable* Sprite::getRenderable(unsigned int state, unsigned int frame)
 {

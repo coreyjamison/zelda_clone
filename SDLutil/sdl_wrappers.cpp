@@ -5,6 +5,7 @@
  *      Author: Corey
  */
 
+
 #include "sdl_wrappers.hpp"
 
 SdlWindow::SdlWindow( const char* title, int x, int y, int w, int h, Uint32 flags )
@@ -120,4 +121,11 @@ SdlTexture::~SdlTexture()
 	{
 		delete texture;
 	}*/
+}
+
+Vec2<int> SdlTexture::getDimensions()
+{
+	Vec2<int> dimensions;
+	SDL_QueryTexture(texture, nullptr, nullptr, &dimensions.x, &dimensions.y);
+	return dimensions;
 }

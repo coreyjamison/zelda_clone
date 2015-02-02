@@ -19,6 +19,9 @@ using namespace std;
 
 struct SpriteState
 {
+	SpriteState();
+	SpriteState(vector<SDL_Rect> f, Vec2<int> o);
+
 	vector<SDL_Rect> frames;
 	Vec2<int> offset;
 };
@@ -26,7 +29,10 @@ struct SpriteState
 class Sprite
 {
 public:
+	Sprite();
 	Sprite(SdlTexture& texture);
+
+	void setTexture(SdlTexture& texture);
 
 	Renderable* getRenderable(unsigned int state, unsigned int frame);
 	unsigned int nextFrame(unsigned int state, unsigned int frame);

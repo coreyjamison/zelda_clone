@@ -15,6 +15,8 @@ class SpriteFactory
 {
 public:
 	Sprite makeDemoSprite( const GameWindow& window );
+	Sprite makeSprite(const GameWindow& window, std::string name);
+	SdlTexture makeTexture(string imageFile, const GameWindow& window);
 };
 
 

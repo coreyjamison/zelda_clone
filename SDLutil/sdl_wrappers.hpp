@@ -10,6 +10,8 @@
 
 #include <SDL.h>
 
+#include <data_containers/vec2.hpp>
+
 struct SdlWindow
 {
 	SdlWindow( const char* title, int x, int y, int w, int h, Uint32 flags);
@@ -63,6 +65,8 @@ struct SdlTexture
 	SdlTexture( const SdlRenderer& renderer, const SdlSurface& surface );
 	SdlTexture( const SdlTexture& other );
 	~SdlTexture();
+
+	Vec2<int> getDimensions();
 
 	SDL_Texture* texture;
 };

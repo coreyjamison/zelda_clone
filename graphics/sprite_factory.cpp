@@ -7,7 +7,9 @@
 
 #include <string>
 #include <iostream>
+#include <fstream>
 
+#include <include/rapidjson/document.h>
 #include <ecs/component.hpp>
 
 #include "sprite_factory.hpp"
@@ -129,4 +131,167 @@ Sprite SpriteFactory::makeDemoSprite( const GameWindow& window )
 	return testSprite;
 }
 
+using namespace rapidjson;
+Sprite SpriteFactory::makeSprite(const GameWindow& window, string name)
+{
+	ifstream fs("res/link_sprite.json");
+	string content{ istreambuf_iterator<char>(fs),
+					istreambuf_iterator<char>() };
 
+	Document document;
+	char buffer[content.length()];
+	sprintf(buffer, "%s", content.c_str());
+	cout << buffer << endl;
+	if(document.ParseInsitu(buffer).HasParseError())
+	{
+		cout << "Error reading json file!" << endl;
+	}
+
+	Sprite spr;
+
+	if(document.IsObject())
+	{
+		if(document.HasMember("sprites"))
+		{
+			const Value& sprites = document["sprites"];
+			if(sprites.HasMember(name.c_str()))
+			{
+				const Value& sprite = sprites[name.c_str()];
+				if( sprite.HasMember("texture") &&
+					sprite.HasMember("frameSize") &&
+					sprite.HasMember("states") )
+				{
+					string imageFile = sprite["texture"].GetString();
+					SdlTexture texture = makeTexture(imageFile, window);
+					spr.setTexture(texture);
+					const Value& fs = sprite["frameSize"];
+					Vec2<int> frameSize = {
+							fs["w"].GetInt(),
+							fs["h"].GetInt()
+					};
+					Vec2<int> textureSize = texture.getDimensions();
+					vector<vector<SDL_Rect>> frames;
+					for(int y = 0; y < textureSize.y; y += frameSize.y)
+					{
+						vector<SDL_Rect> row;
+						for(int x = 0; x < textureSize.x; x += frameSize.x)
+						{
+							row.push_back({
+									x,
+									y,
+									frameSize.x,
+									frameSize.y
+								}
+							);
+						}
+						for(SDL_Rect frame : row) {
+							cout << "x:" << frame.x
+									<< " y:" << frame.y
+									<< " w:" << frame.w
+									<< " h:" << frame.h << endl;
+						}
+						frames.push_back(row);
+					}
+					const Value& states = sprite["states"];
+					for(Value::ConstValueIterator itr = states.Begin(); itr != states.End(); ++itr)
+					{
+						const Value& state = *itr;
+						if( state.HasMember("direction") &&
+							state.HasMember("action"),
+							state.HasMember("row"),
+							state.HasMember("columns") )
+						{
+							cout << "state " << state["direction"].GetString() << " " << state["action"].GetString() << " Good!" << endl;
+							int row = state["row"].GetInt() - 1; // to go from 1-indexed to 0-indexed
+							int columns = state["columns"].GetInt();
+							cout << "row: " << row << " columns: " << columns << endl;
+							string action = state["action"].GetString();
+							string direction = state["direction"].GetString();
+							unsigned int state = 0;
+							if(action == "idle") {
+								state |= StateComponent::State::IDLE;
+							} else if(action == "move") {
+								state |= StateComponent::State::MOVE;
+							}
+
+							if(direction == "u") {
+								state |= StateComponent::Direction::UP;
+							} else if(direction == "d") {
+								state |= StateComponent::Direction::DOWN;
+							} else if(direction == "l") {
+								state |= StateComponent::Direction::LEFT;
+							} else if(direction == "r") {
+								state |= StateComponent::Direction::RIGHT;
+							}
+
+							cout << "State: " << state << endl;
+
+							vector<SDL_Rect> spriteFrames;
+							for(int i = 0; i < columns; i++) {
+								SDL_Rect f = frames[row][i];
+								cout << "Adding frame: " << endl
+										<< "x: " << f.x << " y: " << f.y << " w: " << f.w << " h: " << f.h << endl
+										<< "to state: " << state << endl;
+								spriteFrames.push_back(frames[row][i]);
+							}
+
+							Vec2<int> offset = {12, 26}; // TODO: Decide where offset should go (Sprite | SpriteState) so we can load it from the json file.
+
+							SpriteState s{spriteFrames, offset};
+
+							spr.addState(state, s);
+						}
+					}
+				}
+				else
+				{
+					cout << "Missing a member of sprite " << name << endl;
+				}
+			}
+			else
+			{
+				cout << "No member called " << name << endl;
+			}
+		}
+		else
+		{
+			cout << "Document doesn't have sprites!" << endl;
+		}
+	}
+	else
+	{
+		cout << "Document not an object" << endl;
+	}
+
+	return spr;
+}
+
+SdlTexture SpriteFactory::makeTexture(string imageFile, const GameWindow& window)
+{
+	SdlSurface loadedSurface{ imageFile.c_str() };
+	cout << "Loaded surface!" << endl;
+
+	SdlTexture texture;
+	if( loadedSurface.surface == NULL )
+	{
+		//_logger.log( LogSeverities::ERROR, "Failed to load image!" );
+		cout << "Failed to load image!" << endl;
+	}
+	else
+	{
+		cout << "Loaded image!" << endl;
+		loadedSurface.setColorKey( true, 0xFF, 0xFF, 0xFF );
+		texture = window.makeTexture( loadedSurface );
+		if( texture.texture == NULL )
+		{
+			cout << "Failed to create texture!" << endl;
+			//_logger.log( LogSeverities::ERROR, "Failed to create texture!" );
+		}
+		else
+		{
+			cout << "Created texture!" << endl;
+		}
+	}
+
+	return texture;
+}
