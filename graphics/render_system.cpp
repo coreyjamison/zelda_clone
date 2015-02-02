@@ -15,15 +15,14 @@ RenderSystem::RenderSystem(GameWindow* window)
 :	_window( window )
 {}
 
-void RenderSystem::addNode(RenderNode* node) {
-	_nodes.push_back(node);
-}
-
 bool RenderSystem::run() {
 	if(++_frame > 2) {
 		_frame = 0;
+		// TODO: remove invalid nodes
 		for(RenderNode* node : _nodes) {
-			node->render->sprite->tick();
+			if(node->valid) {
+				node->render->frame = node->render->sprite->nextFrame(node->state->state, node->render->frame);
+			}
 		}
 	}
 	return true;
@@ -33,12 +32,16 @@ bool RenderSystem::run(double alpha) {
 	if(alpha < 0 || alpha > 1) {
 		return true;
 	}
-	cout << "alpha: " << alpha << endl;
 	for(RenderNode* node : _nodes) {
 		// TODO: Actually interpolate
-		Vec2<int> interpolated = node->position->curPos;
+		Vec2<int> interpolated = node->position->curPos; //.average(node->position->lastPos); // interpolate
 
-		_window->queueRenderable(node->render->sprite->getRenderable(),
+		Renderable* r = node->render->sprite->getRenderable(
+				node->state->state,
+				node->render->frame
+				);
+
+		_window->queueRenderable(r,
 				RenderLayer::ENTITIES,
 				interpolated);
 	}

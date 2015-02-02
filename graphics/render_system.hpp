@@ -21,9 +21,6 @@ class RenderSystem : public VariableRunnable, public FixedRunnable, public NodeL
 public:
 	RenderSystem(GameWindow* window);
 
-	//TEST
-	void addNode(RenderNode* node);
-
 	virtual bool run();
 	virtual bool run(double alpha);
 	virtual void onNodeChange(Node* r)

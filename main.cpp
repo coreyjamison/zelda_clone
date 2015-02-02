@@ -40,21 +40,13 @@ int main(int argc, char* args[])
 
 	Sprite testSprite = sf.makeDemoSprite(gw);
 
-	cout << "Queuing render!" << endl;
-
-	gw.queueRenderable(testSprite.getRenderable(), RenderLayer::ENTITIES, {50,50});
-
-	cout << "Rendering!" << endl;
-
-	gw.render();
-
-	cout << "Done Rendering!" << endl;
-
 	Entity e;
 	PositionComponent p{{100, 100}};
 	RenderComponent r{&testSprite};
+	StateComponent s{StateComponent::Direction::UP|StateComponent::State::MOVE};
 	e.addComponent(&p);
 	e.addComponent(&r);
+	e.addComponent(&s);
 
 	class DummyRunnable : public FixedRunnable, public InputObserver {
 	public:
@@ -93,23 +85,36 @@ int main(int argc, char* args[])
 		virtual bool run() {
 			if(++count > 2)
 			{
+				bool move = false;
+				unsigned int state = _node->state->state;
 				if(_state.held(ButtonType::W)) {
 					_node->position->movePos({0,-4});
-					_node->render->sprite->setState(0);
-					cout << "W" << endl;
+					_node->state->state = (state & 0xC) | StateComponent::Direction::UP;
+					move = true;
 				}
 				if(_state.held(ButtonType::S)) {
 					_node->position->movePos({0,4});
-					_node->render->sprite->setState(1);
-					cout << "S" << endl;
+					_node->state->state = (state & 0xC) | StateComponent::Direction::DOWN;
+					move = true;
 				}
 				if(_state.held(ButtonType::A)) {
 					_node->position->movePos({-4,0});
-					_node->render->sprite->setState(3);
+					_node->state->state = (state & 0xC) | StateComponent::Direction::LEFT;
+					move = true;
 				}
 				if(_state.held(ButtonType::D)) {
 					_node->position->movePos({4,0});
-					_node->render->sprite->setState(2);
+					_node->state->state = (state & 0xC) | StateComponent::Direction::RIGHT;
+					move = true;
+				}
+				state = _node->state->state;
+				if(move)
+				{
+					_node->state->state = (state & 0x3) | StateComponent::State::MOVE;
+				}
+				else
+				{
+					_node->state->state = (state & 0x3) | StateComponent::State::IDLE;
 				}
 				count = 0;
 			}

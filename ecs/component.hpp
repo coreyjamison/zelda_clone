@@ -8,15 +8,21 @@
 #ifndef COMPONENT_HPP_
 #define COMPONENT_HPP_
 
+#include <vector>
+
 #include <data_containers/vec2.hpp>
 #include <graphics/sprite.hpp>
 
+#include "node.hpp"
+
+class Node;
+
 struct Component
 {
-	virtual ~Component() = 0;
-};
+	virtual ~Component();
 
-inline Component::~Component() {}
+	vector<Node*> nodes;
+};
 
 struct PositionComponent : public Component
 {
@@ -32,7 +38,37 @@ struct PositionComponent : public Component
 struct RenderComponent : public Component
 {
 	RenderComponent(Sprite* s);
+
 	Sprite* sprite;
+	unsigned int frame;
+};
+
+struct StateComponent : public Component
+{
+	StateComponent(unsigned int s);
+
+	unsigned int state;
+
+	enum Direction
+	{
+		LEFT = 0x0,
+		RIGHT = 0x1,
+		UP = 0x2,
+		DOWN = 0x3
+	};
+
+	enum State
+	{
+		IDLE = 0x0,
+		MOVE = 0x4
+	};
+};
+
+struct MoveComponent : public Component
+{
+	MoveComponent(int s);
+
+	int speed;
 };
 
 

@@ -14,6 +14,8 @@
 
 using namespace std;
 
+class Component;
+
 class Entity
 {
 public:

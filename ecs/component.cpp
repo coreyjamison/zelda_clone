@@ -7,6 +7,13 @@
 
 #include "component.hpp"
 
+Component::~Component()
+{
+	for(Node* node : nodes) {
+		node->valid = false;
+	}
+}
+
 PositionComponent::PositionComponent(Vec2<int> pos)
 :	curPos(pos), lastPos(pos)
 {}
@@ -24,5 +31,14 @@ void PositionComponent::movePos(Vec2<int> move)
 }
 
 RenderComponent::RenderComponent(Sprite* s)
-:	sprite(s)
+:	sprite(s),
+ 	frame(0)
+{}
+
+StateComponent::StateComponent(unsigned int s)
+:	state(s)
+{}
+
+MoveComponent::MoveComponent(int s)
+:	speed(s)
 {}

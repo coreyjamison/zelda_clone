@@ -17,21 +17,26 @@
 
 using namespace std;
 
+struct SpriteState
+{
+	vector<SDL_Rect> frames;
+	Vec2<int> offset;
+};
+
 class Sprite
 {
 public:
-	Sprite(SdlTexture& texture, map<int, vector<SDL_Rect>> frames, Vec2<int> offset);
+	Sprite(SdlTexture& texture);
 
-	Renderable* getRenderable();
-	void tick();
-	void setState(unsigned int state);
+	Renderable* getRenderable(unsigned int state, unsigned int frame);
+	unsigned int nextFrame(unsigned int state, unsigned int frame);
+	unsigned int validateFrame(unsigned int state, unsigned int frame);
 
-//private:
+	void addState(unsigned int state, SpriteState data);
+
+private:
 	SdlTexture _texture;
-	map<int, vector<SDL_Rect>> _frames;
-	Vec2<int> _offset;
-	unsigned int _state;
-	unsigned int _frame;
+	map<unsigned int, SpriteState> _states;
 };
 
 

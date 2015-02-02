@@ -63,6 +63,11 @@ public:
 		//printf( "new x: %f, y: %f\n", _x, y );
 	}
 
+	Vec2 average( const Vec2& other) const
+	{
+		return {(x + other.x) / 2, (y + other.y) / 2};
+	}
+
 	num_type dot( const Vec2& other ) const
 	{
 		return x * other.x + y * other.y;

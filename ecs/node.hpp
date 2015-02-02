@@ -11,20 +11,41 @@
 #include "component.hpp"
 #include "entity.hpp"
 
-struct Node {
+class PositionComponent;
+class RenderComponent;
+class StateComponent;
+class MoveComponent;
+
+class Entity;
+
+struct Node
+{
+	Node();
 	virtual ~Node() = default;
-	//virtual Node* createFrom(Entity* c) = 0;
+
+	bool valid;
 };
 
-struct RenderNode : public Node{
-	RenderNode(PositionComponent* p, RenderComponent* r);
+struct RenderNode : public Node
+{
+	RenderNode(PositionComponent* p, RenderComponent* r, StateComponent* s);
 
 	PositionComponent* position;
 	RenderComponent* render;
+	StateComponent* state;
 
-	static int test();
+	static RenderNode* createFrom(Entity* e);
+};
 
-	static RenderNode* createFrom(Entity* c);
+struct MoveNode : public Node
+{
+	MoveNode(PositionComponent* p, MoveComponent* m, StateComponent* s);
+
+	PositionComponent* position;
+	MoveComponent* move;
+	StateComponent* state;
+
+	static MoveNode* createFrom(Entity* e);
 };
 
 
