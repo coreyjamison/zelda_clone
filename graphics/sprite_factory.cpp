@@ -117,15 +117,15 @@ Sprite SpriteFactory::makeDemoSprite( const GameWindow& window )
 
 	Sprite testSprite{ texture };
 
-	testSprite.addState(StateComponent::Direction::LEFT|StateComponent::State::MOVE, moveLeft);
-	testSprite.addState(StateComponent::Direction::RIGHT|StateComponent::State::MOVE, moveRight);
-	testSprite.addState(StateComponent::Direction::UP|StateComponent::State::MOVE, moveUp);
-	testSprite.addState(StateComponent::Direction::DOWN|StateComponent::State::MOVE, moveDown);
+	testSprite.addState(StateComponent::Direction::LEFT|StateComponent::Action::MOVE, moveLeft);
+	testSprite.addState(StateComponent::Direction::RIGHT|StateComponent::Action::MOVE, moveRight);
+	testSprite.addState(StateComponent::Direction::UP|StateComponent::Action::MOVE, moveUp);
+	testSprite.addState(StateComponent::Direction::DOWN|StateComponent::Action::MOVE, moveDown);
 
-	testSprite.addState(StateComponent::Direction::LEFT|StateComponent::State::IDLE, idleLeft);
-	testSprite.addState(StateComponent::Direction::RIGHT|StateComponent::State::IDLE, idleRight);
-	testSprite.addState(StateComponent::Direction::UP|StateComponent::State::IDLE, idleUp);
-	testSprite.addState(StateComponent::Direction::DOWN|StateComponent::State::IDLE, idleDown);
+	testSprite.addState(StateComponent::Direction::LEFT|StateComponent::Action::IDLE, idleLeft);
+	testSprite.addState(StateComponent::Direction::RIGHT|StateComponent::Action::IDLE, idleRight);
+	testSprite.addState(StateComponent::Direction::UP|StateComponent::Action::IDLE, idleUp);
+	testSprite.addState(StateComponent::Direction::DOWN|StateComponent::Action::IDLE, idleDown);
 
 
 	return testSprite;
@@ -209,9 +209,9 @@ Sprite SpriteFactory::makeSprite(const GameWindow& window, string name)
 							string direction = state["direction"].GetString();
 							unsigned int state = 0;
 							if(action == "idle") {
-								state |= StateComponent::State::IDLE;
+								state |= StateComponent::Action::IDLE;
 							} else if(action == "move") {
-								state |= StateComponent::State::MOVE;
+								state |= StateComponent::Action::MOVE;
 							}
 
 							if(direction == "u") {

@@ -47,6 +47,7 @@ struct StateComponent : public Component
 {
 	StateComponent(unsigned int s);
 
+
 	unsigned int state;
 
 	enum Direction
@@ -57,11 +58,14 @@ struct StateComponent : public Component
 		DOWN = 0x3
 	};
 
-	enum State
+	enum Action
 	{
 		IDLE = 0x0,
 		MOVE = 0x4
 	};
+
+	void setDirection(Direction d);
+	void setAction(Action a);
 };
 
 struct MoveComponent : public Component

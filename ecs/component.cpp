@@ -5,6 +5,9 @@
  *      Author: Corey
  */
 
+#include <iostream>
+using namespace std;
+
 #include "component.hpp"
 
 Component::~Component()
@@ -38,6 +41,20 @@ RenderComponent::RenderComponent(Sprite* s)
 StateComponent::StateComponent(unsigned int s)
 :	state(s)
 {}
+
+void StateComponent::setAction(Action a)
+{
+	cout << "Before: " << state << endl;
+	state = (state & 0x3) | a;
+	cout << "After: " << state << endl;
+}
+
+void StateComponent::setDirection(Direction d)
+{
+	cout << "Before: " << state << endl;
+	state = (state & 0xFC) | d;
+	cout << "After: " << state << endl;
+}
 
 MoveComponent::MoveComponent(int s)
 :	speed(s)

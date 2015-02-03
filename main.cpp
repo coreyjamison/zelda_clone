@@ -16,6 +16,7 @@
 #include <ecs/component.hpp>
 #include <ecs/entity.hpp>
 #include <ecs/ecs_manager.hpp>
+#include <systems/move_system.hpp>
 
 using namespace std;
 
@@ -39,16 +40,18 @@ int main(int argc, char* args[])
 	cout << "Making Sprite!" << endl;
 
 	Sprite testSprite = sf.makeDemoSprite(gw);
-	Sprite jsonTestSprite = sf.makeSprite(gw, "slime");
+	Sprite jsonTestSprite = sf.makeSprite(gw, "guy1");
 	SDL_Delay(1000);
 
 	Entity e;
 	PositionComponent p{{100, 100}};
 	RenderComponent r{&jsonTestSprite};
-	StateComponent s{StateComponent::Direction::UP|StateComponent::State::MOVE};
+	StateComponent s{StateComponent::Direction::UP|StateComponent::Action::MOVE};
+	MoveComponent m{2};
 	e.addComponent(&p);
 	e.addComponent(&r);
 	e.addComponent(&s);
+	e.addComponent(&m);
 
 	class DummyRunnable : public FixedRunnable, public InputObserver {
 	public:
@@ -112,11 +115,11 @@ int main(int argc, char* args[])
 				state = _node->state->state;
 				if(move)
 				{
-					_node->state->state = (state & 0x3) | StateComponent::State::MOVE;
+					_node->state->state = (state & 0x3) | StateComponent::Action::MOVE;
 				}
 				else
 				{
-					_node->state->state = (state & 0x3) | StateComponent::State::IDLE;
+					_node->state->state = (state & 0x3) | StateComponent::Action::IDLE;
 				}
 				count = 0;
 			}
@@ -131,31 +134,36 @@ int main(int argc, char* args[])
 	};
 
 	DummyRunnable* dr = new DummyRunnable();
-	DummyAnimator* da = new DummyAnimator(RenderNode::createFrom(&e));
+	//DummyAnimator* da = new DummyAnimator(RenderNode::createFrom(&e));
 	RenderSystem* render = new RenderSystem(&gw);
+	MoveSystem* move = new MoveSystem();
 	EcsManager* ecs = new EcsManager();
 
 	ecs->addNodeListener<RenderNode>(render);
+	ecs->addNodeListener<MoveNode>(move);
 	ecs->addEntity(&e);
 
 	//render->addNode(RenderNode::createFrom(&e));
 
 	gm->addFixedRunnable(im);
 	//gm->addFixedRunnable(dr);
-	gm->addFixedRunnable(da);
+	//gm->addFixedRunnable(da);
 
 	gm->addFixedRunnable(render);
+	gm->addFixedRunnable(move);
 	gm->addVariableRunnable(render);
 
 	//im->addObserver(dr);
-	im->addObserver(da);
+	//im->addObserver(da);
+	im->addObserver(move);
 
 	gm->run();
 
 	//delete win;
 	delete render;
+	delete move;
 	delete dr;
-	delete da;
+	//delete da;
 	delete gm;
 	delete im;
 
