@@ -20,7 +20,7 @@ using namespace std;
 
 Sprite SpriteFactory::makeDemoSprite( const GameWindow& window )
 {
-	string imageFile = "res/4LinkGreen1_2.bmp";
+	string imageFile = "res/sprite1.bmp";
 
 	SdlSurface loadedSurface{ imageFile.c_str() };
 	cout << "Loaded surface!" << endl;
@@ -134,7 +134,7 @@ Sprite SpriteFactory::makeDemoSprite( const GameWindow& window )
 using namespace rapidjson;
 Sprite SpriteFactory::makeSprite(const GameWindow& window, string name)
 {
-	ifstream fs("res/link_sprite.json");
+	ifstream fs("res/sprite_config.json");
 	string content{ istreambuf_iterator<char>(fs),
 					istreambuf_iterator<char>() };
 

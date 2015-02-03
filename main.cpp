@@ -39,7 +39,7 @@ int main(int argc, char* args[])
 	cout << "Making Sprite!" << endl;
 
 	Sprite testSprite = sf.makeDemoSprite(gw);
-	Sprite jsonTestSprite = sf.makeSprite(gw, "link");
+	Sprite jsonTestSprite = sf.makeSprite(gw, "slime");
 	SDL_Delay(1000);
 
 	Entity e;

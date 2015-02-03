@@ -1,0 +1,118 @@
+{
+	"sprites": {
+		"guy1": {
+			"texture": "res/guy1.bmp",
+			"frameSize": {
+				"w": 48,
+				"h": 64
+			},
+			"states": [
+				{
+					"direction": "l",
+					"action": "idle",
+					"row": 4,
+					"columns": 1
+				},
+				{
+					"direction": "r",
+					"action": "idle",
+					"row": 3,
+					"columns": 1
+				},
+				{
+					"direction": "u",
+					"action": "idle",
+					"row": 2,
+					"columns": 1
+				},
+				{
+					"direction": "d",
+					"action": "idle",
+					"row": 1,
+					"columns": 1
+				},
+				{
+					"direction": "l",
+					"action": "move",
+					"row": 4,
+					"columns": 16
+				},
+				{
+					"direction": "r",
+					"action": "move",
+					"row": 3,
+					"columns": 16
+				},
+				{
+					"direction": "u",
+					"action": "move",
+					"row": 2,
+					"columns": 16
+				},
+				{
+					"direction": "d",
+					"action": "move",
+					"row": 1,
+					"columns": 16
+				}
+			]
+		},
+		"slime": {
+			"texture": "res/green_slime.bmp",
+			"frameSize": {
+				"w": 24,
+				"h": 32
+			},
+			"states": [
+				{
+					"direction": "l",
+					"action": "idle",
+					"row": 4,
+					"columns": 1
+				},
+				{
+					"direction": "r",
+					"action": "idle",
+					"row": 3,
+					"columns": 1
+				},
+				{
+					"direction": "u",
+					"action": "idle",
+					"row": 2,
+					"columns": 1
+				},
+				{
+					"direction": "d",
+					"action": "idle",
+					"row": 1,
+					"columns": 1
+				},
+				{
+					"direction": "l",
+					"action": "move",
+					"row": 4,
+					"columns": 24
+				},
+				{
+					"direction": "r",
+					"action": "move",
+					"row": 3,
+					"columns": 24
+				},
+				{
+					"direction": "u",
+					"action": "move",
+					"row": 2,
+					"columns": 24
+				},
+				{
+					"direction": "d",
+					"action": "move",
+					"row": 1,
+					"columns": 24
+				}
+			]
+		}
+	}
+}
