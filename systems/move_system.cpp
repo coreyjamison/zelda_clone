@@ -5,6 +5,8 @@
  *      Author: Corey
  */
 
+#include <iostream>
+
 #include "move_system.hpp"
 /*
 class MoveSystem: public FixedRunnable, public NodeListener, public InputObserver
@@ -18,6 +20,8 @@ private:
 	vector<MoveNode*> _nodes;
 	InputState _input;
 };*/
+
+using namespace std;
 
 bool MoveSystem::run()
 {
@@ -60,7 +64,11 @@ bool MoveSystem::run()
 		node->state->setDirection(StateComponent::Direction::LEFT);
 	}
 
-	node->position->movePos(totalMove.scale(node->move->speed));
+	cout << "before: " << totalMove.x << " " << totalMove.y << endl;
+	totalMove = totalMove.scale(node->move->speed);
+	cout << "after: " << totalMove.x << " " << totalMove.y << endl;
+
+	node->position->movePos(totalMove);
 
 	return true;
 }
