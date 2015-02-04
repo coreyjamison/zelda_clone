@@ -64,10 +64,7 @@ bool MoveSystem::run()
 		node->state->setDirection(StateComponent::Direction::LEFT);
 	}
 
-	cout << "before: " << totalMove.x << " " << totalMove.y << endl;
 	totalMove = totalMove.scale(node->move->speed);
-	cout << "after: " << totalMove.x << " " << totalMove.y << endl;
-
 	node->position->movePos(totalMove);
 
 	return true;
