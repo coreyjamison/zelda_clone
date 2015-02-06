@@ -121,6 +121,25 @@
 					"columns": 24
 				}
 			]
+		},
+		"background": {
+			"texture": "res/gradient_background.bmp",
+			"frameSize": {
+				"w": 1280,
+				"h": 960
+			},
+			"offset": {
+				"x": 0,
+				"y": 0
+			},
+			"states": [
+				{
+					"direction": "u",
+					"action": "idle",
+					"row": 1,
+					"columns": 1
+				}
+			]
 		}
 	}
 }

@@ -33,9 +33,10 @@ void PositionComponent::movePos(Vec2<int> move)
 	curPos += move;
 }
 
-RenderComponent::RenderComponent(Sprite* s)
+RenderComponent::RenderComponent(Sprite* s, RenderLayer l)
 :	sprite(s),
- 	frame(0)
+ 	frame(0),
+ 	layer(l)
 {}
 
 StateComponent::StateComponent(unsigned int s)

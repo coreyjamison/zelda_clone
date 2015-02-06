@@ -42,7 +42,7 @@ bool RenderSystem::run(double alpha) {
 				);
 
 		_window->queueRenderable(r,
-				RenderLayer::ENTITIES,
+				node->render->layer,
 				interpolated);
 	}
 	_window->render();

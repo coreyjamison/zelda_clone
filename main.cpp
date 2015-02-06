@@ -33,11 +33,12 @@ int main(int argc, char* args[])
 	GameWindow gw{"Test!", {640, 480}};
 
 	Sprite testSprite = sf.makeSprite(gw, "guy1");
+	Sprite bkgSprite = sf.makeSprite(gw, "background");
 
 	Entity e;
 
 	PositionComponent p{{100, 100}};
-	RenderComponent r{&testSprite};
+	RenderComponent r{&testSprite, RenderLayer::ENTITIES};
 	StateComponent s{StateComponent::Direction::UP|StateComponent::Action::MOVE};
 	MoveComponent m{2};
 
@@ -45,6 +46,18 @@ int main(int argc, char* args[])
 	e.addComponent(&r);
 	e.addComponent(&s);
 	e.addComponent(&m);
+
+	Entity bkg;
+
+	// TODO - maybe make multiple sprite types so our background doesn't need
+	// a direction and an action
+	PositionComponent p_bkg{{0, 0}};
+	RenderComponent r_bkg{&bkgSprite, RenderLayer::TERRAIN};
+	StateComponent s_bkg{StateComponent::Direction::UP|StateComponent::Action::IDLE};
+
+	bkg.addComponent(&p_bkg);
+	bkg.addComponent(&r_bkg);
+	bkg.addComponent(&s_bkg);
 
 	RenderSystem* render = new RenderSystem(&gw);
 	MoveSystem* move = new MoveSystem();
@@ -55,6 +68,7 @@ int main(int argc, char* args[])
 	ecs->addNodeListener<MoveNode>(move);
 	ecs->addNodeListener<MoveNode>(ucs);
 	ecs->addEntity(&e);
+	ecs->addEntity(&bkg);
 
 	gm->addFixedRunnable(im);
 	gm->addFixedRunnable(render);

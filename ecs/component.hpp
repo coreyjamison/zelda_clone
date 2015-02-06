@@ -12,6 +12,7 @@
 
 #include <data_containers/vec2.hpp>
 #include <graphics/sprite.hpp>
+#include <graphics/game_window.hpp>
 
 #include "node.hpp"
 
@@ -37,10 +38,11 @@ struct PositionComponent : public Component
 
 struct RenderComponent : public Component
 {
-	RenderComponent(Sprite* s);
+	RenderComponent(Sprite* s, RenderLayer l);
 
 	Sprite* sprite;
 	unsigned int frame;
+	RenderLayer layer;
 };
 
 struct StateComponent : public Component
