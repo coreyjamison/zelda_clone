@@ -24,11 +24,7 @@ private:
 using namespace std;
 
 MoveSystem::MoveSystem()
-:	_nodes(), _input(), _camera(nullptr)
-{}
-
-MoveSystem::MoveSystem(Camera* camera)
-:	_nodes(), _input(), _camera(camera)
+:	_nodes(), _input()
 {}
 
 bool MoveSystem::run()

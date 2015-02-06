@@ -21,7 +21,6 @@ class MoveSystem: public FixedRunnable, public NodeListener, public InputObserve
 {
 public:
 	MoveSystem();
-	MoveSystem(Camera* camera);
 
 	virtual bool run();
 	virtual void onNodeChange(Node* node);
@@ -30,7 +29,6 @@ public:
 private:
 	vector<MoveNode*> _nodes;
 	InputState _input;
-	Camera* _camera;
 };
 
 

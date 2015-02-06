@@ -33,7 +33,7 @@ int main(int argc, char* args[])
 
 	GameWindow gw{"Test!", {640, 480}};
 
-	Sprite testSprite = sf.makeSprite(gw, "slime");
+	Sprite testSprite = sf.makeSprite(gw, "guy1");
 	Sprite bkgSprite = sf.makeSprite(gw, "background");
 
 	Entity e;
@@ -63,7 +63,7 @@ int main(int argc, char* args[])
 	TrackingCamera tc{TrackingCameraNode::createFrom(&e), {640, 480}, {640, 480}};
 
 	RenderSystem* render = new RenderSystem(&gw, &tc);
-	MoveSystem* move = new MoveSystem(&tc);
+	MoveSystem* move = new MoveSystem();
 	EcsManager* ecs = new EcsManager();
 	UserCommandSystem* ucs = new UserCommandSystem();
 
