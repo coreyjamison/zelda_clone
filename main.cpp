@@ -17,6 +17,7 @@
 #include <ecs/entity.hpp>
 #include <ecs/ecs_manager.hpp>
 #include <systems/move_system.hpp>
+#include <systems/user_command_system.hpp>
 
 using namespace std;
 
@@ -48,24 +49,29 @@ int main(int argc, char* args[])
 	RenderSystem* render = new RenderSystem(&gw);
 	MoveSystem* move = new MoveSystem();
 	EcsManager* ecs = new EcsManager();
+	UserCommandSystem* ucs = new UserCommandSystem();
 
 	ecs->addNodeListener<RenderNode>(render);
 	ecs->addNodeListener<MoveNode>(move);
+	ecs->addNodeListener<MoveNode>(ucs);
 	ecs->addEntity(&e);
 
 	gm->addFixedRunnable(im);
 	gm->addFixedRunnable(render);
 	gm->addFixedRunnable(move);
+	gm->addFixedRunnable(ucs);
 
 	gm->addVariableRunnable(render);
 
 	im->addObserver(move);
+	im->addObserver(ucs);
 
 	gm->run();
 
 	delete render;
 	delete move;
 	delete ecs;
+	delete ucs;
 	delete gm;
 	delete im;
 

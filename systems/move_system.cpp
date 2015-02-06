@@ -25,6 +25,29 @@ using namespace std;
 
 bool MoveSystem::run()
 {
+	for(MoveNode* node : _nodes)
+	{
+		Vec2<int> goal = node->move->goalMove.scaleBack(node->move->speed);
+		node->position->movePos(goal);
+
+		if(goal.getDist() > 0)
+		{
+			node->state->setAction(StateComponent::Action::MOVE);
+		} else {
+			node->state->setAction(StateComponent::Action::IDLE);
+		}
+
+		if(goal.y < 0) {
+			node->state->setDirection(StateComponent::Direction::UP);
+		} else if(goal.y > 0) {
+			node->state->setDirection(StateComponent::Direction::DOWN);
+		} else if(goal.x > 0) {
+			node->state->setDirection(StateComponent::Direction::RIGHT);
+		} else if(goal.x < 0) {
+			node->state->setDirection(StateComponent::Direction::LEFT);
+		}
+	}/*
+
 	// temp stuff
 	if(_nodes.size() == 0) {
 		return true;
@@ -66,7 +89,7 @@ bool MoveSystem::run()
 
 	totalMove = totalMove.scale(node->move->speed);
 	node->position->movePos(totalMove);
-
+*/
 	return true;
 }
 

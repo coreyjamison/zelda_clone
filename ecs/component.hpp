@@ -73,6 +73,7 @@ struct MoveComponent : public Component
 	MoveComponent(int s);
 
 	int speed;
+	Vec2<int> goalMove;
 };
 
 

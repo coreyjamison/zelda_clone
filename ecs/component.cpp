@@ -53,5 +53,5 @@ void StateComponent::setDirection(Direction d)
 }
 
 MoveComponent::MoveComponent(int s)
-:	speed(s)
+:	speed(s), goalMove({0, 0})
 {}
