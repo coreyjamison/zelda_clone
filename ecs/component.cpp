@@ -56,3 +56,7 @@ void StateComponent::setDirection(Direction d)
 MoveComponent::MoveComponent(double s)
 :	speed(s), goalMove({0, 0})
 {}
+
+CollisionComponent::CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m)
+:	size(s), type(t), mask(m)
+{}

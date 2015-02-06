@@ -78,6 +78,21 @@ struct MoveComponent : public Component
 	Vec2<double> goalMove;
 };
 
+struct CollisionComponent : public Component
+{
+	CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m);
+
+	enum CollisionType
+	{
+		ENTITY = 0x1,
+		PROJECTILE = 0x2
+	};
+
+	Vec2<double> size; // for now, all colliders are rectangles
+	unsigned int type;
+	unsigned int mask;
+};
+
 
 
 #endif /* COMPONENT_HPP_ */

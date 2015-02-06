@@ -18,6 +18,7 @@
 #include <ecs/ecs_manager.hpp>
 #include <systems/move_system.hpp>
 #include <systems/user_command_system.hpp>
+#include <systems/collision_system.hpp>
 #include <graphics/tracking_camera.hpp>
 
 using namespace std;
@@ -33,20 +34,37 @@ int main(int argc, char* args[])
 
 	GameWindow gw{"Test!", {640, 480}};
 
-	Sprite testSprite = sf.makeSprite(gw, "guy1");
+	Sprite guySprite = sf.makeSprite(gw, "guy1");
+	Sprite slimeSprite = sf.makeSprite(gw, "slime");
 	Sprite bkgSprite = sf.makeSprite(gw, "background");
 
 	Entity e;
 
 	PositionComponent p{{100, 100}};
-	RenderComponent r{&testSprite, RenderLayer::ENTITIES};
-	StateComponent s{StateComponent::Direction::UP|StateComponent::Action::MOVE};
+	RenderComponent r{&guySprite, RenderLayer::ENTITIES};
+	StateComponent s{StateComponent::UP|StateComponent::MOVE};
 	MoveComponent m{2};
+	CollisionComponent c{{15, 15}, CollisionComponent::ENTITY, CollisionComponent::ENTITY};
 
 	e.addComponent(&p);
 	e.addComponent(&r);
 	e.addComponent(&s);
 	e.addComponent(&m);
+	e.addComponent(&c);
+
+	Entity slime;
+
+	PositionComponent ps{{400, 400}};
+	RenderComponent rs{&slimeSprite, RenderLayer::ENTITIES};
+	StateComponent ss{StateComponent::Direction::DOWN|StateComponent::Action::IDLE};
+	MoveComponent ms{2};
+	CollisionComponent cs{{10, 10}, CollisionComponent::ENTITY, 0};
+
+	slime.addComponent(&ps);
+	slime.addComponent(&rs);
+	slime.addComponent(&ss);
+	slime.addComponent(&ms);
+	slime.addComponent(&cs);
 
 	Entity bkg;
 
@@ -66,17 +84,21 @@ int main(int argc, char* args[])
 	MoveSystem* move = new MoveSystem();
 	EcsManager* ecs = new EcsManager();
 	UserCommandSystem* ucs = new UserCommandSystem();
+	CollisionSystem* col = new CollisionSystem();
 
 	ecs->addNodeListener<RenderNode>(render);
 	ecs->addNodeListener<MoveNode>(move);
 	ecs->addNodeListener<MoveNode>(ucs);
+	ecs->addNodeListener<CollisionNode>(col);
 	ecs->addEntity(&e);
+	ecs->addEntity(&slime);
 	ecs->addEntity(&bkg);
 
 	gm->addFixedRunnable(im);
 	gm->addFixedRunnable(render);
 	gm->addFixedRunnable(ucs);
 	gm->addFixedRunnable(move);
+	gm->addFixedRunnable(col);
 
 	gm->addVariableRunnable(render);
 
@@ -91,6 +113,7 @@ int main(int argc, char* args[])
 	delete ucs;
 	delete gm;
 	delete im;
+	delete col;
 
 	SdlUtils::quit();
 

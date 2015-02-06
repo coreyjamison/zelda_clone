@@ -52,6 +52,26 @@ MoveNode* MoveNode::createFrom(Entity* e) {
 	}
 }
 
+CollisionNode::CollisionNode(PositionComponent* p, CollisionComponent* c)
+:	position(p), collision(c)
+{}
+
+CollisionNode* CollisionNode::createFrom(Entity* e)
+{
+	PositionComponent* p = e->getComponent<PositionComponent>();
+	CollisionComponent* c = e->getComponent<CollisionComponent>();
+	if(p && c)
+	{
+		CollisionNode* node = new CollisionNode(p, c);
+		p->nodes.push_back(node);
+		return node;
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
 TrackingCameraNode::TrackingCameraNode(PositionComponent* p)
 :	position(p)
 {}

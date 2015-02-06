@@ -39,7 +39,6 @@ void EcsManager::checkNodes(Entity* e)
 	{
 		for(NodeListener* l : _nodeListeners[&typeid(RenderNode)])
 		{
-			cout << "Render Node!" << endl;
 			l->onNodeChange(r);
 		}
 	}
@@ -48,8 +47,15 @@ void EcsManager::checkNodes(Entity* e)
 	{
 		for(NodeListener* l : _nodeListeners[&typeid(MoveNode)])
 		{
-			cout << "Move Node!" << endl;
 			l->onNodeChange(m);
+		}
+	}
+	CollisionNode* c = CollisionNode::createFrom(e);
+	if(c)
+	{
+		for(NodeListener* l : _nodeListeners[&typeid(CollisionNode)])
+		{
+			l->onNodeChange(c);
 		}
 	}
 }

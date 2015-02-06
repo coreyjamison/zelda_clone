@@ -15,6 +15,7 @@ class PositionComponent;
 class RenderComponent;
 class StateComponent;
 class MoveComponent;
+class CollisionComponent;
 
 class Entity;
 
@@ -48,6 +49,17 @@ struct MoveNode : public Node
 	static MoveNode* createFrom(Entity* e);
 };
 
+struct CollisionNode : public Node
+{
+	CollisionNode(PositionComponent* p, CollisionComponent* c);
+
+	PositionComponent* position;
+	CollisionComponent* collision;
+
+	static CollisionNode* createFrom(Entity* e);
+};
+
+/* Static Nodes -> not handled by ECS Manager */
 struct TrackingCameraNode : public Node
 {
 	TrackingCameraNode(PositionComponent* p);

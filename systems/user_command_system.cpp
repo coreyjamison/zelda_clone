@@ -54,6 +54,8 @@ void UserCommandSystem::notify(InputState state)
 
 void UserCommandSystem::onNodeChange(Node* node)
 {
+	if(_playerNode)
+		return;
 	MoveNode* moveNode = static_cast<MoveNode*>(node);
 	if(moveNode)
 	{
