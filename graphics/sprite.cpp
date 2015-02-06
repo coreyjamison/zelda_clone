@@ -10,21 +10,19 @@
 #include "renderable_texture.hpp"
 
 SpriteState::SpriteState()
-:	frames{},
- 	offset{0, 0}
+:	frames{}
 {}
 
-SpriteState::SpriteState(vector<SDL_Rect> f, Vec2<int> o)
-:	frames(f),
- 	offset(o)
+SpriteState::SpriteState(vector<SDL_Rect> f)
+:	frames(f)
 {}
 
 Sprite::Sprite()
-:	_texture{}
+:	_texture{}, _offset{}
 {}
 
-Sprite::Sprite(SdlTexture& texture)
-:	_texture{texture}
+Sprite::Sprite(SdlTexture& texture, Vec2<int> offset)
+:	_texture{texture}, _offset{offset}
 {}
 
 void Sprite::setTexture(SdlTexture& texture)
@@ -32,10 +30,15 @@ void Sprite::setTexture(SdlTexture& texture)
 	_texture = texture;
 }
 
+void Sprite::setOffset(Vec2<int> offset)
+{
+	_offset = offset;
+}
+
 Renderable* Sprite::getRenderable(unsigned int state, unsigned int frame)
 {
 	frame = validateFrame(state, frame);
-	RenderableTexture* rt = new RenderableTexture(_texture, _states[state].frames[frame], _states[state].offset);
+	RenderableTexture* rt = new RenderableTexture(_texture, _states[state].frames[frame], _offset);
 	return rt;
 }
 

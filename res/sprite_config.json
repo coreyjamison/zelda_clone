@@ -6,6 +6,10 @@
 				"w": 48,
 				"h": 64
 			},
+			"offset": {
+				"x": 24,
+				"y": 52
+			},
 			"states": [
 				{
 					"direction": "l",
@@ -62,6 +66,10 @@
 			"frameSize": {
 				"w": 24,
 				"h": 32
+			},
+			"offset": {
+				"x": 12,
+				"y": 26
 			},
 			"states": [
 				{

@@ -20,19 +20,19 @@ using namespace std;
 struct SpriteState
 {
 	SpriteState();
-	SpriteState(vector<SDL_Rect> f, Vec2<int> o);
+	SpriteState(vector<SDL_Rect> f);
 
 	vector<SDL_Rect> frames;
-	Vec2<int> offset;
 };
 
 class Sprite
 {
 public:
 	Sprite();
-	Sprite(SdlTexture& texture);
+	Sprite(SdlTexture& texture, Vec2<int> offset);
 
 	void setTexture(SdlTexture& texture);
+	void setOffset(Vec2<int> offset);
 
 	Renderable* getRenderable(unsigned int state, unsigned int frame);
 	unsigned int nextFrame(unsigned int state, unsigned int frame);
@@ -43,6 +43,7 @@ public:
 private:
 	SdlTexture _texture;
 	map<unsigned int, SpriteState> _states;
+	Vec2<int> _offset;
 };
 
 

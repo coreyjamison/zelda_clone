@@ -57,7 +57,6 @@ Sprite SpriteFactory::makeDemoSprite( const GameWindow& window )
 		{ 0, 256, 24, 32}, { 24, 256, 24, 32}, { 48, 256, 24, 32}, { 72, 256, 24, 32},
 		{ 96, 256, 24, 32}, { 120, 256, 24, 32}
 	};
-	moveUp.offset = {12, 26};
 
 	SpriteState moveRight;
 	moveRight.frames = {
@@ -70,7 +69,6 @@ Sprite SpriteFactory::makeDemoSprite( const GameWindow& window )
 		{ 0, 288, 24, 32}, { 24, 288, 24, 32}, { 48, 288, 24, 32}, { 72, 288, 24, 32},
 		{ 96, 288, 24, 32}, { 120, 288, 24, 32}
 	};
-	moveRight.offset = {12, 26};
 
 	SpriteState moveDown;
 	moveDown.frames =
@@ -84,7 +82,6 @@ Sprite SpriteFactory::makeDemoSprite( const GameWindow& window )
 		{ 0, 320, 24, 32}, { 24, 320, 24, 32}, { 48, 320, 24, 32}, { 72, 320, 24, 32},
 		{ 96, 320, 24, 32}, { 120, 320, 24, 32}
 	};
-	moveDown.offset = {12, 26};
 
 	SpriteState moveLeft;
 	moveLeft.frames = {
@@ -97,25 +94,20 @@ Sprite SpriteFactory::makeDemoSprite( const GameWindow& window )
 		{ 0, 352, 24, 32}, { 24, 352, 24, 32}, { 48, 352, 24, 32}, { 72, 352, 24, 32},
 		{ 96, 352, 24, 32}, { 120, 352, 24, 32}
 	};
-	moveLeft.offset = {12, 26};
 
 	SpriteState idleUp;
 	idleUp.frames = { { 0, 0, 24, 32} };
-	idleUp.offset = {12, 26};
 
 	SpriteState idleRight;
 	idleRight.frames = { { 0, 32, 24, 32} };
-	idleRight.offset = {12, 26};
 
 	SpriteState idleDown;
 	idleDown.frames = { { 0, 64, 24, 32} };
-	idleDown.offset = {12, 26};
 
 	SpriteState idleLeft;
 	idleLeft.frames = { { 0, 96, 24, 32} };
-	idleLeft.offset = {12, 26};
 
-	Sprite testSprite{ texture };
+	Sprite testSprite{ texture, {12, 26} };
 
 	testSprite.addState(StateComponent::Direction::LEFT|StateComponent::Action::MOVE, moveLeft);
 	testSprite.addState(StateComponent::Direction::RIGHT|StateComponent::Action::MOVE, moveRight);
@@ -159,6 +151,7 @@ Sprite SpriteFactory::makeSprite(const GameWindow& window, string name)
 				const Value& sprite = sprites[name.c_str()];
 				if( sprite.HasMember("texture") &&
 					sprite.HasMember("frameSize") &&
+					sprite.HasMember("offset") &&
 					sprite.HasMember("states") )
 				{
 					string imageFile = sprite["texture"].GetString();
@@ -169,6 +162,12 @@ Sprite SpriteFactory::makeSprite(const GameWindow& window, string name)
 							fs["w"].GetInt(),
 							fs["h"].GetInt()
 					};
+					const Value& os = sprite["offset"];
+					Vec2<int> offset = {
+							os["x"].GetInt(),
+							os["y"].GetInt()
+					};
+					spr.setOffset(offset);
 					Vec2<int> textureSize = texture.getDimensions();
 					vector<vector<SDL_Rect>> frames;
 					for(int y = 0; y < textureSize.y; y += frameSize.y)
@@ -235,9 +234,7 @@ Sprite SpriteFactory::makeSprite(const GameWindow& window, string name)
 								spriteFrames.push_back(frames[row][i]);
 							}
 
-							Vec2<int> offset = {12, 26}; // TODO: Decide where offset should go (Sprite | SpriteState) so we can load it from the json file.
-
-							SpriteState s{spriteFrames, offset};
+							SpriteState s{spriteFrames};
 
 							spr.addState(state, s);
 						}

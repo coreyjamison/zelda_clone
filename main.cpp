@@ -58,8 +58,8 @@ int main(int argc, char* args[])
 
 	gm->addFixedRunnable(im);
 	gm->addFixedRunnable(render);
-	gm->addFixedRunnable(move);
 	gm->addFixedRunnable(ucs);
+	gm->addFixedRunnable(move);
 
 	gm->addVariableRunnable(render);
 
