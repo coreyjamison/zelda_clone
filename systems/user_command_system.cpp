@@ -25,7 +25,7 @@ bool UserCommandSystem::run()
 {
 	if(_playerNode)
 	{
-		Vec2<int> totalMove = {0, 0};
+		Vec2<double> totalMove = {0, 0};
 
 		if(_input.held(ButtonType::W)) {
 			totalMove += {0, -1};

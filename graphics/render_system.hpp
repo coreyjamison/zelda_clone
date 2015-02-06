@@ -15,11 +15,12 @@
 #include <ecs/node.hpp>
 
 #include "game_window.hpp"
+#include "camera.hpp"
 
 class RenderSystem : public VariableRunnable, public FixedRunnable, public NodeListener
 {
 public:
-	RenderSystem(GameWindow* window);
+	RenderSystem(GameWindow* window, Camera* camera);
 
 	virtual bool run();
 	virtual bool run(double alpha);
@@ -32,6 +33,7 @@ private:
 	GameWindow* _window;
 	vector<RenderNode*> _nodes;
 	int	_frame = 0;
+	Camera* _camera;
 };
 
 

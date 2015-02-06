@@ -48,6 +48,15 @@ struct MoveNode : public Node
 	static MoveNode* createFrom(Entity* e);
 };
 
+struct TrackingCameraNode : public Node
+{
+	TrackingCameraNode(PositionComponent* p);
+
+	PositionComponent* position;
+
+	static TrackingCameraNode* createFrom(Entity* e);
+};
+
 
 
 #endif /* NODE_HPP_ */

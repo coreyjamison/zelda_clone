@@ -18,6 +18,7 @@
 #include <ecs/ecs_manager.hpp>
 #include <systems/move_system.hpp>
 #include <systems/user_command_system.hpp>
+#include <graphics/tracking_camera.hpp>
 
 using namespace std;
 
@@ -32,7 +33,7 @@ int main(int argc, char* args[])
 
 	GameWindow gw{"Test!", {640, 480}};
 
-	Sprite testSprite = sf.makeSprite(gw, "guy1");
+	Sprite testSprite = sf.makeSprite(gw, "slime");
 	Sprite bkgSprite = sf.makeSprite(gw, "background");
 
 	Entity e;
@@ -59,8 +60,10 @@ int main(int argc, char* args[])
 	bkg.addComponent(&r_bkg);
 	bkg.addComponent(&s_bkg);
 
-	RenderSystem* render = new RenderSystem(&gw);
-	MoveSystem* move = new MoveSystem();
+	TrackingCamera tc{TrackingCameraNode::createFrom(&e), {640, 480}, {640, 480}};
+
+	RenderSystem* render = new RenderSystem(&gw, &tc);
+	MoveSystem* move = new MoveSystem(&tc);
 	EcsManager* ecs = new EcsManager();
 	UserCommandSystem* ucs = new UserCommandSystem();
 

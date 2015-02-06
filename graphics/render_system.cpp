@@ -11,8 +11,8 @@
 
 using namespace std;
 
-RenderSystem::RenderSystem(GameWindow* window)
-:	_window( window )
+RenderSystem::RenderSystem(GameWindow* window, Camera* camera)
+:	_window( window ), _camera( camera )
 {}
 
 bool RenderSystem::run() {
@@ -33,8 +33,10 @@ bool RenderSystem::run(double alpha) {
 		return true;
 	}
 	for(RenderNode* node : _nodes) {
-		// TODO: Actually interpolate
-		Vec2<int> interpolated = node->position->curPos; //.average(node->position->lastPos); // interpolate
+
+		Vec2<int> interpolated = _camera->getScreenPosition(
+				node->position->curPos.average(node->position->lastPos)
+		);
 
 		Renderable* r = node->render->sprite->getRenderable(
 				node->state->state,

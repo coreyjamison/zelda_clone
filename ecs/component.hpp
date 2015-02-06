@@ -27,13 +27,13 @@ struct Component
 
 struct PositionComponent : public Component
 {
-	PositionComponent(Vec2<int> pos);
+	PositionComponent(Vec2<double> pos);
 
-	void setPos(Vec2<int> newPos);
-	void movePos(Vec2<int> move);
+	void setPos(Vec2<double> newPos);
+	void movePos(Vec2<double> move);
 
-	Vec2<int> curPos;
-	Vec2<int> lastPos;
+	Vec2<double> curPos;
+	Vec2<double> lastPos;
 };
 
 struct RenderComponent : public Component
@@ -72,10 +72,10 @@ struct StateComponent : public Component
 
 struct MoveComponent : public Component
 {
-	MoveComponent(int s);
+	MoveComponent(double s);
 
-	int speed;
-	Vec2<int> goalMove;
+	double speed;
+	Vec2<double> goalMove;
 };
 
 

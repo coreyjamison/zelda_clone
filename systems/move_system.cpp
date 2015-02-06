@@ -23,11 +23,19 @@ private:
 
 using namespace std;
 
+MoveSystem::MoveSystem()
+:	_nodes(), _input(), _camera(nullptr)
+{}
+
+MoveSystem::MoveSystem(Camera* camera)
+:	_nodes(), _input(), _camera(camera)
+{}
+
 bool MoveSystem::run()
 {
 	for(MoveNode* node : _nodes)
 	{
-		Vec2<int> goal = node->move->goalMove.scaleBack(node->move->speed);
+		Vec2<double> goal = node->move->goalMove.scaleBack(node->move->speed);
 		node->position->movePos(goal);
 
 		if(goal.getDist() > 0)

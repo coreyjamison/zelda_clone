@@ -51,3 +51,22 @@ MoveNode* MoveNode::createFrom(Entity* e) {
 		return nullptr;
 	}
 }
+
+TrackingCameraNode::TrackingCameraNode(PositionComponent* p)
+:	position(p)
+{}
+
+TrackingCameraNode* TrackingCameraNode::createFrom(Entity* e)
+{
+	PositionComponent* p = e->getComponent<PositionComponent>();
+	if(p)
+	{
+		TrackingCameraNode* node = new TrackingCameraNode(p);
+		p->nodes.push_back(node);
+		return node;
+	}
+	else
+	{
+		return nullptr;
+	}
+}

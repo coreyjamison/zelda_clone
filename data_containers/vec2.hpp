@@ -109,6 +109,18 @@ public:
 		return *this;
 	}
 
+	Vec2 operator/( const num_type divisor )
+	{
+		return Vec2( x / divisor, y / divisor );
+	}
+
+	Vec2 operator/=( const num_type divisor )
+	{
+		x /= divisor;
+		y /= divisor;
+		return *this;
+	}
+
 	bool operator==( const Vec2& other )
 	{
 		return ( x == other.x ) && ( y == other.y );

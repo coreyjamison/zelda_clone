@@ -17,17 +17,17 @@ Component::~Component()
 	}
 }
 
-PositionComponent::PositionComponent(Vec2<int> pos)
+PositionComponent::PositionComponent(Vec2<double> pos)
 :	curPos(pos), lastPos(pos)
 {}
 
-void PositionComponent::setPos(Vec2<int> newPos)
+void PositionComponent::setPos(Vec2<double> newPos)
 {
 	lastPos = curPos;
 	curPos = newPos;
 }
 
-void PositionComponent::movePos(Vec2<int> move)
+void PositionComponent::movePos(Vec2<double> move)
 {
 	lastPos = curPos;
 	curPos += move;
@@ -53,6 +53,6 @@ void StateComponent::setDirection(Direction d)
 	state = (state & 0xFC) | d;
 }
 
-MoveComponent::MoveComponent(int s)
+MoveComponent::MoveComponent(double s)
 :	speed(s), goalMove({0, 0})
 {}
