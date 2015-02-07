@@ -38,11 +38,13 @@ int main(int argc, char* args[])
 	Sprite slimeSprite = sf.makeSprite(gw, "slime");
 	Sprite bkgSprite = sf.makeSprite(gw, "background");
 
-	Entity e;
+	unsigned long nextId = 1;
+
+	Entity e{nextId++};
 
 	PositionComponent p{{100, 100}};
 	RenderComponent r{&guySprite, RenderLayer::ENTITIES};
-	StateComponent s{StateComponent::UP|StateComponent::MOVE};
+	StateComponent s{StateComponent::Direction::UP|StateComponent::Action::MOVE};
 	MoveComponent m{2};
 	CollisionComponent c{{15, 15}, CollisionComponent::ENTITY, CollisionComponent::ENTITY};
 
@@ -52,7 +54,7 @@ int main(int argc, char* args[])
 	e.addComponent(&m);
 	e.addComponent(&c);
 
-	Entity slime;
+	Entity slime{nextId++};
 
 	PositionComponent ps{{400, 400}};
 	RenderComponent rs{&slimeSprite, RenderLayer::ENTITIES};
@@ -66,7 +68,7 @@ int main(int argc, char* args[])
 	slime.addComponent(&ms);
 	slime.addComponent(&cs);
 
-	Entity bkg;
+	Entity bkg{nextId++};
 
 	// TODO - maybe make multiple sprite types so our background doesn't need
 	// a direction and an action

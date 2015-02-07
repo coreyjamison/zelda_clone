@@ -7,8 +7,13 @@
 
 #include "entity.hpp"
 
+Entity::Entity(unsigned long id)
+:	_id(id)
+{}
+
 void Entity::addComponent(Component* c)
 {
+	c->parentId = _id;
 	_components[&typeid(*c)] = c;
 }
 

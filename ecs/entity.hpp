@@ -19,6 +19,10 @@ class Component;
 class Entity
 {
 public:
+	Entity(unsigned long id);
+
+	inline unsigned long getId() {return _id;}
+
 	void addComponent(Component* c);
 
 	template <typename T>
@@ -43,6 +47,7 @@ public:
 	bool hasComponent(const type_info* componentType);
 
 private:
+	unsigned long _id;
 	unordered_map<const type_info*, Component*> _components;
 };
 

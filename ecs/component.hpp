@@ -22,6 +22,7 @@ struct Component
 {
 	virtual ~Component();
 
+	unsigned long parentId = -1;
 	vector<Node*> nodes;
 };
 

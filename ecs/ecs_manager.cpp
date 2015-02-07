@@ -28,7 +28,7 @@ using namespace std;
 
 void EcsManager::addEntity(Entity* e)
 {
-	_entities.push_back(e);
+	_entities[e->getId()] = e;
 	checkNodes(e);
 }
 

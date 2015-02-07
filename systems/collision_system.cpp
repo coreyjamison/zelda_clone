@@ -12,15 +12,13 @@
 using namespace std;
 bool CollisionSystem::run()
 {
-	// TODO: fix loop
-	// Right now, each collision is detected twice:
-	// if A and B collide:
-	// it's detected with node1 = A, node2 = B AND
-	// node1 = B, node2 = A
 	for(CollisionNode* node1 : _nodes)
 	{
 		for(CollisionNode* node2 : _nodes) {
-			if(node1 == node2)
+
+			// This ensures each collision is only detected once,
+			// and an object can't collide with itself
+			if(node1 >= node2)
 				continue;
 
 			//TODO: remove invalid nodes

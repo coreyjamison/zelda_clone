@@ -37,7 +37,7 @@ public:
 	void checkNodes(Entity* e);
 
 private:
-	vector<Entity*> _entities;
+	unordered_map<unsigned long, Entity*> _entities;
 	unordered_map<const type_info*, vector<NodeListener*>> _nodeListeners;
 	unsigned int _nextId;
 };
