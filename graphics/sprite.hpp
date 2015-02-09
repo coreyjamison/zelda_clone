@@ -30,10 +30,11 @@ class Sprite
 {
 public:
 	Sprite();
-	Sprite(SdlTexture& texture, Vec2<int> offset);
+	Sprite(SdlTexture& texture, Vec2<int> offset, double scale);
 
 	void setTexture(SdlTexture& texture);
 	void setOffset(Vec2<int> offset);
+	void setScale(double scale);
 
 	Renderable* getRenderable(unsigned int state, unsigned int frame);
 	unsigned int nextFrame(unsigned int state, unsigned int frame);
@@ -45,6 +46,7 @@ private:
 	SdlTexture _texture;
 	map<unsigned int, SpriteState> _states;
 	Vec2<int> _offset;
+	double _scale;
 };
 
 

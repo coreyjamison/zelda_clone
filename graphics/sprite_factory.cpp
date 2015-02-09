@@ -107,7 +107,7 @@ Sprite SpriteFactory::makeDemoSprite( const GameWindow& window )
 	SpriteState idleLeft;
 	idleLeft.frames = { { 0, 96, 24, 32} };
 
-	Sprite testSprite{ texture, {12, 26} };
+	Sprite testSprite{ texture, {12, 26}, 1 };
 
 	testSprite.addState(StateComponent::Direction::LEFT|StateComponent::Action::MOVE, moveLeft);
 	testSprite.addState(StateComponent::Direction::RIGHT|StateComponent::Action::MOVE, moveRight);
@@ -152,6 +152,7 @@ Sprite SpriteFactory::makeSprite(const GameWindow& window, string name)
 				if( sprite.HasMember("texture") &&
 					sprite.HasMember("frameSize") &&
 					sprite.HasMember("offset") &&
+					sprite.HasMember("scale") &&
 					sprite.HasMember("states") )
 				{
 					string imageFile = sprite["texture"].GetString();
@@ -167,7 +168,10 @@ Sprite SpriteFactory::makeSprite(const GameWindow& window, string name)
 							os["x"].GetInt(),
 							os["y"].GetInt()
 					};
+					const Value& scaleValue = sprite["scale"];
+					double scale = scaleValue.GetDouble();
 					spr.setOffset(offset);
+					spr.setScale(scale);
 					Vec2<int> textureSize = texture.getDimensions();
 					vector<vector<SDL_Rect>> frames;
 					for(int y = 0; y < textureSize.y; y += frameSize.y)

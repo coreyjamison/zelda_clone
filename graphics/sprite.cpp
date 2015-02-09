@@ -21,11 +21,11 @@ SpriteState::SpriteState(vector<SDL_Rect> f, bool flip)
 {}
 
 Sprite::Sprite()
-:	_texture{}, _offset{}
+:	_texture{}, _offset{}, _scale{1}
 {}
 
-Sprite::Sprite(SdlTexture& texture, Vec2<int> offset)
-:	_texture{texture}, _offset{offset}
+Sprite::Sprite(SdlTexture& texture, Vec2<int> offset, double scale)
+:	_texture{texture}, _offset{offset}, _scale{scale}
 {}
 
 void Sprite::setTexture(SdlTexture& texture)
@@ -36,6 +36,11 @@ void Sprite::setTexture(SdlTexture& texture)
 void Sprite::setOffset(Vec2<int> offset)
 {
 	_offset = offset;
+}
+
+void Sprite::setScale(double scale)
+{
+	_scale = scale;
 }
 
 Renderable* Sprite::getRenderable(unsigned int state, unsigned int frame)
@@ -51,7 +56,7 @@ Renderable* Sprite::getRenderable(unsigned int state, unsigned int frame)
 		//cout << "Not Flipped!" << endl;
 	}
 
-	RenderableTexture* rt = new RenderableTexture(_texture, _states[state].frames[frame], _offset, _states[state].flipped);
+	RenderableTexture* rt = new RenderableTexture(_texture, _states[state].frames[frame], _offset, _scale, _states[state].flipped);
 	return rt;
 }
 

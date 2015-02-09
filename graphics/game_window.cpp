@@ -41,6 +41,7 @@ void GameWindow::render()
 			Renderable* renderable = renderData.second;
 
 			renderable->render( _renderer, position );
+			delete renderable;
 		}
 	}
 	_renderables.clear();

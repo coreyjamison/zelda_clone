@@ -10,10 +10,11 @@
 #include <iostream>
 using namespace std;
 
-RenderableTexture::RenderableTexture(const SdlTexture& texture, SDL_Rect source, Vec2<int> offset, bool flipped)
+RenderableTexture::RenderableTexture(const SdlTexture& texture, SDL_Rect source, Vec2<int> offset, double scale, bool flipped)
 :	_texture(texture),
  	_source(source),
  	_offset(offset),
+ 	_scale(scale),
  	_flipped(flipped)
 {}
 
@@ -22,8 +23,8 @@ void RenderableTexture::render(SdlRenderer* renderer, Vec2<int> renderPos)
 	SDL_Rect dest{
 		renderPos.x - _offset.x,
 		renderPos.y - _offset.y,
-		_source.w,
-		_source.h
+		static_cast<int>(_source.w * _scale),
+		static_cast<int>(_source.h * _scale)
 	};
 
 	if(_flipped)

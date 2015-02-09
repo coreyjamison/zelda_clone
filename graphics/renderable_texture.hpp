@@ -11,7 +11,7 @@
 class RenderableTexture : public Renderable
 {
 public:
-	RenderableTexture(const SdlTexture& texture, SDL_Rect source, Vec2<int> offset, bool flipped);
+	RenderableTexture(const SdlTexture& texture, SDL_Rect source, Vec2<int> offset, double scale, bool flipped);
 
 	virtual void render( SdlRenderer* renderer, Vec2<int> renderPos );
 
@@ -19,6 +19,7 @@ private:
 	const SdlTexture& _texture;
 	SDL_Rect _source;
 	Vec2<int> _offset;
+	double _scale;
 	bool _flipped;
 };
 

@@ -10,6 +10,7 @@
 				"x": 24,
 				"y": 52
 			},
+			"scale": 1,
 			"states": [
 				{
 					"direction": "l",
@@ -76,9 +77,10 @@
 				"h": 32
 			},
 			"offset": {
-				"x": 12,
-				"y": 26
+				"x": 24,
+				"y": 52
 			},
+			"scale": 2,
 			"states": [
 				{
 					"direction": "l",
@@ -148,6 +150,7 @@
 				"x": 0,
 				"y": 0
 			},
+			"scale": 1,
 			"states": [
 				{
 					"direction": "u",
