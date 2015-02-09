@@ -9,12 +9,15 @@
 #include "sprite.hpp"
 #include "renderable_texture.hpp"
 
+#include <iostream>
+using namespace std;
+
 SpriteState::SpriteState()
-:	frames{}
+:	frames{}, flipped{false}
 {}
 
-SpriteState::SpriteState(vector<SDL_Rect> f)
-:	frames(f)
+SpriteState::SpriteState(vector<SDL_Rect> f, bool flip)
+:	frames(f), flipped{flip}
 {}
 
 Sprite::Sprite()
@@ -38,7 +41,17 @@ void Sprite::setOffset(Vec2<int> offset)
 Renderable* Sprite::getRenderable(unsigned int state, unsigned int frame)
 {
 	frame = validateFrame(state, frame);
-	RenderableTexture* rt = new RenderableTexture(_texture, _states[state].frames[frame], _offset);
+
+	if(_states[state].flipped)
+	{
+		//cout << "Flipped!" << endl;
+	}
+	else
+	{
+		//cout << "Not Flipped!" << endl;
+	}
+
+	RenderableTexture* rt = new RenderableTexture(_texture, _states[state].frames[frame], _offset, _states[state].flipped);
 	return rt;
 }
 

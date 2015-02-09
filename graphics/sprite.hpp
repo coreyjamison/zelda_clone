@@ -20,9 +20,10 @@ using namespace std;
 struct SpriteState
 {
 	SpriteState();
-	SpriteState(vector<SDL_Rect> f);
+	SpriteState(vector<SDL_Rect> f, bool flip);
 
 	vector<SDL_Rect> frames;
+	bool flipped;
 };
 
 class Sprite

@@ -7,10 +7,14 @@
 
 #include "renderable_texture.hpp"
 
-RenderableTexture::RenderableTexture(const SdlTexture& texture, SDL_Rect source, Vec2<int> offset)
+#include <iostream>
+using namespace std;
+
+RenderableTexture::RenderableTexture(const SdlTexture& texture, SDL_Rect source, Vec2<int> offset, bool flipped)
 :	_texture(texture),
  	_source(source),
- 	_offset(offset)
+ 	_offset(offset),
+ 	_flipped(flipped)
 {}
 
 void RenderableTexture::render(SdlRenderer* renderer, Vec2<int> renderPos)
@@ -22,5 +26,13 @@ void RenderableTexture::render(SdlRenderer* renderer, Vec2<int> renderPos)
 		_source.h
 	};
 
-	renderer->renderCopy(_texture, _source, dest);
+	if(_flipped)
+	{
+		//cout << "Flipped!" << endl;
+		renderer->renderCopyFlipped(_texture, _source, dest, true);
+	}
+	else
+	{
+		renderer->renderCopy(_texture, _source, dest);
+	}
 }

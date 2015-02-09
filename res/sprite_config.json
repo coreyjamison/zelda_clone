@@ -1,7 +1,7 @@
 {
 	"sprites": {
 		"guy1": {
-			"texture": "res/guy1.bmp",
+			"texture": "res/guy1_2.bmp",
 			"frameSize": {
 				"w": 48,
 				"h": 64
@@ -14,50 +14,58 @@
 				{
 					"direction": "l",
 					"action": "idle",
-					"row": 4,
-					"columns": 1
+					"row": 3,
+					"columns": 1,
+					"flipped": true
 				},
 				{
 					"direction": "r",
 					"action": "idle",
 					"row": 3,
-					"columns": 1
+					"columns": 1,
+					"flipped": false
 				},
 				{
 					"direction": "u",
 					"action": "idle",
 					"row": 2,
-					"columns": 1
+					"columns": 1,
+					"flipped": false
 				},
 				{
 					"direction": "d",
 					"action": "idle",
 					"row": 1,
-					"columns": 1
+					"columns": 1,
+					"flipped": false
 				},
 				{
 					"direction": "l",
 					"action": "move",
-					"row": 4,
-					"columns": 16
+					"row": 3,
+					"columns": 16,
+					"flipped": true
 				},
 				{
 					"direction": "r",
 					"action": "move",
 					"row": 3,
-					"columns": 16
+					"columns": 16,
+					"flipped": false
 				},
 				{
 					"direction": "u",
 					"action": "move",
 					"row": 2,
-					"columns": 16
+					"columns": 16,
+					"flipped": false
 				},
 				{
 					"direction": "d",
 					"action": "move",
 					"row": 1,
-					"columns": 16
+					"columns": 16,
+					"flipped": false
 				}
 			]
 		},
@@ -75,50 +83,58 @@
 				{
 					"direction": "l",
 					"action": "idle",
-					"row": 4,
-					"columns": 1
+					"row": 3,
+					"columns": 1,
+					"flipped": true
 				},
 				{
 					"direction": "r",
 					"action": "idle",
 					"row": 3,
-					"columns": 1
+					"columns": 1,
+					"flipped": false
 				},
 				{
 					"direction": "u",
 					"action": "idle",
 					"row": 2,
-					"columns": 1
+					"columns": 1,
+					"flipped": false
 				},
 				{
 					"direction": "d",
 					"action": "idle",
 					"row": 1,
-					"columns": 1
+					"columns": 1,
+					"flipped": false
 				},
 				{
 					"direction": "l",
 					"action": "move",
-					"row": 4,
-					"columns": 24
+					"row": 3,
+					"columns": 24,
+					"flipped": true
 				},
 				{
 					"direction": "r",
 					"action": "move",
 					"row": 3,
-					"columns": 24
+					"columns": 24,
+					"flipped": false
 				},
 				{
 					"direction": "u",
 					"action": "move",
 					"row": 2,
-					"columns": 24
+					"columns": 24,
+					"flipped": false
 				},
 				{
 					"direction": "d",
 					"action": "move",
 					"row": 1,
-					"columns": 24
+					"columns": 24,
+					"flipped": false
 				}
 			]
 		},
@@ -137,7 +153,8 @@
 					"direction": "u",
 					"action": "idle",
 					"row": 1,
-					"columns": 1
+					"columns": 1,
+					"flipped": false
 				}
 			]
 		}

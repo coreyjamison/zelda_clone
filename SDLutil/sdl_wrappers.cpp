@@ -57,6 +57,12 @@ void SdlRenderer::renderCopy( const SdlTexture& texture, SDL_Rect source, SDL_Re
 	SDL_RenderCopy( renderer, texture.texture/*->ptr*/, &source, &dest );
 }
 
+
+void SdlRenderer::renderCopyFlipped( const SdlTexture& texture, SDL_Rect source, SDL_Rect dest, bool horizontal )
+{
+	SDL_RenderCopyEx( renderer, texture.texture, &source, &dest, 0, NULL, horizontal ? SDL_FLIP_HORIZONTAL : SDL_FLIP_VERTICAL );
+}
+
 void SdlRenderer::renderDrawRect( SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a )
 {
 	SDL_SetRenderDrawColor( renderer, r, g, b, a );

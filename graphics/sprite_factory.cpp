@@ -133,7 +133,7 @@ Sprite SpriteFactory::makeSprite(const GameWindow& window, string name)
 	Document document;
 	char buffer[content.length()];
 	sprintf(buffer, "%s", content.c_str());
-	cout << buffer << endl;
+	//cout << buffer << endl;
 	if(document.ParseInsitu(buffer).HasParseError())
 	{
 		cout << "Error reading json file!" << endl;
@@ -196,14 +196,17 @@ Sprite SpriteFactory::makeSprite(const GameWindow& window, string name)
 					{
 						const Value& state = *itr;
 						if( state.HasMember("direction") &&
-							state.HasMember("action"),
-							state.HasMember("row"),
-							state.HasMember("columns") )
+							state.HasMember("action") &&
+							state.HasMember("row") &&
+							state.HasMember("columns") &&
+							state.HasMember("flipped") )
 						{
-							cout << "state " << state["direction"].GetString() << " " << state["action"].GetString() << " Good!" << endl;
+							//cout << "state " << state["direction"].GetString() << " " << state["action"].GetString() << " Good!" << endl;
 							int row = state["row"].GetInt() - 1; // to go from 1-indexed to 0-indexed
 							int columns = state["columns"].GetInt();
-							cout << "row: " << row << " columns: " << columns << endl;
+							bool flipped = state["flipped"].IsTrue();
+
+							//cout << "row: " << row << " columns: " << columns << endl;
 							string action = state["action"].GetString();
 							string direction = state["direction"].GetString();
 							unsigned int state = 0;
@@ -228,13 +231,23 @@ Sprite SpriteFactory::makeSprite(const GameWindow& window, string name)
 							vector<SDL_Rect> spriteFrames;
 							for(int i = 0; i < columns; i++) {
 								SDL_Rect f = frames[row][i];
-								cout << "Adding frame: " << endl
-										<< "x: " << f.x << " y: " << f.y << " w: " << f.w << " h: " << f.h << endl
-										<< "to state: " << state << endl;
+								//cout << "Adding frame: " << endl
+								//		<< "x: " << f.x << " y: " << f.y << " w: " << f.w << " h: " << f.h << endl
+								//		<< "to state: " << state << endl;
 								spriteFrames.push_back(frames[row][i]);
 							}
 
-							SpriteState s{spriteFrames};
+
+
+							/*if(flipped)
+							{
+								cout << "flipped!" << endl;
+							}
+							else
+							{
+								cout << "not flipped!" << endl;
+							}*/
+							SpriteState s{spriteFrames, flipped};
 
 							spr.addState(state, s);
 						}
