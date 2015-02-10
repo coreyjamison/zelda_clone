@@ -37,6 +37,7 @@ struct PositionComponent : public Component
 	Vec2<double> lastPos;
 };
 
+
 struct RenderComponent : public Component
 {
 	RenderComponent(Sprite* s, RenderLayer l);
@@ -81,7 +82,7 @@ struct MoveComponent : public Component
 
 struct CollisionComponent : public Component
 {
-	CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m);
+	CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m, bool isS);
 
 	enum CollisionType
 	{
@@ -92,6 +93,7 @@ struct CollisionComponent : public Component
 	Vec2<double> size; // for now, all colliders are rectangles
 	unsigned int type;
 	unsigned int mask;
+	bool isStatic;
 };
 
 

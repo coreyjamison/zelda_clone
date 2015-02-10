@@ -34,11 +34,61 @@ bool CollisionSystem::run()
 			double t2 = node2->position->curPos.y - (node2->collision->size.y / 2);
 			double b2 = node2->position->curPos.y + (node2->collision->size.y / 2);
 
-			if( (	(l1 <= l2 && l2 <= r1) ||
-					(l1 <= r2 && r2 <= r1) ) &&
-				(	(t1 <= t2 && t2 <= b1) ||
-					(t1 <= b2 && b2 <= b1) ) )
+			double overlap = 100;
+
+			// how much to push node 2 away from node 1
+			// multiply by -1 to get how much to push node 2
+			Vec2<double> push = {0, 0};
+
+			if(l1 < r2 && l2 < r1 && t1 < b2 && t2 < b1)
 			{
+				cout << "r2 - l1:" << r2 - l1 << endl;
+				cout << "r1 - l2:" << r1 - l2 << endl;
+				cout << "b2 - t1:" << b2 - t1 << endl;
+				cout << "b1 - t2:" << b1 - t2 << endl;
+				if(r2 - l1 > 0 && r2 - l1 < overlap)
+				{
+					overlap = r2 - l1;
+					push = {-overlap, 0};
+				}
+				if(r1 - l2 > 0 && r1 - l2 < overlap)
+				{
+					overlap = r1 - l2;
+					push = {overlap, 0};
+				}
+				if(b2 - t1 > 0 && b2 - t1 < overlap)
+				{
+					overlap = b2 - t1;
+					push = {0, -overlap};
+				}
+				if(b1 - t2 > 0 && b1 - t2 < overlap)
+				{
+					overlap = b1 - t2;
+					push = {0, overlap};
+				}
+
+				cout << "Pushing by: " << push.x << ", " << push.y << endl;
+
+				if(node1->collision->isStatic && !node2->collision->isStatic)
+				{
+					cout << "Only pushing node 2!" << endl;
+					node2->position->curPos += push;
+				}
+				else if(!node1->collision->isStatic && node2->collision->isStatic)
+				{
+					cout << "Only pushing node 1!" << endl;
+					node1->position->curPos += (push * -1);
+				}
+				else
+				{
+					cout << "Both equal push!" << endl;
+					Vec2<double> halfPush = push / 2;
+					cout << "Pushing by: " << halfPush.x << ", " << halfPush.y << endl;
+
+					node1->position->curPos += (halfPush * -1);
+					node2->position->curPos += (halfPush);
+				}
+
 				cout << "Collision!" << endl;
 				if(node1->collision->mask & node2->collision->type)
 				{
