@@ -82,7 +82,7 @@ struct MoveComponent : public Component
 
 struct CollisionComponent : public Component
 {
-	CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m, bool isS);
+	CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m, int w);
 
 	enum CollisionType
 	{
@@ -93,7 +93,7 @@ struct CollisionComponent : public Component
 	Vec2<double> size; // for now, all colliders are rectangles
 	unsigned int type;
 	unsigned int mask;
-	bool isStatic;
+	int weight;			// -1 to make unmoveable
 };
 
 

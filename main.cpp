@@ -46,7 +46,7 @@ int main(int argc, char* args[])
 	RenderComponent r{&guySprite, RenderLayer::ENTITIES};
 	StateComponent s{StateComponent::Direction::UP|StateComponent::Action::MOVE};
 	MoveComponent m{2};
-	CollisionComponent c{{15, 15}, CollisionComponent::ENTITY, CollisionComponent::ENTITY, true};
+	CollisionComponent c{{20, 20}, CollisionComponent::ENTITY, CollisionComponent::ENTITY, 10};
 
 	e.addComponent(&p);
 	e.addComponent(&r);
@@ -60,7 +60,7 @@ int main(int argc, char* args[])
 	RenderComponent rs{&slimeSprite, RenderLayer::ENTITIES};
 	StateComponent ss{StateComponent::Direction::DOWN|StateComponent::Action::IDLE};
 	MoveComponent ms{2};
-	CollisionComponent cs{{10, 10}, CollisionComponent::ENTITY, 0, false};
+	CollisionComponent cs{{20, 20}, CollisionComponent::ENTITY, 0, 1};
 
 	slime.addComponent(&ps);
 	slime.addComponent(&rs);

@@ -57,6 +57,6 @@ MoveComponent::MoveComponent(double s)
 :	speed(s), goalMove({0, 0})
 {}
 
-CollisionComponent::CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m, bool isS)
-:	size(s), type(t), mask(m), isStatic(isS)
+CollisionComponent::CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m, int w)
+:	size(s), type(t), mask(m), weight(w)
 {}

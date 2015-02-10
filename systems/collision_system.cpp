@@ -69,24 +69,20 @@ bool CollisionSystem::run()
 
 				cout << "Pushing by: " << push.x << ", " << push.y << endl;
 
-				if(node1->collision->isStatic && !node2->collision->isStatic)
+				if(node1->collision->weight != -1 && node2->collision->weight != -1)
 				{
-					cout << "Only pushing node 2!" << endl;
-					node2->position->curPos += push;
+					double node2Fraction = static_cast<double>(node1->collision->weight) /
+							static_cast<double>(node2->collision->weight + node1->collision->weight);
+					node1->position->curPos += (push * (node2Fraction - 1));
+					node2->position->curPos += (push * node2Fraction);
 				}
-				else if(!node1->collision->isStatic && node2->collision->isStatic)
+				else if(node1->collision->weight != -1)
 				{
-					cout << "Only pushing node 1!" << endl;
 					node1->position->curPos += (push * -1);
 				}
-				else
+				else if(node2->collision->weight != -1)
 				{
-					cout << "Both equal push!" << endl;
-					Vec2<double> halfPush = push / 2;
-					cout << "Pushing by: " << halfPush.x << ", " << halfPush.y << endl;
-
-					node1->position->curPos += (halfPush * -1);
-					node2->position->curPos += (halfPush);
+					node2->position->curPos += push;
 				}
 
 				cout << "Collision!" << endl;
