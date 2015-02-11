@@ -17,23 +17,21 @@
 #include "game_window.hpp"
 #include "camera.hpp"
 
-class RenderSystem : public VariableRunnable, public FixedRunnable, public NodeListener
+class RenderSystem : public VariableRunnable, public FixedRunnable
 {
 public:
 	RenderSystem(GameWindow* window, Camera* camera);
 
+	void setNodeList(NodeList<RenderNode>* nodes);
+
 	virtual bool run();
 	virtual bool run(double alpha);
-	virtual void onNodeChange(Node* r)
-	{
-		_nodes.push_back(static_cast<RenderNode*>(r));
-	}
 
 private:
 	GameWindow* _window;
-	vector<RenderNode*> _nodes;
 	int	_frame = 0;
 	Camera* _camera;
+	NodeList<RenderNode>* _nodes;
 };
 
 

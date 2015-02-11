@@ -5,6 +5,8 @@
  *      Author: Corey
  */
 
+#include <iostream>
+using namespace std;
 
 #include "user_command_system.hpp"
 
@@ -18,6 +20,7 @@ UserCommandSystem::UserCommandSystem(MoveNode* playerNode)
 
 void UserCommandSystem::setPlayerNode(MoveNode* playerNode)
 {
+	cout << "set player node!" << endl;
 	_playerNode = playerNode;
 }
 
@@ -40,6 +43,9 @@ bool UserCommandSystem::run()
 			totalMove += {1, 0};
 		}
 
+		if(totalMove.x != 0 || totalMove.y != 0)
+			cout << "Moving player!" << endl;
+
 		totalMove = totalMove.scale(_playerNode->move->speed);
 		_playerNode->move->goalMove = totalMove;
 	}
@@ -50,15 +56,4 @@ bool UserCommandSystem::run()
 void UserCommandSystem::notify(InputState state)
 {
 	_input = state;
-}
-
-void UserCommandSystem::onNodeChange(Node* node)
-{
-	if(_playerNode)
-		return;
-	MoveNode* moveNode = static_cast<MoveNode*>(node);
-	if(moveNode)
-	{
-		_playerNode = moveNode;
-	}
 }

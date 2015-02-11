@@ -11,17 +11,18 @@
 #include <vector>
 
 #include <gameloop/runnable.hpp>
-#include <ecs/ecs_manager.hpp>
+#include <ecs/node_list.hpp>
 #include <ecs/node.hpp>
 
-class CollisionSystem : public FixedRunnable, public NodeListener
+class CollisionSystem : public FixedRunnable
 {
 public:
+	void setNodeList(NodeList<CollisionNode>* nodes);
+
 	virtual bool run();
-	virtual void onNodeChange(Node* node);
 
 private:
-	vector<CollisionNode*> _nodes;
+	NodeList<CollisionNode>* _nodes;
 };
 
 

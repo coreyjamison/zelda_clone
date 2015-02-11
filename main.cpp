@@ -44,7 +44,7 @@ int main(int argc, char* args[])
 
 	PositionComponent p{{100, 100}};
 	RenderComponent r{&guySprite, RenderLayer::ENTITIES};
-	StateComponent s{StateComponent::Direction::UP|StateComponent::Action::MOVE};
+	StateComponent s{StateComponent::Direction::RIGHT|StateComponent::Action::IDLE};
 	MoveComponent m{2};
 	CollisionComponent c{{20, 20}, CollisionComponent::ENTITY, CollisionComponent::ENTITY, 10};
 
@@ -88,10 +88,16 @@ int main(int argc, char* args[])
 	UserCommandSystem* ucs = new UserCommandSystem();
 	CollisionSystem* col = new CollisionSystem();
 
-	ecs->addNodeListener<RenderNode>(render);
-	ecs->addNodeListener<MoveNode>(move);
-	ecs->addNodeListener<MoveNode>(ucs);
-	ecs->addNodeListener<CollisionNode>(col);
+	//ecs->addNodeListener<RenderNode>(render);
+	//ecs->addNodeListener<MoveNode>(move);
+	//ecs->addNodeListener<MoveNode>(ucs);
+	//ecs->addNodeListener<CollisionNode>(col);
+	render->setNodeList(ecs->getNodeList<RenderNode>());
+	move->setNodeList(ecs->getNodeList<MoveNode>());
+	col->setNodeList(ecs->getNodeList<CollisionNode>());
+
+	ucs->setPlayerNode(MoveNode::createFrom(&e));
+
 	ecs->addEntity(&e);
 	ecs->addEntity(&slime);
 	ecs->addEntity(&bkg);

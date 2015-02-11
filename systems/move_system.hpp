@@ -17,17 +17,18 @@
 #include <input_manager/input_manager.hpp>
 #include <graphics/camera.hpp>
 
-class MoveSystem: public FixedRunnable, public NodeListener, public InputObserver
+class MoveSystem: public FixedRunnable, public InputObserver
 {
 public:
 	MoveSystem();
 
+	void setNodeList(NodeList<MoveNode>* nodes);
+
 	virtual bool run();
-	virtual void onNodeChange(Node* node);
 	virtual void notify(InputState state);
 
 private:
-	vector<MoveNode*> _nodes;
+	NodeList<MoveNode>* _nodes;
 	InputState _input;
 };
 

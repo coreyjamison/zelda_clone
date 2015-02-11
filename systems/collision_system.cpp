@@ -10,11 +10,17 @@
 #include "collision_system.hpp"
 
 using namespace std;
+
+void CollisionSystem::setNodeList(NodeList<CollisionNode>* nodes)
+{
+	_nodes = nodes;
+}
+
 bool CollisionSystem::run()
 {
-	for(CollisionNode* node1 : _nodes)
+	for(CollisionNode* node1 : _nodes->nodes)
 	{
-		for(CollisionNode* node2 : _nodes) {
+		for(CollisionNode* node2 : _nodes->nodes) {
 
 			// This ensures each collision is only detected once,
 			// and an object can't collide with itself
@@ -101,10 +107,5 @@ bool CollisionSystem::run()
 	}
 
 	return true;
-}
-
-void CollisionSystem::onNodeChange(Node* node)
-{
-	_nodes.push_back(static_cast<CollisionNode*>(node));
 }
 

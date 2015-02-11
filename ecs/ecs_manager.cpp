@@ -26,6 +26,14 @@ private:
 
 using namespace std;
 
+EcsManager::~EcsManager()
+{
+	for(auto pair : _nodeLists)
+	{
+		delete pair.second;
+	}
+}
+
 void EcsManager::addEntity(Entity* e)
 {
 	_entities[e->getId()] = e;
@@ -37,25 +45,27 @@ void EcsManager::checkNodes(Entity* e)
 	RenderNode* r = RenderNode::createFrom(e);
 	if(r)
 	{
-		for(NodeListener* l : _nodeListeners[&typeid(RenderNode)])
-		{
-			l->onNodeChange(r);
-		}
+		cout << "Added render!" << endl;
+		this->_nodeLists[&typeid(RenderNode)]->addNode(r);
 	}
 	MoveNode* m = MoveNode::createFrom(e);
 	if(m)
 	{
-		for(NodeListener* l : _nodeListeners[&typeid(MoveNode)])
-		{
-			l->onNodeChange(m);
-		}
+		cout << "Added move!" << endl;
+		this->_nodeLists[&typeid(MoveNode)]->addNode(m);
 	}
 	CollisionNode* c = CollisionNode::createFrom(e);
 	if(c)
 	{
-		for(NodeListener* l : _nodeListeners[&typeid(CollisionNode)])
-		{
-			l->onNodeChange(c);
-		}
+		cout << "Added collision!" << endl;
+		this->_nodeLists[&typeid(CollisionNode)]->addNode(c);
+	}
+}
+
+void EcsManager::removeInvalids()
+{
+	for(auto pair : _nodeLists)
+	{
+		pair.second->removeInvalids();
 	}
 }

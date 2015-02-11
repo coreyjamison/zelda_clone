@@ -27,10 +27,17 @@ MoveSystem::MoveSystem()
 :	_nodes(), _input()
 {}
 
+void MoveSystem::setNodeList(NodeList<MoveNode>* nodes)
+{
+	cout << "Set NodeList<MoveNode>*!" << endl;
+	_nodes = nodes;
+}
+
 bool MoveSystem::run()
 {
-	for(MoveNode* node : _nodes)
+	for(MoveNode* node : _nodes->nodes)
 	{
+		cout << "Moving node!" << endl;
 		Vec2<double> goal = node->move->goalMove.scaleBack(node->move->speed);
 		node->position->movePos(goal);
 
@@ -54,10 +61,6 @@ bool MoveSystem::run()
 	return true;
 }
 
-void MoveSystem::onNodeChange(Node* node)
-{
-	_nodes.push_back(static_cast<MoveNode*>(node));
-}
 void MoveSystem::notify(InputState state)
 {
 	_input = state;

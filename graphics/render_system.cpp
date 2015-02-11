@@ -12,14 +12,19 @@
 using namespace std;
 
 RenderSystem::RenderSystem(GameWindow* window, Camera* camera)
-:	_window( window ), _camera( camera )
+:	_window( window ), _camera( camera ), _nodes(nullptr)
 {}
+
+void RenderSystem::setNodeList(NodeList<RenderNode>* nodes)
+{
+	_nodes = nodes;
+}
 
 bool RenderSystem::run() {
 	if(++_frame > 2) {
 		_frame = 0;
 		// TODO: remove invalid nodes
-		for(RenderNode* node : _nodes) {
+		for(RenderNode* node : _nodes->nodes) {
 			if(node->valid) {
 				node->render->frame = node->render->sprite->nextFrame(node->state->state, node->render->frame);
 			}
@@ -32,7 +37,7 @@ bool RenderSystem::run(double alpha) {
 	if(alpha < 0 || alpha > 1) {
 		return true;
 	}
-	for(RenderNode* node : _nodes) {
+	for(RenderNode* node : _nodes->nodes) {
 
 		Vec2<int> interpolated = _camera->getScreenPosition(
 				node->position->curPos.average(node->position->lastPos)

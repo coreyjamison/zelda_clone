@@ -14,31 +14,31 @@
 #include "component.hpp"
 #include "entity.hpp"
 #include "node.hpp"
+#include "node_list.hpp"
 
 using namespace std;
 
-class NodeListener {
-public:
-	virtual ~NodeListener() = default;
-
-	virtual void onNodeChange(Node* node) = 0;
-};
-
 class EcsManager {
 public:
+	~EcsManager();
+
 	template<typename T>
-	void addNodeListener(NodeListener* listener)
+	NodeList<T>* getNodeList()
 	{
-		_nodeListeners[&typeid(T)].push_back(listener);
+		if(!_nodeLists[&typeid(T)])
+		{
+			_nodeLists[&typeid(T)] = new NodeList<T>();
+		}
+		return static_cast<NodeList<T>*>(_nodeLists[&typeid(T)]);
 	}
 
 	void addEntity(Entity* e);
-
 	void checkNodes(Entity* e);
+	void removeInvalids();
 
 private:
 	unordered_map<unsigned long, Entity*> _entities;
-	unordered_map<const type_info*, vector<NodeListener*>> _nodeListeners;
+	unordered_map<const type_info*, NodeListInterface*> _nodeLists;
 	unsigned int _nextId;
 };
 

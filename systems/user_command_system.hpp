@@ -14,7 +14,7 @@
 #include <ecs/node.hpp>
 #include <ecs/ecs_manager.hpp>
 
-class UserCommandSystem : public FixedRunnable, public InputObserver, public NodeListener
+class UserCommandSystem : public FixedRunnable, public InputObserver
 {
 public:
 	UserCommandSystem();
@@ -24,7 +24,6 @@ public:
 
 	virtual bool run();
 	virtual void notify(InputState state);
-	virtual void onNodeChange(Node* node);
 
 private:
 	MoveNode* _playerNode;
