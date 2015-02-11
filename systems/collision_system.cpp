@@ -22,9 +22,26 @@ bool CollisionSystem::run()
 			if(node1 >= node2)
 				continue;
 
-			//TODO: remove invalid nodes
 			if(!node1->valid || !node2->valid)
 				continue;
+
+			bool n1ignore = node1->collision->ignoredIds.find(node2->collision->parentId) != node1->collision->ignoredIds.end();
+			bool n2ignore = node2->collision->ignoredIds.find(node1->collision->parentId) != node2->collision->ignoredIds.end();
+
+			if(n1ignore || n2ignore)
+			{
+				cout << "Node1 ignored ids: " << endl;
+				for(unsigned int id : node1->collision->ignoredIds)
+				{
+					cout << id << " ";
+				}
+				cout << endl << "Node2 ignored ids: " << endl;
+				for(unsigned int id : node2->collision->ignoredIds)
+				{
+					cout << id << " ";
+				}
+				continue;
+			}
 
 			double l1 = node1->position->curPos.x - (node1->collision->size.x / 2);
 			double r1 = node1->position->curPos.x + (node1->collision->size.x / 2);

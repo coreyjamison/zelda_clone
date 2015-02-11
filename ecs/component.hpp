@@ -9,6 +9,7 @@
 #define COMPONENT_HPP_
 
 #include <vector>
+#include <set>
 
 #include <data_containers/vec2.hpp>
 #include <graphics/sprite.hpp>
@@ -91,6 +92,7 @@ struct CollisionComponent : public Component
 	};
 
 	Vec2<double> size; // for now, all colliders are rectangles
+	set<unsigned int> ignoredIds;
 	unsigned int type;
 	unsigned int mask;
 	int weight;			// -1 to make unmoveable
