@@ -9,12 +9,18 @@
 #define VEC2_HPP_
 
 #include <cmath>
+#include <type_traits>
 
-// Don't be a dummy! Only use Vec2 with numeric types!
-template <class num_type>
-class Vec2
+/*
+ * Vec2
+ *
+ * 2-dimensional vector with x and y components.
+ *
+ * num_type should be a numerical type, otherwise behaviour is undefined.
+ */
+template <typename num_type>
+struct Vec2
 {
-public:
 	Vec2()
 	:	x( 0 ),
 		y( 0 )
@@ -25,18 +31,29 @@ public:
 	 	y( initY )
 	{}
 
-	num_type getDist() const
+	/*
+	 * Gets the euclidean length of the vector.
+	 *
+	 * @return The length of the vector.
+	 */
+	num_type length() const
 	{
 		return sqrt( x * x + y * y );
 	}
 
-	Vec2 scale( num_type dist )
+	/*
+	 * Returns a new vector scaled to a new length.
+	 *
+	 * @param newLength The length to scale the vector to.
+	 * @return The new vector.
+	 */
+	Vec2 scale( num_type newLength ) const
 	{
-		double myDist = getDist();
-		if( myDist != 0 )
+		double len = length();
+		if( len != 0 )
 		{
-			double newX = x * dist / myDist;
-			double newY = y * dist / myDist;
+			double newX = x * newLength / len;
+			double newY = y * newLength / len;
 			return Vec2( newX, newY );
 		}
 		else
@@ -45,35 +62,53 @@ public:
 		}
 	}
 
-	Vec2 scaleBack( num_type dist )
+	/*
+	 * Returns a new vector, scaled back to a maximum length.
+	 *
+	 * @param newLength The maximum length of the new vector.
+	 * @return The new vector.
+	 */
+	Vec2 scaleBack( num_type newLength ) const
 	{
-		double myDist = getDist();
-		//printf( "dist: %f, mydist: %f\n", dist, myDist );
-		//printf( "old x: %f, y: %f\n", _x, y );
-		if( myDist > dist && myDist > 0 )
+		double myDist = length();
+		if( myDist > newLength && myDist > 0 )
 		{
-			double newX = x * dist / myDist;
-			double newY = y * dist / myDist;
+			double newX = x * newLength / myDist;
+			double newY = y * newLength / myDist;
 			return Vec2( newX, newY );
 		}
 		else
 		{
 			return *this;
 		}
-		//printf( "new x: %f, y: %f\n", _x, y );
 	}
 
+	/*
+	 * Returns a new vector that is the average of this and the other vector.
+	 *
+	 * @param other The other vector.
+	 * @return A new averaged vector.
+	 */
 	Vec2 average( const Vec2& other) const
 	{
 		return {(x + other.x) / 2, (y + other.y) / 2};
 	}
 
+	/*
+	 * Returns the dot product of this vector with another vector.
+	 *
+	 * @param other The other vector.
+	 * @return The result of the dot product.
+	 */
 	num_type dot( const Vec2& other ) const
 	{
 		return x * other.x + y * other.y;
 	}
 
-	Vec2 operator+( const Vec2& other )
+	/*
+	 * Standard arithmetic operators.
+	 */
+	Vec2 operator+( const Vec2& other ) const
 	{
 		return Vec2( x + other.x, y + other.y );
 	}
@@ -85,7 +120,7 @@ public:
 		return *this;
 	}
 
-	Vec2 operator-( const Vec2& other )
+	Vec2 operator-( const Vec2& other ) const
 	{
 		return Vec2( x - other.x, y - other.y );
 	}
@@ -97,7 +132,7 @@ public:
 		return *this;
 	}
 
-	Vec2 operator*( const num_type multFactor )
+	Vec2 operator*( const num_type multFactor ) const
 	{
 		return Vec2( x * multFactor, y * multFactor );
 	}
@@ -109,7 +144,7 @@ public:
 		return *this;
 	}
 
-	Vec2 operator/( const num_type divisor )
+	Vec2 operator/( const num_type divisor ) const
 	{
 		return Vec2( x / divisor, y / divisor );
 	}
@@ -121,7 +156,10 @@ public:
 		return *this;
 	}
 
-	bool operator==( const Vec2& other )
+	/*
+	 * Standard comparison operators
+	 */
+	bool operator==( const Vec2& other ) const
 	{
 		return ( x == other.x ) && ( y == other.y );
 	}
@@ -133,7 +171,7 @@ public:
 		return *this;
 	}
 
-	bool operator!=( const Vec2& other )
+	bool operator!=( const Vec2& other ) const
 	{
 		return ( x != other.x ) && ( y != other.y );
 	}

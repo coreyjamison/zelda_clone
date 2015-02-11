@@ -35,7 +35,7 @@ bool MoveSystem::run()
 		Vec2<double> goal = node->move->goalMove.scaleBack(node->move->speed);
 		node->position->movePos(goal);
 
-		if(goal.getDist() > 0)
+		if(goal.length() > 0)
 		{
 			node->state->setAction(StateComponent::Action::MOVE);
 		} else {
