@@ -42,12 +42,8 @@ private:
 	SdlWindow* _window;
 	SdlRenderer* _renderer;
 
-	map<RenderLayer, vector<
-		pair<
-			Vec2<int>, Renderable*
-			>
-		>
-	> _renderables;
+	map<RenderLayer,
+		vector<pair<Vec2<int>, Renderable*>>> _renderables;
 
 };
 

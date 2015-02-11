@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <algorithm>
 
 #include "game_window.hpp"
 
@@ -29,12 +30,19 @@ void GameWindow::queueRenderable(Renderable* renderable, RenderLayer layer, Vec2
 	_renderables[layer].push_back({position, renderable});
 }
 
+typedef pair<Vec2<int>, Renderable*> layer_t;
+bool verticalSort(layer_t first, layer_t second)
+{
+	return first.first.y < second.first.y;
+}
+
 void GameWindow::render()
 {
 	clear();
 
 	for(auto& layer : _renderables)
 	{
+		std::sort(layer.second.begin(), layer.second.end(), verticalSort);
 		for(auto& renderData : layer.second)
 		{
 			Vec2<int> position = renderData.first;
