@@ -38,9 +38,11 @@ int main(int argc, char* args[])
 	Sprite slimeSprite = sf.makeSprite(gw, "slime");
 	Sprite bkgSprite = sf.makeSprite(gw, "background");
 
+	EcsManager* ecs = new EcsManager();
+
 	unsigned long nextId = 1;
 
-	Entity e{nextId++};
+	Entity* e = ecs->createEntity();
 
 	PositionComponent p{{100, 100}};
 	RenderComponent r{&guySprite, RenderLayer::ENTITIES};
@@ -48,13 +50,13 @@ int main(int argc, char* args[])
 	MoveComponent m{2};
 	CollisionComponent c{{25, 15}, CollisionComponent::ENTITY, CollisionComponent::ENTITY, 1};
 
-	e.addComponent(&p);
-	e.addComponent(&r);
-	e.addComponent(&s);
-	e.addComponent(&m);
-	e.addComponent(&c);
+	e->addComponent(&p);
+	e->addComponent(&r);
+	e->addComponent(&s);
+	e->addComponent(&m);
+	e->addComponent(&c);
 
-	Entity slime{nextId++};
+	Entity* slime = ecs->createEntity();
 
 	PositionComponent ps{{400, 400}};
 	RenderComponent rs{&slimeSprite, RenderLayer::ENTITIES};
@@ -62,13 +64,13 @@ int main(int argc, char* args[])
 	MoveComponent ms{2};
 	CollisionComponent cs{{25, 15}, CollisionComponent::ENTITY, 0, 1};
 
-	slime.addComponent(&ps);
-	slime.addComponent(&rs);
-	slime.addComponent(&ss);
-	slime.addComponent(&ms);
-	slime.addComponent(&cs);
+	slime->addComponent(&ps);
+	slime->addComponent(&rs);
+	slime->addComponent(&ss);
+	slime->addComponent(&ms);
+	slime->addComponent(&cs);
 
-	Entity bkg{nextId++};
+	Entity* bkg = ecs->createEntity();
 
 	// TODO - maybe make multiple sprite types so our background doesn't need
 	// a direction and an action
@@ -76,15 +78,14 @@ int main(int argc, char* args[])
 	RenderComponent r_bkg{&bkgSprite, RenderLayer::TERRAIN};
 	StateComponent s_bkg{StateComponent::Direction::UP|StateComponent::Action::IDLE};
 
-	bkg.addComponent(&p_bkg);
-	bkg.addComponent(&r_bkg);
-	bkg.addComponent(&s_bkg);
+	bkg->addComponent(&p_bkg);
+	bkg->addComponent(&r_bkg);
+	bkg->addComponent(&s_bkg);
 
-	TrackingCamera tc{TrackingCameraNode::createFrom(&e), {640, 480}, {640, 480}};
+	TrackingCamera tc{TrackingCameraNode::createFrom(e), {640, 480}, {640, 480}};
 
 	RenderSystem* render = new RenderSystem(&gw, &tc);
 	MoveSystem* move = new MoveSystem();
-	EcsManager* ecs = new EcsManager();
 	UserCommandSystem* ucs = new UserCommandSystem();
 	CollisionSystem* col = new CollisionSystem();
 
@@ -96,11 +97,11 @@ int main(int argc, char* args[])
 	move->setNodeList(ecs->getNodeList<MoveNode>());
 	col->setNodeList(ecs->getNodeList<CollisionNode>());
 
-	ucs->setPlayerNode(MoveNode::createFrom(&e));
+	ucs->setPlayerNode(MoveNode::createFrom(e));
 
-	ecs->addEntity(&e);
-	ecs->addEntity(&slime);
-	ecs->addEntity(&bkg);
+	ecs->checkNodes(e);
+	ecs->checkNodes(slime);
+	ecs->checkNodes(bkg);
 
 	gm->addFixedRunnable(im);
 	gm->addFixedRunnable(render);

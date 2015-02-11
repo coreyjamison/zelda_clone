@@ -62,10 +62,39 @@ void EcsManager::checkNodes(Entity* e)
 	}
 }
 
+void EcsManager::checkNodes(unsigned int id)
+{
+	if(_entities.find(id) != _entities.end())
+	{
+		checkNodes(_entities[id]);
+	}
+}
+
 void EcsManager::removeInvalids()
 {
 	for(auto pair : _nodeLists)
 	{
 		pair.second->removeInvalids();
+	}
+}
+
+
+Entity* EcsManager::createEntity()
+{
+	Entity* newEntity = new Entity{_nextId};
+	_entities[_nextId++] = newEntity;
+
+	return newEntity;
+}
+
+Entity* EcsManager::getEntity(unsigned int id)
+{
+	if(_entities.find(id) != _entities.end())
+	{
+		return _entities[id];
+	}
+	else
+	{
+		return nullptr;
 	}
 }

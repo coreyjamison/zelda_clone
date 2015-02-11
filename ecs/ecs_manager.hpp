@@ -34,6 +34,11 @@ public:
 
 	void addEntity(Entity* e);
 	void checkNodes(Entity* e);
+	void checkNodes(unsigned int id);
+
+	Entity* createEntity();
+	Entity* getEntity(unsigned int id);
+
 	void removeInvalids();
 
 private:
