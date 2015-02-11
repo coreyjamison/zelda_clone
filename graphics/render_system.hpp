@@ -13,16 +13,15 @@
 #include <gameloop/runnable.hpp>
 #include <ecs/ecs_manager.hpp>
 #include <ecs/node.hpp>
+#include <ecs/node_system.hpp>
 
 #include "game_window.hpp"
 #include "camera.hpp"
 
-class RenderSystem : public VariableRunnable, public FixedRunnable
+class RenderSystem : public VariableRunnable, public FixedRunnable, public NodeSystem<RenderNode>
 {
 public:
 	RenderSystem(GameWindow* window, Camera* camera);
-
-	void setNodeList(NodeList<RenderNode>* nodes);
 
 	virtual bool run();
 	virtual bool run(double alpha);
@@ -31,7 +30,6 @@ private:
 	GameWindow* _window;
 	int	_frame = 0;
 	Camera* _camera;
-	NodeList<RenderNode>* _nodes;
 };
 
 

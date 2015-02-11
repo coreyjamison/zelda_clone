@@ -12,13 +12,8 @@
 using namespace std;
 
 RenderSystem::RenderSystem(GameWindow* window, Camera* camera)
-:	_window( window ), _camera( camera ), _nodes(nullptr)
+:	_window( window ), _camera( camera )
 {}
-
-void RenderSystem::setNodeList(NodeList<RenderNode>* nodes)
-{
-	_nodes = nodes;
-}
 
 bool RenderSystem::run() {
 	if(++_frame > 2) {

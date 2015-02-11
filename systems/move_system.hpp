@@ -13,22 +13,20 @@
 #include <gameloop/runnable.hpp>
 #include <ecs/ecs_manager.hpp>
 #include <ecs/node.hpp>
+#include <ecs/node_system.hpp>
 #include <input_manager/input_observer.hpp>
 #include <input_manager/input_manager.hpp>
 #include <graphics/camera.hpp>
 
-class MoveSystem: public FixedRunnable, public InputObserver
+class MoveSystem: public FixedRunnable, public InputObserver, public NodeSystem<MoveNode>
 {
 public:
 	MoveSystem();
-
-	void setNodeList(NodeList<MoveNode>* nodes);
 
 	virtual bool run();
 	virtual void notify(InputState state);
 
 private:
-	NodeList<MoveNode>* _nodes;
 	InputState _input;
 };
 

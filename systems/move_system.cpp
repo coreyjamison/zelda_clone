@@ -24,14 +24,8 @@ private:
 using namespace std;
 
 MoveSystem::MoveSystem()
-:	_nodes(), _input()
+:	_input()
 {}
-
-void MoveSystem::setNodeList(NodeList<MoveNode>* nodes)
-{
-	cout << "Set NodeList<MoveNode>*!" << endl;
-	_nodes = nodes;
-}
 
 bool MoveSystem::run()
 {

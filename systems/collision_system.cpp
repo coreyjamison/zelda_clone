@@ -11,11 +11,6 @@
 
 using namespace std;
 
-void CollisionSystem::setNodeList(NodeList<CollisionNode>* nodes)
-{
-	_nodes = nodes;
-}
-
 bool CollisionSystem::run()
 {
 	for(CollisionNode* node1 : _nodes->nodes)

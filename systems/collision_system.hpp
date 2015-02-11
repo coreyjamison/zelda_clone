@@ -12,17 +12,13 @@
 
 #include <gameloop/runnable.hpp>
 #include <ecs/node_list.hpp>
+#include <ecs/node_system.hpp>
 #include <ecs/node.hpp>
 
-class CollisionSystem : public FixedRunnable
+class CollisionSystem : public FixedRunnable, public NodeSystem<CollisionNode>
 {
 public:
-	void setNodeList(NodeList<CollisionNode>* nodes);
-
 	virtual bool run();
-
-private:
-	NodeList<CollisionNode>* _nodes;
 };
 
 
