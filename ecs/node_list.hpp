@@ -13,12 +13,15 @@
 
 #include "node.hpp"
 
+class Entity;
+
 struct NodeListInterface
 {
 	virtual ~NodeListInterface() = default;
 
 	virtual void removeInvalids() = 0;
 	virtual void addNode(Node* n) = 0;
+	virtual void addNodeFromEntity(Entity* e) = 0;
 };
 
 template <typename T>
@@ -43,6 +46,13 @@ struct NodeList : public NodeListInterface
 		{
 			nodes.push_back(static_cast<T*>(n));
 		}
+	}
+
+	virtual void addNodeFromEntity(Entity* e)
+	{
+		T* n = T::createFrom(e);
+		if(n)
+			nodes.push_back(n);
 	}
 
 	vector<T*> nodes;

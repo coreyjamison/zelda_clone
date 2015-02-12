@@ -26,6 +26,12 @@ struct Node
 	virtual ~Node() = default;
 
 	bool valid;
+
+	/*
+	 * All nodes must implement the following method:
+	 *
+	 * static SomethingNode* createFrom(Entity* e);
+	 */
 };
 
 struct RenderNode : public Node
