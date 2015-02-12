@@ -60,6 +60,11 @@ void EcsManager::checkNodes(Entity* e)
 		cout << "Added collision!" << endl;
 		this->_nodeLists[&typeid(CollisionNode)]->addNode(c);
 	}
+	HealthBarNode* h = HealthBarNode::createFrom(e);
+	if(h)
+	{
+		this->_nodeLists[&typeid(HealthBarNode)]->addNode(h);
+	}
 }
 
 void EcsManager::checkNodes(unsigned int id)

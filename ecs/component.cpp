@@ -60,3 +60,7 @@ MoveComponent::MoveComponent(double s)
 CollisionComponent::CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m, int w)
 :	size(s), type(t), mask(m), weight(w)
 {}
+
+HealthComponent::HealthComponent(int h, int m)
+:	health(h), maxHealth(m)
+{}

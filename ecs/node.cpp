@@ -90,3 +90,24 @@ TrackingCameraNode* TrackingCameraNode::createFrom(Entity* e)
 		return nullptr;
 	}
 }
+
+HealthBarNode::HealthBarNode(PositionComponent* p, HealthComponent* h)
+:	position(p), health(h)
+{}
+
+HealthBarNode* HealthBarNode::createFrom(Entity* e)
+{
+	PositionComponent* p = e->getComponent<PositionComponent>();
+	HealthComponent* h = e->getComponent<HealthComponent>();
+	if(p && h)
+	{
+		HealthBarNode* node = new HealthBarNode(p, h);
+		p->nodes.push_back(node);
+		h->nodes.push_back(node);
+		return node;
+	}
+	else
+	{
+		return nullptr;
+	}
+}

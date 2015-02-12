@@ -49,12 +49,14 @@ int main(int argc, char* args[])
 	StateComponent s{StateComponent::Direction::RIGHT|StateComponent::Action::IDLE};
 	MoveComponent m{2};
 	CollisionComponent c{{25, 15}, CollisionComponent::ENTITY, CollisionComponent::ENTITY, 1};
+	HealthComponent h{50, 100};
 
 	e->addComponent(&p);
 	e->addComponent(&r);
 	e->addComponent(&s);
 	e->addComponent(&m);
 	e->addComponent(&c);
+	e->addComponent(&h);
 
 	Entity* slime = ecs->createEntity();
 
@@ -63,12 +65,14 @@ int main(int argc, char* args[])
 	StateComponent ss{StateComponent::Direction::DOWN|StateComponent::Action::IDLE};
 	MoveComponent ms{2};
 	CollisionComponent cs{{25, 15}, CollisionComponent::ENTITY, 0, 1};
+	HealthComponent hs{20, 25};
 
 	slime->addComponent(&ps);
 	slime->addComponent(&rs);
 	slime->addComponent(&ss);
 	slime->addComponent(&ms);
 	slime->addComponent(&cs);
+	slime->addComponent(&hs);
 
 	Entity* bkg = ecs->createEntity();
 
@@ -93,7 +97,8 @@ int main(int argc, char* args[])
 	//ecs->addNodeListener<MoveNode>(move);
 	//ecs->addNodeListener<MoveNode>(ucs);
 	//ecs->addNodeListener<CollisionNode>(col);
-	render->setNodeList(ecs->getNodeList<RenderNode>());
+	render->::NodeSystem<RenderNode>::setNodeList(ecs->getNodeList<RenderNode>());
+	render->::NodeSystem<HealthBarNode>::setNodeList(ecs->getNodeList<HealthBarNode>());
 	move->setNodeList(ecs->getNodeList<MoveNode>());
 	col->setNodeList(ecs->getNodeList<CollisionNode>());
 

@@ -70,6 +70,13 @@ void SdlRenderer::renderDrawRect( SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint
 	SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 }
 
+void SdlRenderer::renderFillRect( SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a )
+{
+	SDL_SetRenderDrawColor( renderer, r, g, b, a );
+	SDL_RenderFillRect( renderer, &rect );
+	SDL_SetRenderDrawColor( renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+}
+
 SdlSurface::SdlSurface( const char* file )
 {
 	surface = SDL_LoadBMP( file );

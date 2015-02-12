@@ -98,6 +98,14 @@ struct CollisionComponent : public Component
 	int weight;			// -1 to make unmoveable
 };
 
+struct HealthComponent : public Component
+{
+	HealthComponent(int h, int m);
+
+	int health;
+	int maxHealth;
+};
+
 
 
 #endif /* COMPONENT_HPP_ */

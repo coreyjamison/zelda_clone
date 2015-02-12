@@ -16,6 +16,7 @@ class RenderComponent;
 class StateComponent;
 class MoveComponent;
 class CollisionComponent;
+class HealthComponent;
 
 class Entity;
 
@@ -57,6 +58,16 @@ struct CollisionNode : public Node
 	CollisionComponent* collision;
 
 	static CollisionNode* createFrom(Entity* e);
+};
+
+struct HealthBarNode : public Node
+{
+	HealthBarNode(PositionComponent* p, HealthComponent* h);
+
+	PositionComponent* position;
+	HealthComponent* health;
+
+	static HealthBarNode* createFrom(Entity* e);
 };
 
 /* Static Nodes -> not handled by ECS Manager */

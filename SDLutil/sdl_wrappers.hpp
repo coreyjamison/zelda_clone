@@ -35,6 +35,7 @@ struct SdlRenderer
 	void renderCopy( const SdlTexture& texture, SDL_Rect source, SDL_Rect dest );
 	void renderCopyFlipped( const SdlTexture& texture, SDL_Rect source, SDL_Rect dest, bool horizontal );
 	void renderDrawRect( SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a );
+	void renderFillRect( SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a );
 
 	SDL_Renderer* renderer;
 };

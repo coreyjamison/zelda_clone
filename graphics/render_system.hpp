@@ -18,7 +18,7 @@
 #include "game_window.hpp"
 #include "camera.hpp"
 
-class RenderSystem : public VariableRunnable, public FixedRunnable, public NodeSystem<RenderNode>
+class RenderSystem : public VariableRunnable, public FixedRunnable, public NodeSystem<RenderNode>, public NodeSystem<HealthBarNode>
 {
 public:
 	RenderSystem(GameWindow* window, Camera* camera);
