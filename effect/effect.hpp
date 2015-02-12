@@ -20,7 +20,6 @@ public:
 	virtual bool execute() = 0;
 };
 
-
 class SequentialEffectList : public Effect
 {
 public:
@@ -29,6 +28,29 @@ public:
 
 private:
 	list<Effect*> _effects;
+};
+
+class EntityEffect : public Effect
+{
+public:
+	EntityEffect(Entity* e);
+	virtual ~EntityEffect() = default;
+
+	virtual bool execute() = 0;
+
+protected:
+	Entity* _entity;
+};
+
+class MoveEffect : public EntityEffect
+{
+public:
+	MoveEffect(Entity* e, Vec2<double> direction);
+
+	virtual bool execute();
+
+private:
+	Vec2<double> _direction;
 };
 
 

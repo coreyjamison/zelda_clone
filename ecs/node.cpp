@@ -7,12 +7,12 @@
 
 #include "node.hpp"
 
-Node::Node()
-:	valid(true)
+Node::Node(unsigned int id)
+:	valid(true), parentId(id)
 {}
 
-RenderNode::RenderNode( PositionComponent* p, RenderComponent* r, StateComponent* s)
-:	position(p), render(r), state(s)
+RenderNode::RenderNode(unsigned int id, PositionComponent* p, RenderComponent* r, StateComponent* s)
+:	Node(id), position(p), render(r), state(s)
 {}
 
 
@@ -21,7 +21,7 @@ RenderNode* RenderNode::createFrom(Entity* e) {
 	RenderComponent* r = e->getComponent<RenderComponent>();
 	StateComponent* s = e->getComponent<StateComponent>();
 	if(p && r) {
-		RenderNode* node = new RenderNode(p, r, s);
+		RenderNode* node = new RenderNode(e->getId(), p, r, s);
 		p->nodes.push_back(node);
 		r->nodes.push_back(node);
 		s->nodes.push_back(node);
@@ -32,8 +32,8 @@ RenderNode* RenderNode::createFrom(Entity* e) {
 	}
 }
 
-MoveNode::MoveNode(PositionComponent* p, MoveComponent* m, StateComponent* s)
-:	position(p), move(m), state(s)
+MoveNode::MoveNode(unsigned int id, PositionComponent* p, MoveComponent* m, StateComponent* s)
+:	Node(id), position(p), move(m), state(s)
 {}
 
 MoveNode* MoveNode::createFrom(Entity* e) {
@@ -41,7 +41,7 @@ MoveNode* MoveNode::createFrom(Entity* e) {
 	MoveComponent* m = e->getComponent<MoveComponent>();
 	StateComponent* s = e->getComponent<StateComponent>();
 	if(p && m) {
-		MoveNode* node = new MoveNode(p, m, s);
+		MoveNode* node = new MoveNode(e->getId(), p, m, s);
 		p->nodes.push_back(node);
 		m->nodes.push_back(node);
 		s->nodes.push_back(node);
@@ -52,8 +52,8 @@ MoveNode* MoveNode::createFrom(Entity* e) {
 	}
 }
 
-CollisionNode::CollisionNode(PositionComponent* p, CollisionComponent* c)
-:	position(p), collision(c)
+CollisionNode::CollisionNode(unsigned int id, PositionComponent* p, CollisionComponent* c)
+:	Node(id), position(p), collision(c)
 {}
 
 CollisionNode* CollisionNode::createFrom(Entity* e)
@@ -62,7 +62,7 @@ CollisionNode* CollisionNode::createFrom(Entity* e)
 	CollisionComponent* c = e->getComponent<CollisionComponent>();
 	if(p && c)
 	{
-		CollisionNode* node = new CollisionNode(p, c);
+		CollisionNode* node = new CollisionNode(e->getId(), p, c);
 		p->nodes.push_back(node);
 		return node;
 	}
@@ -72,8 +72,8 @@ CollisionNode* CollisionNode::createFrom(Entity* e)
 	}
 }
 
-TrackingCameraNode::TrackingCameraNode(PositionComponent* p)
-:	position(p)
+TrackingCameraNode::TrackingCameraNode(unsigned int id, PositionComponent* p)
+:	Node(id), position(p)
 {}
 
 TrackingCameraNode* TrackingCameraNode::createFrom(Entity* e)
@@ -81,7 +81,7 @@ TrackingCameraNode* TrackingCameraNode::createFrom(Entity* e)
 	PositionComponent* p = e->getComponent<PositionComponent>();
 	if(p)
 	{
-		TrackingCameraNode* node = new TrackingCameraNode(p);
+		TrackingCameraNode* node = new TrackingCameraNode(e->getId(), p);
 		p->nodes.push_back(node);
 		return node;
 	}
@@ -91,8 +91,8 @@ TrackingCameraNode* TrackingCameraNode::createFrom(Entity* e)
 	}
 }
 
-HealthBarNode::HealthBarNode(PositionComponent* p, HealthComponent* h)
-:	position(p), health(h)
+HealthBarNode::HealthBarNode(unsigned int id,PositionComponent* p, HealthComponent* h)
+:	Node(id), position(p), health(h)
 {}
 
 HealthBarNode* HealthBarNode::createFrom(Entity* e)
@@ -101,7 +101,7 @@ HealthBarNode* HealthBarNode::createFrom(Entity* e)
 	HealthComponent* h = e->getComponent<HealthComponent>();
 	if(p && h)
 	{
-		HealthBarNode* node = new HealthBarNode(p, h);
+		HealthBarNode* node = new HealthBarNode(e->getId(), p, h);
 		p->nodes.push_back(node);
 		h->nodes.push_back(node);
 		return node;

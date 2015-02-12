@@ -22,10 +22,11 @@ class Entity;
 
 struct Node
 {
-	Node();
+	Node(unsigned int id);
 	virtual ~Node() = default;
 
 	bool valid;
+	unsigned int parentId;
 
 	/*
 	 * All nodes must implement the following method:
@@ -36,7 +37,7 @@ struct Node
 
 struct RenderNode : public Node
 {
-	RenderNode(PositionComponent* p, RenderComponent* r, StateComponent* s);
+	RenderNode(unsigned int id, PositionComponent* p, RenderComponent* r, StateComponent* s);
 
 	PositionComponent* position;
 	RenderComponent* render;
@@ -47,7 +48,7 @@ struct RenderNode : public Node
 
 struct MoveNode : public Node
 {
-	MoveNode(PositionComponent* p, MoveComponent* m, StateComponent* s);
+	MoveNode(unsigned int id, PositionComponent* p, MoveComponent* m, StateComponent* s);
 
 	PositionComponent* position;
 	MoveComponent* move;
@@ -58,7 +59,7 @@ struct MoveNode : public Node
 
 struct CollisionNode : public Node
 {
-	CollisionNode(PositionComponent* p, CollisionComponent* c);
+	CollisionNode(unsigned int id, PositionComponent* p, CollisionComponent* c);
 
 	PositionComponent* position;
 	CollisionComponent* collision;
@@ -68,7 +69,7 @@ struct CollisionNode : public Node
 
 struct HealthBarNode : public Node
 {
-	HealthBarNode(PositionComponent* p, HealthComponent* h);
+	HealthBarNode(unsigned int id, PositionComponent* p, HealthComponent* h);
 
 	PositionComponent* position;
 	HealthComponent* health;
@@ -79,7 +80,7 @@ struct HealthBarNode : public Node
 /* Static Nodes -> not handled by ECS Manager */
 struct TrackingCameraNode : public Node
 {
-	TrackingCameraNode(PositionComponent* p);
+	TrackingCameraNode(unsigned int id, PositionComponent* p);
 
 	PositionComponent* position;
 

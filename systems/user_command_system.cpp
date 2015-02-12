@@ -8,6 +8,8 @@
 #include <iostream>
 using namespace std;
 
+#include <engine/engine.hpp>
+
 #include "user_command_system.hpp"
 
 UserCommandSystem::UserCommandSystem()
@@ -43,11 +45,16 @@ bool UserCommandSystem::run()
 			totalMove += {1, 0};
 		}
 
-		if(totalMove.x != 0 || totalMove.y != 0)
+		Engine& engine = Engine::getInstance();
+
+		Effect* moveEffect = new MoveEffect(engine.getEcsManager()->getEntity(_playerNode->parentId), totalMove);
+		engine.getEffectSystem()->addEffect(moveEffect);
+
+		/*if(totalMove.x != 0 || totalMove.y != 0)
 			cout << "Moving player!" << endl;
 
 		totalMove = totalMove.scale(_playerNode->move->speed);
-		_playerNode->move->goalMove = totalMove;
+		_playerNode->move->goalMove = totalMove;*/
 	}
 
 	return true;

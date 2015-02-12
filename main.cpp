@@ -21,6 +21,7 @@
 #include <systems/collision_system.hpp>
 #include <systems/sandbox_system.hpp>
 #include <graphics/tracking_camera.hpp>
+#include <engine/engine.hpp>
 
 using namespace std;
 
@@ -39,9 +40,7 @@ int main(int argc, char* args[])
 	Sprite slimeSprite = sf.makeSprite(gw, "slime");
 	Sprite bkgSprite = sf.makeSprite(gw, "background");
 
-	EcsManager* ecs = new EcsManager();
-
-	unsigned long nextId = 1;
+	EcsManager* ecs = Engine::getInstance().getEcsManager();
 
 	Entity* e = ecs->createEntity();
 
@@ -94,6 +93,7 @@ int main(int argc, char* args[])
 	UserCommandSystem* ucs = new UserCommandSystem();
 	CollisionSystem* col = new CollisionSystem();
 	SandboxSystem* sbox = new SandboxSystem();
+	EffectSystem* fx = Engine::getInstance().getEffectSystem();
 
 	//ecs->addNodeListener<RenderNode>(render);
 	//ecs->addNodeListener<MoveNode>(move);
@@ -117,6 +117,7 @@ int main(int argc, char* args[])
 	gm->addFixedRunnable(move);
 	gm->addFixedRunnable(col);
 	gm->addFixedRunnable(sbox);
+	gm->addFixedRunnable(fx);
 
 	gm->addVariableRunnable(render);
 
@@ -128,7 +129,6 @@ int main(int argc, char* args[])
 
 	delete render;
 	delete move;
-	delete ecs;
 	delete ucs;
 	delete gm;
 	delete im;

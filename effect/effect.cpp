@@ -25,3 +25,22 @@ bool SequentialEffectList::execute()
 	}
 	return true;
 }
+
+EntityEffect::EntityEffect(Entity* e)
+:	_entity(e)
+{}
+
+MoveEffect::MoveEffect(Entity* e, Vec2<double> direction)
+:	EntityEffect(e), _direction(direction)
+{}
+
+bool MoveEffect::execute()
+{
+	PositionComponent* p = _entity->getComponent<PositionComponent>();
+	MoveComponent* m = _entity->getComponent<MoveComponent>();
+	if(p && m)
+	{
+		p->movePos(_direction.scale(m->speed));
+	}
+	return true;
+}

@@ -13,7 +13,10 @@ using namespace std;
 
 bool EffectSystem::run()
 {
-	_effects.erase(remove_if(_effects.begin(), _effects.end(), EffectRunner()), _effects.end());
+	//_effects.erase(remove_if(_effects.begin(), _effects.end(), EffectRunner()), _effects.end());
+	for(auto e : _effects)
+		e->execute();
+	_effects.clear();
 	return true;
 }
 
