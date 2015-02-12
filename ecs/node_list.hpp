@@ -27,6 +27,14 @@ struct NodeListInterface
 template <typename T>
 struct NodeList : public NodeListInterface
 {
+	~NodeList()
+	{
+		for(T* node : nodes)
+		{
+			delete node;
+		}
+	}
+
 	struct NodeValidityChecker : public unary_function<T*, bool>
 	{
 		bool operator()(T* t) const
@@ -52,7 +60,9 @@ struct NodeList : public NodeListInterface
 	{
 		T* n = T::createFrom(e);
 		if(n)
+		{
 			nodes.push_back(n);
+		}
 	}
 
 	vector<T*> nodes;
