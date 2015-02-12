@@ -19,6 +19,7 @@
 #include <systems/move_system.hpp>
 #include <systems/user_command_system.hpp>
 #include <systems/collision_system.hpp>
+#include <systems/sandbox_system.hpp>
 #include <graphics/tracking_camera.hpp>
 
 using namespace std;
@@ -92,6 +93,7 @@ int main(int argc, char* args[])
 	MoveSystem* move = new MoveSystem();
 	UserCommandSystem* ucs = new UserCommandSystem();
 	CollisionSystem* col = new CollisionSystem();
+	SandboxSystem* sbox = new SandboxSystem();
 
 	//ecs->addNodeListener<RenderNode>(render);
 	//ecs->addNodeListener<MoveNode>(move);
@@ -101,6 +103,7 @@ int main(int argc, char* args[])
 	render->::NodeSystem<HealthBarNode>::setNodeList(ecs->getNodeList<HealthBarNode>());
 	move->setNodeList(ecs->getNodeList<MoveNode>());
 	col->setNodeList(ecs->getNodeList<CollisionNode>());
+	sbox->setNodeList(ecs->getNodeList<HealthBarNode>());
 
 	ucs->setPlayerNode(MoveNode::createFrom(e));
 
@@ -113,11 +116,13 @@ int main(int argc, char* args[])
 	gm->addFixedRunnable(ucs);
 	gm->addFixedRunnable(move);
 	gm->addFixedRunnable(col);
+	gm->addFixedRunnable(sbox);
 
 	gm->addVariableRunnable(render);
 
 	im->addObserver(move);
 	im->addObserver(ucs);
+	im->addObserver(sbox);
 
 	gm->run();
 
@@ -128,6 +133,7 @@ int main(int argc, char* args[])
 	delete gm;
 	delete im;
 	delete col;
+	delete sbox;
 
 	SdlUtils::quit();
 

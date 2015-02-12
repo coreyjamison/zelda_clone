@@ -64,3 +64,21 @@ CollisionComponent::CollisionComponent(Vec2<double> s, unsigned int t, unsigned 
 HealthComponent::HealthComponent(int h, int m)
 :	health(h), maxHealth(m)
 {}
+
+void HealthComponent::damage(int amount)
+{
+	health -= amount;
+	if(health < 0)
+	{
+		health = 0;
+	}
+}
+
+void HealthComponent::heal(int amount)
+{
+	health += amount;
+	if(health > maxHealth)
+	{
+		health = maxHealth;
+	}
+}

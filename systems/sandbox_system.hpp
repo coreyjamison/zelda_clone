@@ -14,7 +14,7 @@
 #include <input_manager/input_manager.hpp>
 
 /* This is where temporary prototype code goes while we figure out a good home for it */
-class SandboxSystem : public FixedRunnable, public InputObserver
+class SandboxSystem : public FixedRunnable, public InputObserver, public NodeSystem<HealthBarNode>
 {
 public:
 	virtual bool run();

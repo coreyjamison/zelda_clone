@@ -102,6 +102,9 @@ struct HealthComponent : public Component
 {
 	HealthComponent(int h, int m);
 
+	void damage(int amount);
+	void heal(int amount);
+
 	int health;
 	int maxHealth;
 };

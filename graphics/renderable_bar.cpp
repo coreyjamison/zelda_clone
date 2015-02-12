@@ -13,6 +13,11 @@ RenderableBar::RenderableBar(double filled, Vec2<int> offset, Vec2<int> size)
 
 void RenderableBar::render( SdlRenderer* renderer, Vec2<int> renderPos )
 {
+	if(_filled < 0)
+		_filled = 0;
+
+	if(_filled > 1)
+		_filled = 1;
 	Vec2<int> pos = renderPos + _offset - (_size/2);
 
 	int filledWidth = static_cast<int>((_size.x-2)*_filled);
