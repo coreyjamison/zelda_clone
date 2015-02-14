@@ -11,6 +11,7 @@
 #include <unordered_map>
 
 #include <graphics/game_window.hpp>
+#include <ecs/ecs_manager.hpp>
 
 class Engine
 {

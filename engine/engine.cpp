@@ -5,6 +5,8 @@
  *      Author: Corey
  */
 
+#include "engine.hpp"
+
 Engine::Engine()
 :	_window("Test!", {640, 480})
 {
@@ -13,7 +15,7 @@ Engine::Engine()
 
 Engine& Engine::getInstance()
 {
-	static Engine instance();
+	static Engine instance{};
 	return instance;
 }
 
