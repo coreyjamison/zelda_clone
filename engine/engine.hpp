@@ -13,6 +13,7 @@
 #include <graphics/game_window.hpp>
 #include <ecs/ecs_manager.hpp>
 
+using namespace std;
 class Engine
 {
 public:
@@ -20,6 +21,8 @@ public:
 
 	GameWindow& getWindow();
 	EcsManager& getEcsManager();
+
+	void loadSprites(string configFile);
 
 private:
 	Engine();
@@ -30,6 +33,8 @@ private:
 
 	GameWindow _window;
 	EcsManager _ecsManager;
+
+	unordered_map<string, Sprite*> _sprites;
 };
 
 

@@ -19,6 +19,8 @@ public:
 	Sprite makeDemoSprite( const GameWindow& window );
 	Sprite makeSprite(const GameWindow& window, std::string name);
 	SdlTexture makeTexture(string imageFile, const GameWindow& window);
+	unordered_map<string, Sprite*> loadSprites(const GameWindow& window, string configFile);
+
 
 private:
 

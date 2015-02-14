@@ -35,6 +35,10 @@ int main(int argc, char* args[])
 
 	GameWindow gw{"Test!", {640, 480}};
 
+	unordered_map<string, Sprite*> sprites = sf.loadSprites(gw, "res/sprite_config.json");
+
+	SDL_Delay(1000);
+
 	Sprite guySprite = sf.makeSprite(gw, "guy1");
 	Sprite slimeSprite = sf.makeSprite(gw, "slime");
 	Sprite bkgSprite = sf.makeSprite(gw, "background");
@@ -46,7 +50,7 @@ int main(int argc, char* args[])
 	Entity* e = ecs->createEntity();
 
 	PositionComponent p{{100, 100}};
-	RenderComponent r{&guySprite, RenderLayer::ENTITIES};
+	RenderComponent r{sprites["guy1"], RenderLayer::ENTITIES};
 	StateComponent s{StateComponent::Direction::RIGHT|StateComponent::Action::IDLE};
 	MoveComponent m{2};
 	CollisionComponent c{{25, 15}, CollisionComponent::ENTITY, CollisionComponent::ENTITY, 1};
@@ -62,7 +66,7 @@ int main(int argc, char* args[])
 	Entity* slime = ecs->createEntity();
 
 	PositionComponent ps{{400, 400}};
-	RenderComponent rs{&slimeSprite, RenderLayer::ENTITIES};
+	RenderComponent rs{sprites["slime"], RenderLayer::ENTITIES};
 	StateComponent ss{StateComponent::Direction::DOWN|StateComponent::Action::IDLE};
 	MoveComponent ms{2};
 	CollisionComponent cs{{25, 15}, CollisionComponent::ENTITY, 0, 1};
@@ -80,7 +84,7 @@ int main(int argc, char* args[])
 	// TODO - maybe make multiple sprite types so our background doesn't need
 	// a direction and an action
 	PositionComponent p_bkg{{0, 0}};
-	RenderComponent r_bkg{&bkgSprite, RenderLayer::TERRAIN};
+	RenderComponent r_bkg{sprites["background"], RenderLayer::TERRAIN};
 	StateComponent s_bkg{StateComponent::Direction::UP|StateComponent::Action::IDLE};
 
 	bkg->addComponent(&p_bkg);
