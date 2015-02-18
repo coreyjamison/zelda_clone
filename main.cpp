@@ -92,7 +92,7 @@ int main(int argc, char* args[])
 	bkg->addComponent(&r_bkg);
 	bkg->addComponent(&s_bkg);
 
-	TrackingCamera tc{TrackingCameraNode::createFrom(slime), {640, 480}, {640, 480}};
+	TrackingCamera tc{TrackingCameraNode::createFrom(e), {640, 480}, {640, 480}};
 
 	RenderSystem* render = new RenderSystem(&gw, &tc);
 	MoveSystem* move = new MoveSystem();
@@ -110,7 +110,7 @@ int main(int argc, char* args[])
 	col->setNodeList(ecs.getNodeList<CollisionNode>());
 	sbox->setNodeList(ecs.getNodeList<HealthBarNode>());
 
-	ucs->setPlayerNode(MoveNode::createFrom(slime));
+	ucs->setPlayerNode(MoveNode::createFrom(e));
 
 	ecs.checkNodes(e);
 	ecs.checkNodes(slime);
