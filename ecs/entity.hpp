@@ -15,6 +15,7 @@
 using namespace std;
 
 class Component;
+class ComponentModifier;
 
 class Entity
 {

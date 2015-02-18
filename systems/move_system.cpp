@@ -31,7 +31,6 @@ bool MoveSystem::run()
 {
 	for(MoveNode* node : _nodes->nodes)
 	{
-		cout << "Moving node!" << endl;
 		Vec2<double> goal = node->move->goalMove.scaleBack(node->move->speed);
 		node->position->movePos(goal);
 

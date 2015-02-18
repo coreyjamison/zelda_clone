@@ -26,7 +26,10 @@ private:
 	{
 		bool operator()(Effect* e) const
 		{
-			return e->execute();
+			bool finished = e->execute();
+			if(finished)
+				delete e;
+			return finished;
 		}
 	};
 

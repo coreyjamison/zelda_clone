@@ -29,3 +29,8 @@ EcsManager& Engine::getEcsManager()
 	return _ecsManager;
 }
 
+EffectSystem& Engine::getEffectSystem()
+{
+	return _effectSystem;
+}
+

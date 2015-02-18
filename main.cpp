@@ -21,6 +21,7 @@
 #include <systems/collision_system.hpp>
 #include <systems/sandbox_system.hpp>
 #include <graphics/tracking_camera.hpp>
+#include <engine/engine.hpp>
 
 using namespace std;
 
@@ -33,7 +34,7 @@ int main(int argc, char* args[])
 
 	SpriteFactory sf;
 
-	GameWindow gw{"Test!", {640, 480}};
+	GameWindow& gw = Engine::getInstance().getWindow();//{"Test!", {640, 480}};
 
 	unordered_map<string, Sprite*> sprites = sf.loadSprites(gw, "res/sprite_config.json");
 
@@ -43,11 +44,11 @@ int main(int argc, char* args[])
 	Sprite slimeSprite = sf.makeSprite(gw, "slime");
 	Sprite bkgSprite = sf.makeSprite(gw, "background");
 
-	EcsManager* ecs = new EcsManager();
+	EcsManager& ecs = Engine::getInstance().getEcsManager();
 
 	unsigned long nextId = 1;
 
-	Entity* e = ecs->createEntity();
+	Entity* e = ecs.createEntity();
 
 	PositionComponent p{{100, 100}};
 	RenderComponent r{sprites["guy1"], RenderLayer::ENTITIES};
@@ -63,7 +64,7 @@ int main(int argc, char* args[])
 	e->addComponent(&c);
 	e->addComponent(&h);
 
-	Entity* slime = ecs->createEntity();
+	Entity* slime = ecs.createEntity();
 
 	PositionComponent ps{{400, 400}};
 	RenderComponent rs{sprites["slime"], RenderLayer::ENTITIES};
@@ -79,7 +80,7 @@ int main(int argc, char* args[])
 	slime->addComponent(&cs);
 	slime->addComponent(&hs);
 
-	Entity* bkg = ecs->createEntity();
+	Entity* bkg = ecs.createEntity();
 
 	// TODO - maybe make multiple sprite types so our background doesn't need
 	// a direction and an action
@@ -103,17 +104,17 @@ int main(int argc, char* args[])
 	//ecs->addNodeListener<MoveNode>(move);
 	//ecs->addNodeListener<MoveNode>(ucs);
 	//ecs->addNodeListener<CollisionNode>(col);
-	render->::NodeSystem<RenderNode>::setNodeList(ecs->getNodeList<RenderNode>());
-	render->::NodeSystem<HealthBarNode>::setNodeList(ecs->getNodeList<HealthBarNode>());
-	move->setNodeList(ecs->getNodeList<MoveNode>());
-	col->setNodeList(ecs->getNodeList<CollisionNode>());
-	sbox->setNodeList(ecs->getNodeList<HealthBarNode>());
+	render->::NodeSystem<RenderNode>::setNodeList(ecs.getNodeList<RenderNode>());
+	render->::NodeSystem<HealthBarNode>::setNodeList(ecs.getNodeList<HealthBarNode>());
+	move->setNodeList(ecs.getNodeList<MoveNode>());
+	col->setNodeList(ecs.getNodeList<CollisionNode>());
+	sbox->setNodeList(ecs.getNodeList<HealthBarNode>());
 
 	ucs->setPlayerNode(MoveNode::createFrom(e));
 
-	ecs->checkNodes(e);
-	ecs->checkNodes(slime);
-	ecs->checkNodes(bkg);
+	ecs.checkNodes(e);
+	ecs.checkNodes(slime);
+	ecs.checkNodes(bkg);
 
 	gm->addFixedRunnable(im);
 	gm->addFixedRunnable(render);
@@ -121,6 +122,7 @@ int main(int argc, char* args[])
 	gm->addFixedRunnable(move);
 	gm->addFixedRunnable(col);
 	gm->addFixedRunnable(sbox);
+	gm->addFixedRunnable(&Engine::getInstance().getEffectSystem());
 
 	gm->addVariableRunnable(render);
 
@@ -132,7 +134,6 @@ int main(int argc, char* args[])
 
 	delete render;
 	delete move;
-	delete ecs;
 	delete ucs;
 	delete gm;
 	delete im;

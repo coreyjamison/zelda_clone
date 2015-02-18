@@ -5,6 +5,9 @@
  *      Author: Corey
  */
 
+#include <engine/engine.hpp>
+#include <effect/effect.hpp>
+
 #include "sandbox_system.hpp"
 
 bool SandboxSystem::run()
@@ -13,14 +16,24 @@ bool SandboxSystem::run()
 	{
 		if(_nodes->nodes.size() > 0)
 		{
-			_nodes->nodes[0]->health->heal(10);
+			Entity* e = Engine::getInstance().getEcsManager().getEntity(0);
+
+			SequentialEffectList* ef = new SequentialEffectList();
+			//ef->addEffect(new WaitEffect(100));
+			ef->addEffect(new DamageEffect(e, -10));
+
+			Engine::getInstance().getEffectSystem().addEffect(ef);
 		}
 	}
 	if(_input.pressed(ButtonType::X))
 	{
 		if(_nodes->nodes.size() > 0)
 		{
-			_nodes->nodes[0]->health->damage(10);
+			Entity* e = Engine::getInstance().getEcsManager().getEntity(0);
+
+			DotEffect* dot = new DotEffect(e, 2, 10, 20);
+
+			Engine::getInstance().getEffectSystem().addEffect(dot);
 		}
 	}
 	if(_input.pressed(ButtonType::C))

@@ -12,15 +12,17 @@
 
 #include <graphics/game_window.hpp>
 #include <ecs/ecs_manager.hpp>
+#include <effect/effect_system.hpp>
 
 using namespace std;
 class Engine
 {
 public:
-	Engine& getInstance();
+	static Engine& getInstance();
 
 	GameWindow& getWindow();
 	EcsManager& getEcsManager();
+	EffectSystem& getEffectSystem();
 
 	void loadSprites(string configFile);
 
@@ -33,6 +35,7 @@ private:
 
 	GameWindow _window;
 	EcsManager _ecsManager;
+	EffectSystem _effectSystem;
 
 	unordered_map<string, Sprite*> _sprites;
 };
