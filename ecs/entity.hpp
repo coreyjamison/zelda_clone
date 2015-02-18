@@ -20,9 +20,11 @@ class ComponentModifier;
 class Entity
 {
 public:
+	Entity() = default;
 	Entity(unsigned long id);
 
 	inline unsigned long getId() {return _id;}
+	void setId(unsigned long id);
 
 	void addComponent(Component* c);
 
@@ -39,6 +41,8 @@ public:
 		}
 	}
 
+	Entity* clone();
+
 	template <typename T>
 	bool hasComponent()
 	{
@@ -48,7 +52,7 @@ public:
 	bool hasComponent(const type_info* componentType);
 
 private:
-	unsigned long _id;
+	unsigned long _id = -1;
 	unordered_map<const type_info*, Component*> _components;
 };
 

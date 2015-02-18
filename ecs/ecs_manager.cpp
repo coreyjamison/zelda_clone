@@ -58,6 +58,18 @@ Entity* EcsManager::createEntity()
 	return newEntity;
 }
 
+Entity* EcsManager::cloneEntity(unsigned int id)
+{
+	if(_entities.find(id) != _entities.end())
+	{
+		Entity* newEntity = _entities[id]->clone();
+		newEntity->setId(_nextId);
+		_entities[_nextId++] = newEntity;
+		return newEntity;
+	}
+	return nullptr;
+}
+
 Entity* EcsManager::getEntity(unsigned int id)
 {
 	if(_entities.find(id) != _entities.end())

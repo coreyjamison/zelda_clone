@@ -80,6 +80,9 @@ int main(int argc, char* args[])
 	slime->addComponent(&cs);
 	slime->addComponent(&hs);
 
+	Entity* slime2 = ecs.cloneEntity(slime->getId());
+	slime2->getComponent<PositionComponent>()->movePos({100,50});
+
 	Entity* bkg = ecs.createEntity();
 
 	// TODO - maybe make multiple sprite types so our background doesn't need
@@ -114,6 +117,7 @@ int main(int argc, char* args[])
 
 	ecs.checkNodes(e);
 	ecs.checkNodes(slime);
+	ecs.checkNodes(slime2);
 	ecs.checkNodes(bkg);
 
 	gm->addFixedRunnable(im);

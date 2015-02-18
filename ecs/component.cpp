@@ -21,6 +21,11 @@ PositionComponent::PositionComponent(Vec2<double> pos)
 :	curPos(pos), lastPos(pos)
 {}
 
+Component* PositionComponent::copy()
+{
+	return new PositionComponent(curPos);
+}
+
 void PositionComponent::setPos(Vec2<double> newPos)
 {
 	lastPos = curPos;
@@ -39,9 +44,19 @@ RenderComponent::RenderComponent(Sprite* s, RenderLayer l)
  	layer(l)
 {}
 
+Component* RenderComponent::copy()
+{
+	return new RenderComponent(sprite, layer);
+}
+
 StateComponent::StateComponent(unsigned int s)
 :	state(s)
 {}
+
+Component* StateComponent::copy()
+{
+	return new StateComponent(state);
+}
 
 void StateComponent::setAction(Action a)
 {
@@ -57,13 +72,28 @@ MoveComponent::MoveComponent(double s)
 :	speed(s), goalMove({0, 0})
 {}
 
+Component* MoveComponent::copy()
+{
+	return new MoveComponent(speed);
+}
+
 CollisionComponent::CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m, int w)
 :	size(s), type(t), mask(m), weight(w)
 {}
 
+Component* CollisionComponent::copy()
+{
+	return new CollisionComponent(size, type, mask, weight);
+}
+
 HealthComponent::HealthComponent(int h, int m)
 :	health(h), maxHealth(m)
 {}
+
+Component* HealthComponent::copy()
+{
+	return new HealthComponent(health, maxHealth);
+}
 
 void HealthComponent::damage(int amount)
 {

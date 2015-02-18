@@ -23,6 +23,8 @@ struct Component
 {
 	virtual ~Component();
 
+	virtual Component* copy() = 0;
+
 	unsigned long parentId = -1;
 	vector<Node*> nodes;
 };
@@ -30,6 +32,8 @@ struct Component
 struct PositionComponent : public Component
 {
 	PositionComponent(Vec2<double> pos);
+
+	virtual Component* copy();
 
 	void setPos(Vec2<double> newPos);
 	void movePos(Vec2<double> move);
@@ -43,6 +47,8 @@ struct RenderComponent : public Component
 {
 	RenderComponent(Sprite* s, RenderLayer l);
 
+	virtual Component* copy();
+
 	Sprite* sprite;
 	unsigned int frame;
 	RenderLayer layer;
@@ -52,6 +58,7 @@ struct StateComponent : public Component
 {
 	StateComponent(unsigned int s);
 
+	virtual Component* copy();
 
 	unsigned int state;
 
@@ -77,6 +84,8 @@ struct MoveComponent : public Component
 {
 	MoveComponent(double s);
 
+	virtual Component* copy();
+
 	double speed;
 	Vec2<double> goalMove;
 };
@@ -84,6 +93,8 @@ struct MoveComponent : public Component
 struct CollisionComponent : public Component
 {
 	CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m, int w);
+
+	virtual Component* copy();
 
 	enum CollisionType
 	{
@@ -101,6 +112,8 @@ struct CollisionComponent : public Component
 struct HealthComponent : public Component
 {
 	HealthComponent(int h, int m);
+
+	virtual Component* copy();
 
 	void damage(int amount);
 	void heal(int amount);

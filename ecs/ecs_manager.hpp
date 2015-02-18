@@ -37,6 +37,7 @@ public:
 	void checkNodes(unsigned int id);
 
 	Entity* createEntity();
+	Entity* cloneEntity(unsigned int id);
 	Entity* getEntity(unsigned int id);
 
 	void removeInvalids();
