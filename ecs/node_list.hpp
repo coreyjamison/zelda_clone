@@ -13,17 +13,28 @@
 
 #include "node.hpp"
 
+class Entity;
+
 struct NodeListInterface
 {
 	virtual ~NodeListInterface() = default;
 
 	virtual void removeInvalids() = 0;
 	virtual void addNode(Node* n) = 0;
+	virtual void addNodeFromEntity(Entity* e) = 0;
 };
 
 template <typename T>
 struct NodeList : public NodeListInterface
 {
+	~NodeList()
+	{
+		for(T* node : nodes)
+		{
+			delete node;
+		}
+	}
+
 	struct NodeValidityChecker : public unary_function<T*, bool>
 	{
 		bool operator()(T* t) const
@@ -42,6 +53,15 @@ struct NodeList : public NodeListInterface
 		if(typeid(*n) == typeid(T))
 		{
 			nodes.push_back(static_cast<T*>(n));
+		}
+	}
+
+	virtual void addNodeFromEntity(Entity* e)
+	{
+		T* n = T::createFrom(e);
+		if(n)
+		{
+			nodes.push_back(n);
 		}
 	}
 
