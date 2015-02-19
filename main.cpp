@@ -16,6 +16,7 @@
 #include <ecs/component.hpp>
 #include <ecs/entity.hpp>
 #include <ecs/ecs_manager.hpp>
+#include <ecs/component_factory.hpp>
 #include <systems/move_system.hpp>
 #include <systems/user_command_system.hpp>
 #include <systems/collision_system.hpp>
@@ -31,6 +32,18 @@ int main(int argc, char* args[])
 
 	InputManager* im = new InputManager();
 	GameLoop* gm = new GameLoop();
+
+	ComponentFactory cf;
+
+	using namespace rapidjson;
+	Document componentJson;
+	componentJson.Parse("{\"x\":100, \"y\":100}");
+
+	PositionComponent* test = cf.initFrom2(componentJson);
+
+	cout << "x: " << test->curPos.x << ", y: " << test->curPos.y << endl;
+
+	SDL_Delay(5000);
 
 	SpriteFactory sf;
 
@@ -50,14 +63,14 @@ int main(int argc, char* args[])
 
 	Entity* e = ecs.createEntity();
 
-	PositionComponent p{{100, 100}};
+	//PositionComponent p{{100, 100}};
 	RenderComponent r{sprites["guy1"], RenderLayer::ENTITIES};
 	StateComponent s{StateComponent::Direction::RIGHT|StateComponent::Action::IDLE};
 	MoveComponent m{2};
 	CollisionComponent c{{25, 15}, CollisionComponent::ENTITY, CollisionComponent::ENTITY, 1};
 	HealthComponent h{50, 100};
 
-	e->addComponent(&p);
+	e->addComponent(test);
 	e->addComponent(&r);
 	e->addComponent(&s);
 	e->addComponent(&m);
