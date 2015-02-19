@@ -1,6 +1,9 @@
 {
 	"entities": [
 		{
+			"flags": [
+				"player"
+			],
 			"prototype": "guy1",
 			"components": [
 				{

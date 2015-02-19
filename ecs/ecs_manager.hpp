@@ -32,11 +32,14 @@ public:
 		return static_cast<NodeList<T>*>(_nodeLists[&typeid(T)]);
 	}
 
-	void addEntity(Entity* e);
+	unsigned int addEntity(Entity* e);
 	void checkNodes(Entity* e);
 	void checkNodes(unsigned int id);
+	void flagEntity(unsigned int id, vector<string> flags);
 
-	Entity* createEntity();
+	vector<Entity*> getFlaggedEntities(string flag);
+
+	unsigned int createEntity();
 	Entity* cloneEntity(unsigned int id);
 	Entity* getEntity(unsigned int id);
 
@@ -44,6 +47,7 @@ public:
 
 private:
 	unordered_map<unsigned long, Entity*> _entities;
+	unordered_map<string, vector<Entity*>> _flaggedEntities;
 	unordered_map<const type_info*, NodeListInterface*> _nodeLists;
 	unsigned int _nextId;
 };

@@ -42,93 +42,10 @@ int main(int argc, char* args[])
 	InputManager* im = new InputManager();
 	GameLoop* gm = new GameLoop();
 
-	unsigned int testMask = collisionMaskFromString("entity|projectile");
-	cout << "testMask: " << testMask << endl;
-
-	ComponentFactory cf;
-
-	using namespace rapidjson;
-	Document componentJson;
-	componentJson.Parse("{\"x\":100, \"y\":100}");
-
-	//PositionComponent* test = cf.initFrom<PositionComponent>(componentJson);
-	PositionComponent* test = cf.initPositionComponent(componentJson);
-
-	componentJson.Parse("{\"name\":\"guy1\",\"layer\":\"entities\"}");
-
-	//RenderComponent* testRender = cf.initRenderComponent(componentJson);
-	//if(testRender)
-	{
-		cout << "got the renderComponent" << endl;
-	}
-
-	cout << "x: " << test->curPos.x << ", y: " << test->curPos.y << endl;
-
-
-	SpriteFactory sf;
-
-	GameWindow& gw = Engine::getInstance().getWindow();//{"Test!", {640, 480}};
-
-	unordered_map<string, Sprite*> sprites = sf.loadSprites(gw, "res/sprite_config.json");
-
-
-	Sprite guySprite = sf.makeSprite(gw, "guy1");
-	Sprite slimeSprite = sf.makeSprite(gw, "slime");
-	Sprite bkgSprite = sf.makeSprite(gw, "background");
-
+	GameWindow& gw = Engine::getInstance().getWindow();
 	EcsManager& ecs = Engine::getInstance().getEcsManager();
 
-	unsigned long nextId = 1;
-
-	Entity* e = ecs.createEntity();
-
-	//PositionComponent p{{100, 100}};
-	RenderComponent r{sprites["guy1"], RenderLayer::ENTITIES};
-	StateComponent s{Direction::RIGHT|Action::IDLE};
-	MoveComponent m{2};
-	CollisionComponent c{{25, 15}, CollisionType::ENTITY, CollisionType::ENTITY, 1};
-	HealthComponent h{50, 100};
-
-	e->addComponent(test);
-	e->addComponent(&r);
-	e->addComponent(&s);
-	e->addComponent(&m);
-	e->addComponent(&c);
-	e->addComponent(&h);
-
-	/*
-	Entity* slime = ecs.createEntity();
-
-	PositionComponent ps{{400, 400}};
-	RenderComponent rs{sprites["slime"], RenderLayer::ENTITIES};
-	StateComponent ss{Direction::DOWN|Action::IDLE};
-	MoveComponent ms{2};
-	CollisionComponent cs{{25, 15}, CollisionType::ENTITY, 0, 1};
-	HealthComponent hs{20, 25};
-
-	slime->addComponent(&ps);
-	slime->addComponent(&rs);
-	slime->addComponent(&ss);
-	slime->addComponent(&ms);
-	slime->addComponent(&cs);
-	slime->addComponent(&hs);
-
-	Entity* slime2 = ecs.cloneEntity(slime->getId());
-	slime2->getComponent<PositionComponent>()->movePos({100,50});
-
-	Entity* bkg = ecs.createEntity();
-
-	// TODO - maybe make multiple sprite types so our background doesn't need
-	// a direction and an action
-	PositionComponent p_bkg{{0, 0}};
-	RenderComponent r_bkg{sprites["background"], RenderLayer::TERRAIN};
-	StateComponent s_bkg{Direction::UP|Action::IDLE};
-
-	bkg->addComponent(&p_bkg);
-	bkg->addComponent(&r_bkg);
-	bkg->addComponent(&s_bkg);*/
-
-	TrackingCamera tc{TrackingCameraNode::createFrom(e), {640, 480}, {640, 480}};
+	TrackingCamera tc{{640, 480}, {640, 480}};
 
 	RenderSystem* render = new RenderSystem(&gw, &tc);
 	MoveSystem* move = new MoveSystem();
@@ -136,25 +53,20 @@ int main(int argc, char* args[])
 	CollisionSystem* col = new CollisionSystem();
 	SandboxSystem* sbox = new SandboxSystem();
 
-	//ecs->addNodeListener<RenderNode>(render);
-	//ecs->addNodeListener<MoveNode>(move);
-	//ecs->addNodeListener<MoveNode>(ucs);
-	//ecs->addNodeListener<CollisionNode>(col);
 	render->::NodeSystem<RenderNode>::setNodeList(ecs.getNodeList<RenderNode>());
 	render->::NodeSystem<HealthBarNode>::setNodeList(ecs.getNodeList<HealthBarNode>());
 	move->setNodeList(ecs.getNodeList<MoveNode>());
 	col->setNodeList(ecs.getNodeList<CollisionNode>());
 	sbox->setNodeList(ecs.getNodeList<HealthBarNode>());
 
-	engine.getEntityFactory().createPrototypes("res/prototypes.json")
+	engine.getEntityFactory()
+			.createPrototypes("res/prototypes.json")
 			.populate(&engine.getEcsManager(), "res/entities.json");
 
-	ucs->setPlayerNode(MoveNode::createFrom(e));
+	Entity* playerEntity = ecs.getFlaggedEntities("player").front();
 
-	ecs.checkNodes(e);
-	/*ecs.checkNodes(slime);
-	ecs.checkNodes(slime2);
-	ecs.checkNodes(bkg);*/
+	ucs->setPlayerNode(MoveNode::createFrom(playerEntity));
+	tc.setNode(TrackingCameraNode::createFrom(playerEntity));\
 
 	gm->addFixedRunnable(im);
 	gm->addFixedRunnable(render);

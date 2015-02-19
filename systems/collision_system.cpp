@@ -60,10 +60,10 @@ bool CollisionSystem::run()
 
 			if(l1 < r2 && l2 < r1 && t1 < b2 && t2 < b1)
 			{
-				cout << "r2 - l1:" << r2 - l1 << endl;
+				/*cout << "r2 - l1:" << r2 - l1 << endl;
 				cout << "r1 - l2:" << r1 - l2 << endl;
 				cout << "b2 - t1:" << b2 - t1 << endl;
-				cout << "b1 - t2:" << b1 - t2 << endl;
+				cout << "b1 - t2:" << b1 - t2 << endl;*/
 				if(r2 - l1 > 0 && r2 - l1 < overlap)
 				{
 					overlap = r2 - l1;
@@ -85,7 +85,7 @@ bool CollisionSystem::run()
 					push = {0, overlap};
 				}
 
-				cout << "Pushing by: " << push.x << ", " << push.y << endl;
+				//cout << "Pushing by: " << push.x << ", " << push.y << endl;
 
 				if(node1->collision->weight != -1 && node2->collision->weight != -1)
 				{
@@ -103,7 +103,7 @@ bool CollisionSystem::run()
 					node2->position->curPos += push;
 				}
 
-				cout << "Collision!" << endl;
+				//cout << "Collision!" << endl;
 				if(node1->collision->mask & node2->collision->type)
 				{
 					cout << "1 -> 2" << endl;

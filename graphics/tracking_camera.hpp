@@ -15,8 +15,11 @@
 
 struct TrackingCamera : public Camera
 {
+	TrackingCamera(Vec2<double> wSize, Vec2<int> sSize);
 	TrackingCamera(TrackingCameraNode* node, Vec2<double> wSize, Vec2<int> sSize);
 	virtual ~TrackingCamera() = default;
+
+	void setNode(TrackingCameraNode* node);
 
 	virtual Vec2<int> getScreenPosition(Vec2<double> wPos);
 	virtual Vec2<double> getWorldPosition(Vec2<int> sPos);

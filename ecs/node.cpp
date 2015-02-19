@@ -8,7 +8,7 @@
 #include "node.hpp"
 
 Node::Node()
-:	valid(true)
+:	valid(true), parentId(-1)
 {}
 
 RenderNode::RenderNode( PositionComponent* p, RenderComponent* r, StateComponent* s)
@@ -22,6 +22,7 @@ RenderNode* RenderNode::createFrom(Entity* e) {
 	StateComponent* s = e->getComponent<StateComponent>();
 	if(p && r) {
 		RenderNode* node = new RenderNode(p, r, s);
+		node->parentId = e->getId();
 		p->nodes.push_back(node);
 		r->nodes.push_back(node);
 		s->nodes.push_back(node);
@@ -42,6 +43,7 @@ MoveNode* MoveNode::createFrom(Entity* e) {
 	StateComponent* s = e->getComponent<StateComponent>();
 	if(p && m) {
 		MoveNode* node = new MoveNode(p, m, s);
+		node->parentId = e->getId();
 		p->nodes.push_back(node);
 		m->nodes.push_back(node);
 		s->nodes.push_back(node);
@@ -63,6 +65,7 @@ CollisionNode* CollisionNode::createFrom(Entity* e)
 	if(p && c)
 	{
 		CollisionNode* node = new CollisionNode(p, c);
+		node->parentId = e->getId();
 		p->nodes.push_back(node);
 		return node;
 	}
@@ -82,6 +85,7 @@ TrackingCameraNode* TrackingCameraNode::createFrom(Entity* e)
 	if(p)
 	{
 		TrackingCameraNode* node = new TrackingCameraNode(p);
+		node->parentId = e->getId();
 		p->nodes.push_back(node);
 		return node;
 	}
@@ -102,6 +106,7 @@ HealthBarNode* HealthBarNode::createFrom(Entity* e)
 	if(p && h)
 	{
 		HealthBarNode* node = new HealthBarNode(p, h);
+		node->parentId = e->getId();
 		p->nodes.push_back(node);
 		h->nodes.push_back(node);
 		return node;

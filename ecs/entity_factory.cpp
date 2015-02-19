@@ -114,10 +114,25 @@ EntityFactory& EntityFactory::populate(EcsManager* ecs, string entityFile)
 
 				cout << "Adding entity!" << endl;
 
-				ecs->addEntity(e);
+				vector<string> f;
+
+				if(entity.HasMember("flags"))
+				{
+					cout << "have flags!" << endl;
+					const Value& flags = entity["flags"];
+					for(Value::ConstValueIterator itr = flags.Begin();
+							itr != flags.End(); ++ itr)
+					{
+						const Value& flag = *itr;
+						cout << "adding flag: " << flag.GetString() << endl;
+						f.push_back(flag.GetString());
+					}
+				}
+
+				unsigned int id = ecs->addEntity(e);
 				ecs->checkNodes(e);
+				ecs->flagEntity(id, f);
 			}
-			SDL_Delay(3000);
 		}
 	}
 

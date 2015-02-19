@@ -19,10 +19,15 @@ EcsManager::~EcsManager()
 	}
 }
 
-void EcsManager::addEntity(Entity* e)
+unsigned int EcsManager::addEntity(Entity* e)
 {
+	if(e->getId() == -1)
+	{
+		e->setId(_nextId++);
+	}
 	_entities[e->getId()] = e;
 	checkNodes(e);
+	return e->getId();
 }
 
 void EcsManager::checkNodes(Entity* e)
@@ -41,6 +46,38 @@ void EcsManager::checkNodes(unsigned int id)
 	}
 }
 
+void EcsManager::flagEntity(unsigned int id, vector<string> flags)
+{
+	cout << "trying to flag entity " << id << endl;
+	if(_entities.find(id) != _entities.end())
+	{
+		for(string flag : flags)
+		{
+			//if(_flaggedEntities.find(flag) != _flaggedEntities.end())
+			//{
+				cout << "Entity " << id << " flagged as \"" << flag << "\"" << endl;
+				_flaggedEntities[flag].push_back(_entities[id]);
+			//}
+		}
+	}
+	else
+	{
+		cout << "didn't find entity!" << endl;
+	}
+}
+
+vector<Entity*> EcsManager::getFlaggedEntities(string flag)
+{
+	if(_flaggedEntities.find(flag) != _flaggedEntities.end())
+	{
+		return _flaggedEntities[flag];
+	}
+	else
+	{
+		return {};
+	}
+}
+
 void EcsManager::removeInvalids()
 {
 	for(auto pair : _nodeLists)
@@ -50,12 +87,12 @@ void EcsManager::removeInvalids()
 }
 
 
-Entity* EcsManager::createEntity()
+unsigned int EcsManager::createEntity()
 {
 	Entity* newEntity = new Entity{_nextId};
-	_entities[_nextId++] = newEntity;
+	_entities[_nextId] = newEntity;
 
-	return newEntity;
+	return _nextId++;
 }
 
 Entity* EcsManager::cloneEntity(unsigned int id)

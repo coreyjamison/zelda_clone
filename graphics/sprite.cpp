@@ -61,7 +61,7 @@ Renderable* Sprite::getRenderable(unsigned int state, unsigned int frame)
 
 	SpriteState s = _states[state];
 
-	cout << s.frames.size() << " frames!" << endl;
+	//cout << s.frames.size() << " frames!" << endl;
 
 	if(s.frames.size() == 0)
 	{

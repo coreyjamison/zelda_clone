@@ -50,7 +50,7 @@ struct NodeList : public NodeListInterface
 
 	virtual void addNode(Node* n)
 	{
-		if(typeid(*n) == typeid(T))
+		if(typeid(*n) == typeid(T) && !haveNode(n->parentId));
 		{
 			nodes.push_back(static_cast<T*>(n));
 		}
@@ -59,10 +59,20 @@ struct NodeList : public NodeListInterface
 	virtual void addNodeFromEntity(Entity* e)
 	{
 		T* n = T::createFrom(e);
-		if(n)
+		if(n && !haveNode(e->getId()))
 		{
 			nodes.push_back(n);
 		}
+	}
+
+	bool haveNode(unsigned int id)
+	{
+		for(T* node : nodes)
+		{
+			if(node->parentId == id)
+				return true;
+		}
+		return false;
 	}
 
 	vector<T*> nodes;
