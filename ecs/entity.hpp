@@ -23,6 +23,8 @@ public:
 	Entity() = default;
 	Entity(unsigned long id);
 
+	~Entity();
+
 	inline unsigned long getId() {return _id;}
 	void setId(unsigned long id);
 

@@ -17,15 +17,13 @@ using namespace std;
 class ComponentFactory
 {
 public:
-	template <typename ComponentType>
-	ComponentType* initFrom(rapidjson::Value& config)
-	{
-		cout << "Unsupported component type!" << endl;
-	}
-
-	PositionComponent* initFrom2(rapidjson::Value& config);
+	PositionComponent* initPositionComponent(rapidjson::Value& config);
+	RenderComponent* initRenderComponent(rapidjson::Value& config);
 };
-
+/*
+template <>
+PositionComponent* ComponentFactory::initFrom<PositionComponent>(rapidjson::Value& config);
+*/
 
 
 #endif /* ECS_COMPONENT_FACTORY_HPP_ */

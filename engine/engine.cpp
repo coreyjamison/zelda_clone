@@ -13,6 +13,11 @@ Engine::Engine()
 
 }
 
+void Engine::init()
+{
+	getInstance();
+}
+
 Engine& Engine::getInstance()
 {
 	static Engine instance{};
@@ -32,5 +37,10 @@ EcsManager& Engine::getEcsManager()
 EffectSystem& Engine::getEffectSystem()
 {
 	return _effectSystem;
+}
+
+SpriteFactory& Engine::getSpriteFactory()
+{
+	return _spriteFactory;
 }
 

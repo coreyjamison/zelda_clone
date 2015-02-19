@@ -30,6 +30,12 @@ int main(int argc, char* args[])
 {
 	SdlUtils::init();
 
+	Engine::init();
+
+	Engine& engine = Engine::getInstance();
+
+	engine.getSpriteFactory().loadSprites(engine.getWindow(), "res/sprite_config.json");
+
 	InputManager* im = new InputManager();
 	GameLoop* gm = new GameLoop();
 
@@ -39,7 +45,16 @@ int main(int argc, char* args[])
 	Document componentJson;
 	componentJson.Parse("{\"x\":100, \"y\":100}");
 
-	PositionComponent* test = cf.initFrom2(componentJson);
+	//PositionComponent* test = cf.initFrom<PositionComponent>(componentJson);
+	PositionComponent* test = cf.initPositionComponent(componentJson);
+
+	componentJson.Parse("{\"name\":\"guy1\",\"layer\":\"entities\"}");
+
+	RenderComponent* testRender = cf.initRenderComponent(componentJson);
+	if(testRender)
+	{
+		cout << "got the renderComponent" << endl;
+	}
 
 	cout << "x: " << test->curPos.x << ", y: " << test->curPos.y << endl;
 
@@ -71,7 +86,7 @@ int main(int argc, char* args[])
 	HealthComponent h{50, 100};
 
 	e->addComponent(test);
-	e->addComponent(&r);
+	e->addComponent(testRender);
 	e->addComponent(&s);
 	e->addComponent(&m);
 	e->addComponent(&c);

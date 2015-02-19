@@ -22,8 +22,14 @@ public:
 	unordered_map<string, Sprite*> loadSprites(const GameWindow& window, string configFile);
 
 
-private:
 
+	Sprite* getSprite(unsigned int spriteId);
+	unsigned int getId(string spriteName);
+private:
+	unsigned int _nextId = 1;
+
+	unordered_map<unsigned int, Sprite*> _sprites;
+	unordered_map<string, unsigned int> _spriteIds;
 };
 
 

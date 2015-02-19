@@ -267,6 +267,9 @@ unordered_map<string, Sprite*> SpriteFactory::loadSprites(const GameWindow& wind
 										cout << "Missing a member of sprite " << name << endl;
 									}
 					spriteMap[name] = tempSprite;
+
+					_spriteIds[name] = _nextId;
+					_sprites[_nextId++] = tempSprite;
 				}
 			/*
 			string name = "DELETEME";
@@ -588,4 +591,22 @@ SdlTexture SpriteFactory::makeTexture(string imageFile, const GameWindow& window
 	}
 
 	return texture;
+}
+
+Sprite* SpriteFactory::getSprite(unsigned int spriteId)
+{
+	if(_sprites.find(spriteId) != _sprites.end())
+	{
+		return _sprites[spriteId];
+	}
+	return nullptr;
+}
+
+unsigned int SpriteFactory::getId(string spriteName)
+{
+	if(_spriteIds.find(spriteName) != _spriteIds.end())
+	{
+		return _spriteIds[spriteName];
+	}
+	return -1;
 }

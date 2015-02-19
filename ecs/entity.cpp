@@ -11,6 +11,14 @@ Entity::Entity(unsigned long id)
 :	_id(id)
 {}
 
+Entity::~Entity()
+{
+	for(auto pair : _components)
+	{
+		delete pair.second;
+	}
+}
+
 void Entity::setId(unsigned long id)
 {
 	_id = id;
