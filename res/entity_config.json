@@ -1,0 +1,37 @@
+{
+	"entityTypes": {
+		"name": "guy",
+		"components": [
+			{
+				"type": "position",
+				"config": {
+					"x": 50,
+					"y": 50
+				}
+			},
+			{
+				"type": "render",
+				"config": {
+					"sprite": "guy1",
+					"layer": "entities"
+				}
+			},
+			{
+				"type": "state",
+				"config": {}
+			},
+			{
+				"type": "move",
+				"config": {
+					"speed": 2
+				}
+			},
+			{
+				"type": "collision",
+				"config": {
+					"w": 25,
+					"h": 15,
+					"type": "entity",
+					"mask": "entity",
+					"weight": 1
+				}

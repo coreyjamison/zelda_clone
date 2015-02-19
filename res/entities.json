@@ -7,7 +7,7 @@
 					"type": "position",
 					"config": {
 						"x": 100,
-						"y": 100
+						"y": 400
 					}
 				},
 				{
@@ -26,6 +26,82 @@
 					"type": "position",
 					"config": {
 						"x": 200,
+						"y": 100
+					}
+				},
+				{
+					"type": "state",
+					"config": {
+						"action": "idle",
+						"direction": "down"
+					}
+				}
+			]
+		},
+		{
+			"prototype": "slime",
+			"components": [
+				{
+					"type": "position",
+					"config": {
+						"x": 300,
+						"y": 100
+					}
+				},
+				{
+					"type": "state",
+					"config": {
+						"action": "idle",
+						"direction": "down"
+					}
+				}
+			]
+		},
+		{
+			"prototype": "slime",
+			"components": [
+				{
+					"type": "position",
+					"config": {
+						"x": 400,
+						"y": 100
+					}
+				},
+				{
+					"type": "state",
+					"config": {
+						"action": "idle",
+						"direction": "down"
+					}
+				}
+			]
+		},
+		{
+			"prototype": "slime",
+			"components": [
+				{
+					"type": "position",
+					"config": {
+						"x": 500,
+						"y": 100
+					}
+				},
+				{
+					"type": "state",
+					"config": {
+						"action": "idle",
+						"direction": "down"
+					}
+				}
+			]
+		},
+		{
+			"prototype": "slime",
+			"components": [
+				{
+					"type": "position",
+					"config": {
+						"x": 600,
 						"y": 100
 					}
 				},
