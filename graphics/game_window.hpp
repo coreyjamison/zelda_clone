@@ -13,19 +13,11 @@
 #include <memory>
 
 #include <data_containers/vec2.hpp>
+#include <data_containers/enums.hpp>
 #include "renderable.hpp"
 
-enum class RenderLayer
-{
-	TERRAIN,
-	TERRAIN_BLENDING,
-	DECORATION,
-	SHADOWS,
-	ENTITIES,
-	UI
-};
-
 using namespace std;
+using namespace Enums;
 
 class GameWindow {
 public:

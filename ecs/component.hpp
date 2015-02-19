@@ -12,12 +12,15 @@
 #include <set>
 
 #include <data_containers/vec2.hpp>
+#include <data_containers/enums.hpp>
 #include <graphics/sprite.hpp>
 #include <graphics/game_window.hpp>
 
 #include "node.hpp"
 
 class Node;
+
+using namespace Enums;
 
 struct Component
 {
@@ -61,20 +64,6 @@ struct StateComponent : public Component
 	virtual Component* copy();
 
 	unsigned int state;
-
-	enum Direction
-	{
-		LEFT = 0x0,
-		RIGHT = 0x1,
-		UP = 0x2,
-		DOWN = 0x3
-	};
-
-	enum Action
-	{
-		IDLE = 0x0,
-		MOVE = 0x4
-	};
 
 	void setDirection(Direction d);
 	void setAction(Action a);

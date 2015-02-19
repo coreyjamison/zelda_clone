@@ -7,6 +7,8 @@
 #include <SDLutil/sdl_utils.hpp>
 #include <iostream>
 
+#include <data_containers/enums.hpp>
+#include <data_containers/vec2.hpp>
 #include <input_manager/input_manager.hpp>
 #include <gameloop/gameloop.hpp>
 #include <SDLutil/sdl_wrappers.hpp>
@@ -25,6 +27,7 @@
 #include <engine/engine.hpp>
 
 using namespace std;
+using namespace Enums;
 
 int main(int argc, char* args[])
 {
@@ -50,8 +53,8 @@ int main(int argc, char* args[])
 
 	componentJson.Parse("{\"name\":\"guy1\",\"layer\":\"entities\"}");
 
-	RenderComponent* testRender = cf.initRenderComponent(componentJson);
-	if(testRender)
+	//RenderComponent* testRender = cf.initRenderComponent(componentJson);
+	//if(testRender)
 	{
 		cout << "got the renderComponent" << endl;
 	}
@@ -80,13 +83,13 @@ int main(int argc, char* args[])
 
 	//PositionComponent p{{100, 100}};
 	RenderComponent r{sprites["guy1"], RenderLayer::ENTITIES};
-	StateComponent s{StateComponent::Direction::RIGHT|StateComponent::Action::IDLE};
+	StateComponent s{Direction::RIGHT|Action::IDLE};
 	MoveComponent m{2};
 	CollisionComponent c{{25, 15}, CollisionComponent::ENTITY, CollisionComponent::ENTITY, 1};
 	HealthComponent h{50, 100};
 
 	e->addComponent(test);
-	e->addComponent(testRender);
+	e->addComponent(&r);
 	e->addComponent(&s);
 	e->addComponent(&m);
 	e->addComponent(&c);
@@ -96,7 +99,7 @@ int main(int argc, char* args[])
 
 	PositionComponent ps{{400, 400}};
 	RenderComponent rs{sprites["slime"], RenderLayer::ENTITIES};
-	StateComponent ss{StateComponent::Direction::DOWN|StateComponent::Action::IDLE};
+	StateComponent ss{Direction::DOWN|Action::IDLE};
 	MoveComponent ms{2};
 	CollisionComponent cs{{25, 15}, CollisionComponent::ENTITY, 0, 1};
 	HealthComponent hs{20, 25};
@@ -117,7 +120,7 @@ int main(int argc, char* args[])
 	// a direction and an action
 	PositionComponent p_bkg{{0, 0}};
 	RenderComponent r_bkg{sprites["background"], RenderLayer::TERRAIN};
-	StateComponent s_bkg{StateComponent::Direction::UP|StateComponent::Action::IDLE};
+	StateComponent s_bkg{Direction::UP|Action::IDLE};
 
 	bkg->addComponent(&p_bkg);
 	bkg->addComponent(&r_bkg);

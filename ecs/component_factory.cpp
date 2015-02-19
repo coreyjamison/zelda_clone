@@ -9,6 +9,7 @@
 #include "component.hpp"
 #include <graphics/game_window.hpp>
 #include <engine/engine.hpp>
+#include <data_containers/enums.hpp>
 
 using namespace rapidjson;
 PositionComponent* ComponentFactory::initPositionComponent(Value& config)
@@ -41,6 +42,22 @@ RenderComponent* ComponentFactory::initRenderComponent(Value& config)
 			l = RenderLayer::TERRAIN;
 		}
 		return new RenderComponent(sprite, l);
+	}
+	return nullptr;
+}
+
+StateComponent* ComponentFactory::initStateComponent(Value& config)
+{
+	if(config.HasMember("action") &&
+			config.HasMember("direction"))
+	{
+		string action = config["action"].GetString();
+		string direction = config["direction"].GetString();
+
+		using namespace Enums;
+		Action a = actionFromString(action);
+		Direction d = directionFromString(direction);
+		return new StateComponent(a | d);
 	}
 	return nullptr;
 }

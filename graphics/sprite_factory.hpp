@@ -21,8 +21,6 @@ public:
 	SdlTexture makeTexture(string imageFile, const GameWindow& window);
 	unordered_map<string, Sprite*> loadSprites(const GameWindow& window, string configFile);
 
-
-
 	Sprite* getSprite(unsigned int spriteId);
 	unsigned int getId(string spriteName);
 private:

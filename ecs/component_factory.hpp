@@ -19,6 +19,10 @@ class ComponentFactory
 public:
 	PositionComponent* initPositionComponent(rapidjson::Value& config);
 	RenderComponent* initRenderComponent(rapidjson::Value& config);
+	StateComponent* initStateComponent(rapidjson::Value& config);
+	MoveComponent* initMoveComponent(rapidjson::Value& config);
+	CollisionComponent* initCollisionComponent(rapidjson::Value& config);
+	HealthComponent* initHealthComponent(rapidjson::Value& config);
 };
 /*
 template <>

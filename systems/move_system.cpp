@@ -7,6 +7,8 @@
 
 #include <iostream>
 
+#include <data_containers/enums.hpp>
+
 #include "move_system.hpp"
 /*
 class MoveSystem: public FixedRunnable, public NodeListener, public InputObserver
@@ -22,6 +24,7 @@ private:
 };*/
 
 using namespace std;
+using namespace Enums;
 
 MoveSystem::MoveSystem()
 :	_input()
@@ -36,19 +39,19 @@ bool MoveSystem::run()
 
 		if(goal.length() > 0)
 		{
-			node->state->setAction(StateComponent::Action::MOVE);
+			node->state->setAction(Action::MOVE);
 		} else {
-			node->state->setAction(StateComponent::Action::IDLE);
+			node->state->setAction(Action::IDLE);
 		}
 
 		if(goal.y < 0) {
-			node->state->setDirection(StateComponent::Direction::UP);
+			node->state->setDirection(Direction::UP);
 		} else if(goal.y > 0) {
-			node->state->setDirection(StateComponent::Direction::DOWN);
+			node->state->setDirection(Direction::DOWN);
 		} else if(goal.x > 0) {
-			node->state->setDirection(StateComponent::Direction::RIGHT);
+			node->state->setDirection(Direction::RIGHT);
 		} else if(goal.x < 0) {
-			node->state->setDirection(StateComponent::Direction::LEFT);
+			node->state->setDirection(Direction::LEFT);
 		}
 	}
 	return true;

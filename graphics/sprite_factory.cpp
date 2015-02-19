@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 
+#include <data_containers/enums.hpp>
 #include <include/rapidjson/document.h>
 #include <ecs/component.hpp>
 
@@ -17,6 +18,7 @@
 #include "game_window.hpp"
 
 using namespace std;
+using namespace Enums;
 
 Sprite SpriteFactory::makeDemoSprite( const GameWindow& window )
 {
@@ -109,15 +111,15 @@ Sprite SpriteFactory::makeDemoSprite( const GameWindow& window )
 
 	Sprite testSprite{ texture, {12, 26}, 1 };
 
-	testSprite.addState(StateComponent::Direction::LEFT|StateComponent::Action::MOVE, moveLeft);
-	testSprite.addState(StateComponent::Direction::RIGHT|StateComponent::Action::MOVE, moveRight);
-	testSprite.addState(StateComponent::Direction::UP|StateComponent::Action::MOVE, moveUp);
-	testSprite.addState(StateComponent::Direction::DOWN|StateComponent::Action::MOVE, moveDown);
+	testSprite.addState(Direction::LEFT|Action::MOVE, moveLeft);
+	testSprite.addState(Direction::RIGHT|Action::MOVE, moveRight);
+	testSprite.addState(Direction::UP|Action::MOVE, moveUp);
+	testSprite.addState(Direction::DOWN|Action::MOVE, moveDown);
 
-	testSprite.addState(StateComponent::Direction::LEFT|StateComponent::Action::IDLE, idleLeft);
-	testSprite.addState(StateComponent::Direction::RIGHT|StateComponent::Action::IDLE, idleRight);
-	testSprite.addState(StateComponent::Direction::UP|StateComponent::Action::IDLE, idleUp);
-	testSprite.addState(StateComponent::Direction::DOWN|StateComponent::Action::IDLE, idleDown);
+	testSprite.addState(Direction::LEFT|Action::IDLE, idleLeft);
+	testSprite.addState(Direction::RIGHT|Action::IDLE, idleRight);
+	testSprite.addState(Direction::UP|Action::IDLE, idleUp);
+	testSprite.addState(Direction::DOWN|Action::IDLE, idleDown);
 
 
 	return testSprite;
@@ -219,21 +221,8 @@ unordered_map<string, Sprite*> SpriteFactory::loadSprites(const GameWindow& wind
 												string action = state["action"].GetString();
 												string direction = state["direction"].GetString();
 												unsigned int state = 0;
-												if(action == "idle") {
-													state |= StateComponent::Action::IDLE;
-												} else if(action == "move") {
-													state |= StateComponent::Action::MOVE;
-												}
-
-												if(direction == "u") {
-													state |= StateComponent::Direction::UP;
-												} else if(direction == "d") {
-													state |= StateComponent::Direction::DOWN;
-												} else if(direction == "l") {
-													state |= StateComponent::Direction::LEFT;
-												} else if(direction == "r") {
-													state |= StateComponent::Direction::RIGHT;
-												}
+												state |= actionFromString(action);
+												state |= directionFromString(direction);
 
 												cout << "State: " << state << endl;
 
@@ -497,21 +486,9 @@ Sprite SpriteFactory::makeSprite(const GameWindow& window, string name)
 							string action = state["action"].GetString();
 							string direction = state["direction"].GetString();
 							unsigned int state = 0;
-							if(action == "idle") {
-								state |= StateComponent::Action::IDLE;
-							} else if(action == "move") {
-								state |= StateComponent::Action::MOVE;
-							}
 
-							if(direction == "u") {
-								state |= StateComponent::Direction::UP;
-							} else if(direction == "d") {
-								state |= StateComponent::Direction::DOWN;
-							} else if(direction == "l") {
-								state |= StateComponent::Direction::LEFT;
-							} else if(direction == "r") {
-								state |= StateComponent::Direction::RIGHT;
-							}
+							state |= actionFromString(action);
+							state |= directionFromString(direction);
 
 							cout << "State: " << state << endl;
 
