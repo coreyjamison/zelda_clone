@@ -12,7 +12,25 @@
 #include <data_containers/enums.hpp>
 
 using namespace rapidjson;
-PositionComponent* ComponentFactory::initPositionComponent(Value& config)
+Component* ComponentFactory::initComponent(string type, const Value& config)
+{
+	if(type == "position")
+		return initPositionComponent(config);
+	else if(type == "render")
+		return initRenderComponent(config);
+	else if(type == "state")
+		return initStateComponent(config);
+	else if(type == "move")
+		return initMoveComponent(config);
+	else if(type == "collision")
+		return initCollisionComponent(config);
+	else if(type == "health")
+		return initHealthComponent(config);
+	else
+		return nullptr;
+}
+
+PositionComponent* ComponentFactory::initPositionComponent(const Value& config)
 {
 	if(config.HasMember("x") &&
 			config.HasMember("y"))
@@ -26,7 +44,7 @@ PositionComponent* ComponentFactory::initPositionComponent(Value& config)
 	return nullptr;
 }
 
-RenderComponent* ComponentFactory::initRenderComponent(Value& config)
+RenderComponent* ComponentFactory::initRenderComponent(const Value& config)
 {
 	if(config.HasMember("name") &&
 			config.HasMember("layer"))
@@ -46,7 +64,7 @@ RenderComponent* ComponentFactory::initRenderComponent(Value& config)
 	return nullptr;
 }
 
-StateComponent* ComponentFactory::initStateComponent(Value& config)
+StateComponent* ComponentFactory::initStateComponent(const Value& config)
 {
 	if(config.HasMember("action") &&
 			config.HasMember("direction"))
@@ -58,6 +76,50 @@ StateComponent* ComponentFactory::initStateComponent(Value& config)
 		Action a = actionFromString(action);
 		Direction d = directionFromString(direction);
 		return new StateComponent(a | d);
+	}
+	return nullptr;
+}
+
+MoveComponent* ComponentFactory::initMoveComponent(const Value& config)
+{
+	if(config.HasMember("speed"))
+	{
+		double speed = config["speed"].GetDouble();
+		return new MoveComponent(speed);
+	}
+	return nullptr;
+}
+
+CollisionComponent* ComponentFactory::initCollisionComponent(const Value& config)
+{
+	if(config.HasMember("w") &&
+			config.HasMember("h") &&
+			config.HasMember("type") &&
+			config.HasMember("mask") &&
+			config.HasMember("weight"))
+	{
+		Vec2<double> size = {
+				config["w"].GetDouble(),
+				config["h"].GetDouble()
+		};
+		unsigned int type = collisionTypeFromString(config["type"].GetString());
+		unsigned int mask = collisionMaskFromString(config["mask"].GetString());
+		int weight = config["weight"].GetInt();
+
+		return new CollisionComponent(size, type, mask, weight);
+	}
+	return nullptr;
+}
+
+HealthComponent* ComponentFactory::initHealthComponent(const Value& config)
+{
+	if(config.HasMember("hp") &&
+			config.HasMember("max"))
+	{
+		unsigned int hp = config["hp"].GetInt();
+		unsigned int maxHp = config["max"].GetInt();
+
+		return new HealthComponent(hp, maxHp);
 	}
 	return nullptr;
 }

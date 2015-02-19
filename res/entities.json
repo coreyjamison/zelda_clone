@@ -1,0 +1,67 @@
+{
+	"entities": [
+		{
+			"prototype": "guy1",
+			"components": [
+				{
+					"type": "position",
+					"config": {
+						"x": 100,
+						"y": 100
+					}
+				},
+				{
+					"type": "state",
+					"config": {
+						"action": "idle",
+						"direction": "down"
+					}
+				}
+			]
+		},
+		{
+			"prototype": "slime",
+			"components": [
+				{
+					"type": "position",
+					"config": {
+						"x": 200,
+						"y": 100
+					}
+				},
+				{
+					"type": "state",
+					"config": {
+						"action": "idle",
+						"direction": "down"
+					}
+				}
+			]
+		},
+		{
+			"components": [
+				{
+					"type": "position",
+					"config": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"type": "render",
+					"config": {
+						"name": "background",
+						"layer": "terrain"
+					}
+				},
+				{
+					"type": "state",
+					"config": {
+						"action": "idle",
+						"direction": "up"
+					}
+				}
+			]
+		}
+	]
+}

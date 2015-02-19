@@ -44,3 +44,7 @@ SpriteFactory& Engine::getSpriteFactory()
 	return _spriteFactory;
 }
 
+EntityFactory& Engine::getEntityFactory()
+{
+	return _entityFactory;
+}

@@ -85,12 +85,6 @@ struct CollisionComponent : public Component
 
 	virtual Component* copy();
 
-	enum CollisionType
-	{
-		ENTITY = 0x1,
-		PROJECTILE = 0x2
-	};
-
 	Vec2<double> size; // for now, all colliders are rectangles
 	set<unsigned int> ignoredIds;
 	unsigned int type;

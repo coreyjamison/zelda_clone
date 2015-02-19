@@ -37,10 +37,18 @@ namespace Enums
 		MOVE = 0x4
 	};
 
+	enum CollisionType
+	{
+		ENTITY = 0x1,
+		PROJECTILE = 0x2
+	};
+
 
 	RenderLayer layerFromString(string s);
 	Direction directionFromString(string s);
 	Action actionFromString(string s);
+	CollisionType collisionTypeFromString(string s);
+	unsigned int collisionMaskFromString(string s);
 };
 
 

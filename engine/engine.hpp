@@ -12,6 +12,7 @@
 
 #include <graphics/game_window.hpp>
 #include <ecs/ecs_manager.hpp>
+#include <ecs/entity_factory.hpp>
 #include <effect/effect_system.hpp>
 #include <graphics/sprite_factory.hpp>
 
@@ -26,6 +27,7 @@ public:
 	EcsManager& getEcsManager();
 	EffectSystem& getEffectSystem();
 	SpriteFactory& getSpriteFactory();
+	EntityFactory& getEntityFactory();
 
 	void loadSprites(string configFile);
 
@@ -40,6 +42,7 @@ private:
 	EcsManager _ecsManager;
 	EffectSystem _effectSystem;
 	SpriteFactory _spriteFactory;
+	EntityFactory _entityFactory;
 
 	unordered_map<string, Sprite*> _sprites;
 };

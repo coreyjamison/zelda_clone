@@ -1,0 +1,74 @@
+{
+	"prototypes": [
+		{
+			"name": "guy1",
+			"components": [
+				{
+					"type": "render",
+					"config": {
+						"name": "guy1",
+						"layer": "entities"
+					}
+				},
+				{
+					"type": "move",
+					"config": {
+						"speed": 2
+					}
+				},
+				{
+					"type": "collision",
+					"config": {
+						"w": 20,
+						"h": 15,
+						"type": "entities",
+						"mask": "entities",
+						"weight": 1
+					}
+				},
+				{
+					"type": "health",
+					"config": {
+						"hp": 100,
+						"max": 100
+					}
+				}
+			]
+		},
+		{
+			"name": "slime",
+			"components": [
+				{
+					"type": "render",
+					"config": {
+						"name": "slime",
+						"layer": "entities"
+					}
+				},
+				{
+					"type": "move",
+					"config": {
+						"speed": 1
+					}
+				},
+				{
+					"type": "collision",
+					"config": {
+						"w": 20,
+						"h": 15,
+						"type": "entities",
+						"mask": "entities",
+						"weight": 1
+					}
+				},
+				{
+					"type": "health",
+					"config": {
+						"hp": 50,
+						"max": 50
+					}
+				}
+			]
+		}
+	]
+}

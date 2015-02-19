@@ -17,12 +17,14 @@ using namespace std;
 class ComponentFactory
 {
 public:
-	PositionComponent* initPositionComponent(rapidjson::Value& config);
-	RenderComponent* initRenderComponent(rapidjson::Value& config);
-	StateComponent* initStateComponent(rapidjson::Value& config);
-	MoveComponent* initMoveComponent(rapidjson::Value& config);
-	CollisionComponent* initCollisionComponent(rapidjson::Value& config);
-	HealthComponent* initHealthComponent(rapidjson::Value& config);
+	Component* initComponent(string type, const rapidjson::Value& config);
+
+	PositionComponent* initPositionComponent(const rapidjson::Value& config);
+	RenderComponent* initRenderComponent(const rapidjson::Value& config);
+	StateComponent* initStateComponent(const rapidjson::Value& config);
+	MoveComponent* initMoveComponent(const rapidjson::Value& config);
+	CollisionComponent* initCollisionComponent(const rapidjson::Value& config);
+	HealthComponent* initHealthComponent(const rapidjson::Value& config);
 };
 /*
 template <>

@@ -42,6 +42,11 @@ public:
 
 	void addState(unsigned int state, SpriteState data);
 
+#ifdef __DEBUG
+	static int _nextId = 1;
+	int _id;
+#endif
+
 private:
 	SdlTexture _texture;
 	map<unsigned int, SpriteState> _states;

@@ -42,6 +42,9 @@ int main(int argc, char* args[])
 	InputManager* im = new InputManager();
 	GameLoop* gm = new GameLoop();
 
+	unsigned int testMask = collisionMaskFromString("entity|projectile");
+	cout << "testMask: " << testMask << endl;
+
 	ComponentFactory cf;
 
 	using namespace rapidjson;
@@ -61,7 +64,6 @@ int main(int argc, char* args[])
 
 	cout << "x: " << test->curPos.x << ", y: " << test->curPos.y << endl;
 
-	SDL_Delay(5000);
 
 	SpriteFactory sf;
 
@@ -69,7 +71,6 @@ int main(int argc, char* args[])
 
 	unordered_map<string, Sprite*> sprites = sf.loadSprites(gw, "res/sprite_config.json");
 
-	SDL_Delay(1000);
 
 	Sprite guySprite = sf.makeSprite(gw, "guy1");
 	Sprite slimeSprite = sf.makeSprite(gw, "slime");
@@ -85,7 +86,7 @@ int main(int argc, char* args[])
 	RenderComponent r{sprites["guy1"], RenderLayer::ENTITIES};
 	StateComponent s{Direction::RIGHT|Action::IDLE};
 	MoveComponent m{2};
-	CollisionComponent c{{25, 15}, CollisionComponent::ENTITY, CollisionComponent::ENTITY, 1};
+	CollisionComponent c{{25, 15}, CollisionType::ENTITY, CollisionType::ENTITY, 1};
 	HealthComponent h{50, 100};
 
 	e->addComponent(test);
@@ -95,13 +96,14 @@ int main(int argc, char* args[])
 	e->addComponent(&c);
 	e->addComponent(&h);
 
+	/*
 	Entity* slime = ecs.createEntity();
 
 	PositionComponent ps{{400, 400}};
 	RenderComponent rs{sprites["slime"], RenderLayer::ENTITIES};
 	StateComponent ss{Direction::DOWN|Action::IDLE};
 	MoveComponent ms{2};
-	CollisionComponent cs{{25, 15}, CollisionComponent::ENTITY, 0, 1};
+	CollisionComponent cs{{25, 15}, CollisionType::ENTITY, 0, 1};
 	HealthComponent hs{20, 25};
 
 	slime->addComponent(&ps);
@@ -124,7 +126,7 @@ int main(int argc, char* args[])
 
 	bkg->addComponent(&p_bkg);
 	bkg->addComponent(&r_bkg);
-	bkg->addComponent(&s_bkg);
+	bkg->addComponent(&s_bkg);*/
 
 	TrackingCamera tc{TrackingCameraNode::createFrom(e), {640, 480}, {640, 480}};
 
@@ -144,12 +146,15 @@ int main(int argc, char* args[])
 	col->setNodeList(ecs.getNodeList<CollisionNode>());
 	sbox->setNodeList(ecs.getNodeList<HealthBarNode>());
 
+	engine.getEntityFactory().createPrototypes("res/prototypes.json")
+			.populate(&engine.getEcsManager(), "res/entities.json");
+
 	ucs->setPlayerNode(MoveNode::createFrom(e));
 
 	ecs.checkNodes(e);
-	ecs.checkNodes(slime);
+	/*ecs.checkNodes(slime);
 	ecs.checkNodes(slime2);
-	ecs.checkNodes(bkg);
+	ecs.checkNodes(bkg);*/
 
 	gm->addFixedRunnable(im);
 	gm->addFixedRunnable(render);
