@@ -21,8 +21,8 @@
 					"config": {
 						"w": 20,
 						"h": 15,
-						"type": "entities",
-						"mask": "entities",
+						"type": "entity",
+						"mask": "",
 						"weight": 1
 					}
 				},
@@ -56,8 +56,8 @@
 					"config": {
 						"w": 20,
 						"h": 15,
-						"type": "entities",
-						"mask": "entities",
+						"type": "entity",
+						"mask": "entity",
 						"weight": 1
 					}
 				},

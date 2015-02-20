@@ -17,6 +17,7 @@ class StateComponent;
 class MoveComponent;
 class CollisionComponent;
 class HealthComponent;
+class AiCommandComponent;
 
 class Entity;
 
@@ -75,6 +76,18 @@ struct HealthBarNode : public Node
 	HealthComponent* health;
 
 	static HealthBarNode* createFrom(Entity* e);
+};
+
+struct AiCommandNode : public Node
+{
+	AiCommandNode(AiCommandComponent* a, PositionComponent* p, MoveComponent* m, StateComponent* s);
+
+	AiCommandComponent* ai;
+	PositionComponent* position;
+	MoveComponent* move;
+	StateComponent* state;
+
+	static AiCommandNode* createFrom(Entity* e);
 };
 
 /* Static Nodes -> not handled by ECS Manager */

@@ -8,6 +8,8 @@
 #include <iostream>
 
 #include "collision_system.hpp"
+#include <effect/effect.hpp>
+#include <engine/engine.hpp>
 
 using namespace std;
 
@@ -103,16 +105,30 @@ bool CollisionSystem::run()
 					node2->position->curPos += push;
 				}
 
+				EffectSystem& es = Engine::getInstance().getEffectSystem();
+				EcsManager& ecs = Engine::getInstance().getEcsManager();
+				Entity* e1 = ecs.getEntity(node1->parentId);
+				Entity* e2 = ecs.getEntity(node2->parentId);
 				//cout << "Collision!" << endl;
 				if(node1->collision->mask & node2->collision->type)
 				{
 					cout << "1 -> 2" << endl;
-					// node1 does something to node2
+					SimultaneousEffectList* el = new SimultaneousEffectList;
+
+					es.addEffect(new PushEffect(e2, push * 10, 5));
+					el->addEffect(new DamageEffect(e2, 10));
+
+					es.addEffect(el);
 				}
 				if(node2->collision->mask & node1->collision->type)
 				{
 					cout << "2 -> 1" << endl;
-					// node2 does something to node1
+					SimultaneousEffectList* el = new SimultaneousEffectList;
+
+					es.addEffect(new PushEffect(e1, push * -10, 5));
+					el->addEffect(new DamageEffect(e1, 10));
+
+					es.addEffect(el);
 				}
 			}
 		}

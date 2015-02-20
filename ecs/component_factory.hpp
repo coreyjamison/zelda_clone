@@ -25,6 +25,7 @@ public:
 	MoveComponent* initMoveComponent(const rapidjson::Value& config);
 	CollisionComponent* initCollisionComponent(const rapidjson::Value& config);
 	HealthComponent* initHealthComponent(const rapidjson::Value& config);
+	AiCommandComponent* initAiCommandComponent(const rapidjson::Value& config);
 };
 /*
 template <>

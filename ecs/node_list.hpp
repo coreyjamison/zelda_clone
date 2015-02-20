@@ -50,7 +50,7 @@ struct NodeList : public NodeListInterface
 
 	virtual void addNode(Node* n)
 	{
-		if(typeid(*n) == typeid(T) && !haveNode(n->parentId));
+		if(typeid(*n) == typeid(T) && !haveNode(n->parentId))
 		{
 			nodes.push_back(static_cast<T*>(n));
 		}

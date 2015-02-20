@@ -116,3 +116,27 @@ HealthBarNode* HealthBarNode::createFrom(Entity* e)
 		return nullptr;
 	}
 }
+
+AiCommandNode::AiCommandNode(AiCommandComponent* a, PositionComponent* p, MoveComponent* m, StateComponent* s)
+:	ai(a), position(p), move(m), state(s)
+{}
+
+AiCommandNode* AiCommandNode::createFrom(Entity* e)
+{
+	AiCommandComponent* ai = e->getComponent<AiCommandComponent>();
+	PositionComponent* p = e->getComponent<PositionComponent>();
+	MoveComponent* m = e->getComponent<MoveComponent>();
+	StateComponent* s = e->getComponent<StateComponent>();
+	if(ai && p && m && s) {
+		AiCommandNode* node = new AiCommandNode(ai, p, m, s);
+		node->parentId = e->getId();
+		ai->nodes.push_back(node);
+		p->nodes.push_back(node);
+		m->nodes.push_back(node);
+		s->nodes.push_back(node);
+		return node;
+	}
+	else {
+		return nullptr;
+	}
+}

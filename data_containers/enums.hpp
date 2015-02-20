@@ -39,6 +39,7 @@ namespace Enums
 
 	enum CollisionType
 	{
+		NONE = 0x0,
 		ENTITY = 0x1,
 		PROJECTILE = 0x2
 	};

@@ -112,3 +112,8 @@ void HealthComponent::heal(int amount)
 		health = maxHealth;
 	}
 }
+
+Component* AiCommandComponent::copy()
+{
+	return new AiCommandComponent();
+}

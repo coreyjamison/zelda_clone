@@ -26,6 +26,8 @@ Component* ComponentFactory::initComponent(string type, const Value& config)
 		return initCollisionComponent(config);
 	else if(type == "health")
 		return initHealthComponent(config);
+	else if(type == "ai_command")
+		return initAiCommandComponent(config);
 	else
 		return nullptr;
 }
@@ -104,6 +106,9 @@ CollisionComponent* ComponentFactory::initCollisionComponent(const Value& config
 		};
 		unsigned int type = collisionTypeFromString(config["type"].GetString());
 		unsigned int mask = collisionMaskFromString(config["mask"].GetString());
+
+		cout << "type: " << type << "  mask: " << mask << endl;
+
 		int weight = config["weight"].GetInt();
 
 		return new CollisionComponent(size, type, mask, weight);
@@ -122,4 +127,9 @@ HealthComponent* ComponentFactory::initHealthComponent(const Value& config)
 		return new HealthComponent(hp, maxHp);
 	}
 	return nullptr;
+}
+
+AiCommandComponent* ComponentFactory::initAiCommandComponent(const Value& config)
+{
+	return new AiCommandComponent();
 }

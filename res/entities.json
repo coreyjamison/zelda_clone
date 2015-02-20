@@ -38,6 +38,11 @@
 						"action": "idle",
 						"direction": "down"
 					}
+				},
+				{
+					"type": "ai_command",
+					"config": {
+					}
 				}
 			]
 		},

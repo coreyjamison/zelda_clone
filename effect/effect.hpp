@@ -39,6 +39,27 @@ private:
 	list<Effect*> _effects;
 };
 
+class SimultaneousEffectList : public Effect
+{
+public:
+	virtual void addEffect(Effect* e);
+	virtual bool step();
+
+	struct EffectRunner : public unary_function<Effect*, bool>
+		{
+			bool operator()(Effect* e) const
+			{
+				bool finished = e->execute();
+				if(finished)
+					delete e;
+				return finished;
+			}
+		};
+
+private:
+	vector<Effect*> _effects;
+};
+
 class WaitEffect : public Effect
 {
 public:
@@ -71,6 +92,18 @@ private:
 	int _tickAmount;
 	unsigned int _ticks;
 	unsigned int _tickLength;
+};
+
+class PushEffect : public Effect
+{
+public:
+	PushEffect(Entity* entity, Vec2<double> push, unsigned int duration);
+
+	virtual bool step();
+private:
+	Entity* _entity;
+	Vec2<double> _push;
+	unsigned int _duration;
 };
 
 

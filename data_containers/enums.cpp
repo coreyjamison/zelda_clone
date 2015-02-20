@@ -7,6 +7,9 @@
 
 #include "enums.hpp"
 
+#include <iostream>
+using namespace std;
+
 using namespace Enums;
 RenderLayer Enums::layerFromString(string s)
 {
@@ -46,24 +49,40 @@ Action Enums::actionFromString(string s)
 
 CollisionType Enums::collisionTypeFromString(string s)
 {
-	if(s == "entity")
+	cout << "collisionTypeFromString :: " << s << endl;
+	if(s == "entity") {
+		cout << "returning " << CollisionType::ENTITY << endl;
 		return CollisionType::ENTITY;
-	else /*if(s == "projectile")*/
+	} else if(s == "projectile") {
+		cout << "returning " << CollisionType::PROJECTILE << endl;
 		return CollisionType::PROJECTILE;
+	} else {
+		cout << "returning " << CollisionType::NONE << endl;
+		return CollisionType::NONE;
+	}
 }
 
 unsigned int Enums::collisionMaskFromString(string s)
 {
+	cout << "collisionMaskFromString :: " << s << endl;
 	unsigned int mask = 0;
 
 	size_t position = 0;
 	string type = "";
 	string delimiter = "|";
+
+	cout << s << endl;
+
 	while ((position = s.find(delimiter)) != std::string::npos) {
 	    type = s.substr(0, position);
+
+	    cout << "type: " << type << endl;
+
 	    mask |= collisionTypeFromString(type);
 	    s.erase(0, position + delimiter.length());
 	}
+
+	mask |= collisionTypeFromString(s);
 
 	return mask;
 }

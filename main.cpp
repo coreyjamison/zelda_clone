@@ -23,6 +23,7 @@
 #include <systems/user_command_system.hpp>
 #include <systems/collision_system.hpp>
 #include <systems/sandbox_system.hpp>
+#include <systems/ai_command_system.hpp>
 #include <graphics/tracking_camera.hpp>
 #include <engine/engine.hpp>
 
@@ -42,8 +43,8 @@ int main(int argc, char* args[])
 	InputManager* im = new InputManager();
 	GameLoop* gm = new GameLoop();
 
-	GameWindow& gw = Engine::getInstance().getWindow();
-	EcsManager& ecs = Engine::getInstance().getEcsManager();
+	GameWindow& gw = engine.getWindow();
+	EcsManager& ecs = engine.getEcsManager();
 
 	TrackingCamera tc{{640, 480}, {640, 480}};
 
@@ -52,12 +53,14 @@ int main(int argc, char* args[])
 	UserCommandSystem* ucs = new UserCommandSystem();
 	CollisionSystem* col = new CollisionSystem();
 	SandboxSystem* sbox = new SandboxSystem();
+	AiCommandSystem* ai = new AiCommandSystem();
 
 	render->::NodeSystem<RenderNode>::setNodeList(ecs.getNodeList<RenderNode>());
 	render->::NodeSystem<HealthBarNode>::setNodeList(ecs.getNodeList<HealthBarNode>());
 	move->setNodeList(ecs.getNodeList<MoveNode>());
 	col->setNodeList(ecs.getNodeList<CollisionNode>());
 	sbox->setNodeList(ecs.getNodeList<HealthBarNode>());
+	ai->setNodeList(ecs.getNodeList<AiCommandNode>());
 
 	engine.getEntityFactory()
 			.createPrototypes("res/prototypes.json")
@@ -66,7 +69,8 @@ int main(int argc, char* args[])
 	Entity* playerEntity = ecs.getFlaggedEntities("player").front();
 
 	ucs->setPlayerNode(MoveNode::createFrom(playerEntity));
-	tc.setNode(TrackingCameraNode::createFrom(playerEntity));\
+	ai->setPlayerNode(MoveNode::createFrom(playerEntity));
+	tc.setNode(TrackingCameraNode::createFrom(playerEntity));
 
 	gm->addFixedRunnable(im);
 	gm->addFixedRunnable(render);
@@ -74,6 +78,7 @@ int main(int argc, char* args[])
 	gm->addFixedRunnable(move);
 	gm->addFixedRunnable(col);
 	gm->addFixedRunnable(sbox);
+	gm->addFixedRunnable(ai);
 	gm->addFixedRunnable(&Engine::getInstance().getEffectSystem());
 
 	gm->addVariableRunnable(render);

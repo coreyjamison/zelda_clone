@@ -105,6 +105,14 @@ struct HealthComponent : public Component
 	int maxHealth;
 };
 
+struct PlayerCommandComponent : public Component
+{};
+
+struct AiCommandComponent : public Component
+{
+	virtual Component* copy();
+};
+
 
 
 #endif /* COMPONENT_HPP_ */

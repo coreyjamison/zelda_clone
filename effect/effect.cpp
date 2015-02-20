@@ -7,6 +7,7 @@
 
 #include "effect.hpp"
 #include <ecs/component.hpp>
+#include <algorithm>
 
 #include <iostream>
 using namespace std;
@@ -52,6 +53,17 @@ bool SequentialEffectList::step()
 	return true;
 }
 
+void SimultaneousEffectList::addEffect(Effect* e)
+{
+	_effects.push_back(e);
+}
+
+bool SimultaneousEffectList::step()
+{
+	_effects.erase(remove_if(_effects.begin(), _effects.end(), EffectRunner()), _effects.end());
+	return true;
+}
+
 WaitEffect::WaitEffect(unsigned int ticks)
 :	_ticksRemaining(ticks)
 {}
@@ -87,4 +99,17 @@ bool DotEffect::step()
 		cout << h->health << " HP" << endl;
 	}
 	return --_ticks <= 0;
+}
+
+PushEffect::PushEffect(Entity* entity, Vec2<double> push, unsigned int duration)
+:	_entity(entity), _push(push.scale(25) / duration), _duration(duration)
+{}
+
+bool PushEffect::step()
+{
+	PositionComponent* p = _entity->getComponent<PositionComponent>();
+	if(p)
+		p->movePos(_push);
+
+	return --_duration <= 0;
 }

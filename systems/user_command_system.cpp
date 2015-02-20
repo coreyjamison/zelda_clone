@@ -43,9 +43,6 @@ bool UserCommandSystem::run()
 			totalMove += {1, 0};
 		}
 
-		if(totalMove.x != 0 || totalMove.y != 0)
-			cout << "Moving player!" << endl;
-
 		totalMove = totalMove.scale(_playerNode->move->speed);
 		_playerNode->move->goalMove = totalMove;
 	}
