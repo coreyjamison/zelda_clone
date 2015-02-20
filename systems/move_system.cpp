@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <cmath>
 
 #include <data_containers/enums.hpp>
 
@@ -36,6 +37,7 @@ bool MoveSystem::run()
 	{
 		Vec2<double> goal = node->move->goalMove.scaleBack(node->move->speed);
 		node->position->movePos(goal);
+		node->move->goalMove = {0, 0};
 
 		if(goal.length() > 0)
 		{
@@ -43,15 +45,22 @@ bool MoveSystem::run()
 		} else {
 			node->state->setAction(Action::IDLE);
 		}
-
-		if(goal.y < 0) {
-			node->state->setDirection(Direction::UP);
-		} else if(goal.y > 0) {
-			node->state->setDirection(Direction::DOWN);
-		} else if(goal.x > 0) {
-			node->state->setDirection(Direction::RIGHT);
-		} else if(goal.x < 0) {
-			node->state->setDirection(Direction::LEFT);
+		if(goal.x != 0 || goal.y != 0)
+		{
+			if(abs(goal.x) > abs(goal.y))
+			{
+				if(goal.x > 0)
+					node->state->setDirection(Direction::RIGHT);
+				else
+					node->state->setDirection(Direction::LEFT);
+			}
+			else
+			{
+				if(goal.y < 0)
+					node->state->setDirection(Direction::UP);
+				else
+					node->state->setDirection(Direction::DOWN);
+			}
 		}
 	}
 	return true;

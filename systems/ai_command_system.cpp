@@ -27,7 +27,9 @@ bool AiCommandSystem::run()
 	{
 		Vec2<double> goal = _playerNode->position->curPos - node->position->curPos;
 
-		node->move->goalMove = goal.scale(node->move->speed);
+
+		if(goal.length() < 200)
+			node->move->goalMove = goal.scale(node->move->speed);
 	}
 
 	return true;

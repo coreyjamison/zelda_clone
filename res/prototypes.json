@@ -19,10 +19,11 @@
 				{
 					"type": "collision",
 					"config": {
-						"w": 20,
+						"w": 25,
 						"h": 15,
 						"type": "entity",
 						"mask": "",
+						"team": 0,
 						"weight": 1
 					}
 				},
@@ -54,10 +55,11 @@
 				{
 					"type": "collision",
 					"config": {
-						"w": 20,
+						"w": 25,
 						"h": 15,
 						"type": "entity",
 						"mask": "entity",
+						"team": 1,
 						"weight": 1
 					}
 				},

@@ -98,6 +98,7 @@ CollisionComponent* ComponentFactory::initCollisionComponent(const Value& config
 			config.HasMember("h") &&
 			config.HasMember("type") &&
 			config.HasMember("mask") &&
+			config.HasMember("team") &&
 			config.HasMember("weight"))
 	{
 		Vec2<double> size = {
@@ -109,9 +110,10 @@ CollisionComponent* ComponentFactory::initCollisionComponent(const Value& config
 
 		cout << "type: " << type << "  mask: " << mask << endl;
 
-		int weight = config["weight"].GetInt();
+		unsigned int weight = config["weight"].GetInt();
+		unsigned int team = config["team"].GetInt();
 
-		return new CollisionComponent(size, type, mask, weight);
+		return new CollisionComponent(size, type, mask, weight, team);
 	}
 	return nullptr;
 }

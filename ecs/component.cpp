@@ -77,13 +77,13 @@ Component* MoveComponent::copy()
 	return new MoveComponent(speed);
 }
 
-CollisionComponent::CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m, int w)
-:	size(s), type(t), mask(m), weight(w)
+CollisionComponent::CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m, int w, unsigned int tm)
+:	size(s), type(t), mask(m), team(tm), weight(w)
 {}
 
 Component* CollisionComponent::copy()
 {
-	return new CollisionComponent(size, type, mask, weight);
+	return new CollisionComponent(size, type, mask, weight, team);
 }
 
 HealthComponent::HealthComponent(int h, int m)

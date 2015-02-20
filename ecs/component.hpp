@@ -81,7 +81,7 @@ struct MoveComponent : public Component
 
 struct CollisionComponent : public Component
 {
-	CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m, int w);
+	CollisionComponent(Vec2<double> s, unsigned int t, unsigned int m, int w, unsigned int tm);
 
 	virtual Component* copy();
 
@@ -89,6 +89,7 @@ struct CollisionComponent : public Component
 	set<unsigned int> ignoredIds;
 	unsigned int type;
 	unsigned int mask;
+	unsigned int team;	// don't run effects on same team
 	int weight;			// -1 to make unmoveable
 };
 
