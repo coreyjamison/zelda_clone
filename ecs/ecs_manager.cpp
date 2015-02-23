@@ -23,6 +23,7 @@ unsigned int EcsManager::addEntity(Entity* e)
 {
 	if(e->getId() == -1)
 	{
+		cout << "Setting entity id to " << _nextId << endl;
 		e->setId(_nextId++);
 	}
 	_entities[e->getId()] = e;

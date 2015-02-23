@@ -27,7 +27,7 @@ struct Node
 	virtual ~Node() = default;
 
 	bool valid;
-	unsigned int parentId;
+	long parentId;
 
 	/*
 	 * All nodes must implement the following method:

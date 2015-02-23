@@ -10,17 +10,55 @@
 #include "collision_system.hpp"
 #include <effect/effect.hpp>
 #include <engine/engine.hpp>
+#include <data_containers/quad_tree.hpp>
 
 using namespace std;
 
 bool CollisionSystem::run()
 {
+	class CollisionQtObj : public QuadTreeObject
+	{
+	public:
+		CollisionQtObj(CollisionNode* n)
+		:	node(n),
+		 	_l(node->position->curPos.x - (node->collision->size.x / 2)),
+		 	_r(node->position->curPos.x + (node->collision->size.x / 2)),
+		 	_t(node->position->curPos.y - (node->collision->size.y / 2)),
+		 	_b(node->position->curPos.y + (node->collision->size.y / 2)) {}
+
+		double getLeft() {return _l;}
+		double getRight() {return _r;}
+		double getTop() {return _t;}
+		double getBottom() {return _b;}
+		CollisionNode* node;
+
+		double _l, _r, _t, _b;
+	};
+
+	/*QuadTree<CollisionQtObj> qt(0, 10, 2, -1000, -1000, 2000, 2000);
+	qt.subdivide();
+	qt.subdivide();
+	qt.subdivide();
+	qt.subdivide();
+	for(CollisionNode* node : _nodes->nodes)
+	{
+		qt.insert(new CollisionQtObj(node));
+	}*/
+
+	/*for(auto pair : qt.getCollisions())
+	{*/
+
+
+
 	for(CollisionNode* node1 : _nodes->nodes)
 	{
 		for(CollisionNode* node2 : _nodes->nodes) {
 
 			// This ensures each collision is only detected once,
 			// and an object can't collide with itself
+			//CollisionNode* node1 = pair.first->node;
+			//CollisionNode* node2 = pair.second->node;
+
 			if(node1 >= node2)
 				continue;
 
@@ -134,6 +172,7 @@ bool CollisionSystem::run()
 					}
 				}
 			}
+
 		}
 	}
 

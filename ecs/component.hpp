@@ -28,7 +28,7 @@ struct Component
 
 	virtual Component* copy() = 0;
 
-	unsigned long parentId = -1;
+	long parentId = -1;
 	vector<Node*> nodes;
 };
 
@@ -40,11 +40,11 @@ struct PositionComponent : public Component
 
 	void setPos(Vec2<double> newPos);
 	void movePos(Vec2<double> move);
+	bool moved();
 
 	Vec2<double> curPos;
 	Vec2<double> lastPos;
 };
-
 
 struct RenderComponent : public Component
 {

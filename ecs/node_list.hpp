@@ -13,6 +13,9 @@
 
 #include "node.hpp"
 
+#include <iostream>
+using namespace std;
+
 class Entity;
 
 struct NodeListInterface
@@ -61,6 +64,7 @@ struct NodeList : public NodeListInterface
 		T* n = T::createFrom(e);
 		if(n && !haveNode(e->getId()))
 		{
+			cout << "NodeList<" << typeid(T).name() << "> adding node from " << e->getId() << endl;
 			nodes.push_back(n);
 		}
 	}

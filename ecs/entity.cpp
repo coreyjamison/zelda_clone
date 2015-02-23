@@ -7,7 +7,7 @@
 
 #include "entity.hpp"
 
-Entity::Entity(unsigned long id)
+Entity::Entity(long id)
 :	_id(id)
 {}
 
@@ -19,7 +19,7 @@ Entity::~Entity()
 	}
 }
 
-void Entity::setId(unsigned long id)
+void Entity::setId(long id)
 {
 	_id = id;
 }

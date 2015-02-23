@@ -10,6 +10,7 @@
 
 #include <list>
 
+#include <ecs/entity_factory.hpp>
 #include <ecs/entity.hpp>
 
 class Effect
@@ -104,6 +105,16 @@ private:
 	Entity* _entity;
 	Vec2<double> _push;
 	unsigned int _duration;
+};
+
+class CreateEntityEffect : public Effect
+{
+public:
+	CreateEntityEffect(const EntityConfig& config);
+
+	virtual void finish();
+private:
+	EntityConfig _config;
 };
 
 

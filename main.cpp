@@ -9,6 +9,7 @@
 
 #include <data_containers/enums.hpp>
 #include <data_containers/vec2.hpp>
+#include <data_containers/quad_tree.hpp>
 #include <input_manager/input_manager.hpp>
 #include <gameloop/gameloop.hpp>
 #include <SDLutil/sdl_wrappers.hpp>
@@ -35,6 +36,42 @@ int main(int argc, char* args[])
 	SdlUtils::init();
 
 	Engine::init();
+
+	cout << "Quad Tree Testing!" << endl;
+
+	class DummyQtObj : public QuadTreeObject
+	{
+	public:
+		DummyQtObj(int id, int x, int y, int w, int h)
+		: _id(id), _x(x), _y(y), _w(w), _h(h) {}
+
+		double _id, _x, _y, _w, _h;
+		double getLeft() {return _x;}
+		double getRight() {return _x+_w;}
+		double getTop() {return _y;}
+		double getBottom() {return _y+_h;}
+	};
+
+	QuadTree<DummyQtObj> qt(0, 3, 2, 0, 0, 1000, 1000);
+
+	//qt.subdivide();
+
+	DummyQtObj o1{1, 0, 0, 10, 10};
+	DummyQtObj o2{2, 600, 0, 10, 10};
+	DummyQtObj o3(3, 400, 400, 10, 10);
+
+	qt.insert(&o1);
+	qt.insert(&o2);
+	qt.insert(&o3);
+
+	for(auto pair : qt.getCollisions())
+	{
+		cout << "Collision between: " << pair.first->_id << " and " <<
+				pair.second->_id << endl;
+	}
+
+
+	SDL_Delay(10000);
 
 	Engine& engine = Engine::getInstance();
 

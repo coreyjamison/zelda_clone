@@ -7,6 +7,7 @@
 
 #include "effect.hpp"
 #include <ecs/component.hpp>
+#include <engine/engine.hpp>
 #include <algorithm>
 
 #include <iostream>
@@ -112,4 +113,21 @@ bool PushEffect::step()
 		p->movePos(_push);
 
 	return --_duration <= 0;
+}
+
+CreateEntityEffect::CreateEntityEffect(const EntityConfig& config)
+:	_config(config)
+{}
+
+void CreateEntityEffect::finish()
+{
+	cout << "Running CreateEntityEffect!" << endl;
+
+	Engine& e = Engine::getInstance();
+	EntityFactory& ef = e.getEntityFactory();
+	EcsManager& ecs = e.getEcsManager();
+
+	Entity* entity = ef.createEntity(_config);
+	unsigned int id = ecs.addEntity(entity);
+	ecs.checkNodes(id);
 }

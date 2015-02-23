@@ -49,7 +49,7 @@ private:
 	unordered_map<unsigned long, Entity*> _entities;
 	unordered_map<string, vector<Entity*>> _flaggedEntities;
 	unordered_map<const type_info*, NodeListInterface*> _nodeLists;
-	unsigned int _nextId;
+	long _nextId;
 };
 
 

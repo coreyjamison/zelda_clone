@@ -42,7 +42,7 @@
 				{
 					"type": "render",
 					"config": {
-						"name": "slime",
+						"name": "guy1",
 						"layer": "entities"
 					}
 				},

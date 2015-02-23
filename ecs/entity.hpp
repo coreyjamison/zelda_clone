@@ -21,12 +21,12 @@ class Entity
 {
 public:
 	Entity() = default;
-	Entity(unsigned long id);
+	Entity(long id);
 
 	~Entity();
 
-	inline unsigned long getId() {return _id;}
-	void setId(unsigned long id);
+	inline long getId() {return _id;}
+	void setId(long id);
 
 	void addComponent(Component* c);
 
@@ -54,7 +54,7 @@ public:
 	bool hasComponent(const type_info* componentType);
 
 private:
-	unsigned long _id = -1;
+	long _id = -1;
 	unordered_map<const type_info*, Component*> _components;
 };
 

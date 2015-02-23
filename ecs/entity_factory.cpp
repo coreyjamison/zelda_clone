@@ -52,6 +52,28 @@ Entity* EntityFactory::createEntity(const Value& config)
 	return e;
 }
 
+Entity* EntityFactory::createEntity(const EntityConfig& config)
+{
+	Entity* e;
+	if(_prototypeIds.find(config.prototype) != _prototypeIds.end())
+	{
+		unsigned int id = _prototypeIds[config.prototype];
+		e = _prototypes[id]->clone();
+	}
+	else
+	{
+		cout << "Couldn't find prototype: '" << config.prototype << "'" << endl;
+		e = new Entity();
+	}
+	PositionComponent* p = new PositionComponent{config.position};
+	e->addComponent(p);
+
+	for(Component* c : config.components)
+		e->addComponent(c);
+
+	return e;
+}
+
 EntityFactory& EntityFactory::createPrototypes(string prototypeConfigFile)
 {
 	ifstream fs(prototypeConfigFile);
